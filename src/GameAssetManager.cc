@@ -1,5 +1,9 @@
 #include "GameAssetManager.h"
 
+// required to fix build issue on Windows using cygwin using make,
+//which was returning " error: ‘exit’ was not declared in this scope".
+#include <cstdlib>
+
 /**
  * Creates a GameAssetManager to load the correct shaders based on the
  * ApplicationMode.
