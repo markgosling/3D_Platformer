@@ -1,5 +1,7 @@
 #include "CubeAsset.h"
 
+using namespace std;
+
 CubeAsset::CubeAsset() {
   // model coordinates, origin at centre.
   GLfloat vertex_buffer [] {
@@ -73,17 +75,17 @@ CubeAsset::~CubeAsset() {
 #define checkGLError()
 #endif
 
-void checkError(std::string file, int line) {
+void checkError(string file, int line) {
   GLenum gl_error = glGetError();
   if(GL_NO_ERROR != gl_error) {
-    std::cerr << "GL error in " << file << " at line " << line << " error: " << gl_error << std::endl;
+    cerr << "GL error in " << file << " at line " << line << " error: " << gl_error << endl;
     exit(-1);
   }
 }
 
 void CubeAsset::Draw(GLuint program_token) {
   if(!glIsProgram(program_token)) {
-    std::cerr << "Drawing Cube with invalid program" << std::endl;
+    cerr << "Drawing Cube with invalid program" << endl;
     return;
   }
   GLint validation_ok;
@@ -94,12 +96,12 @@ void CubeAsset::Draw(GLuint program_token) {
     glGetProgramiv(program_token, GL_INFO_LOG_LENGTH, &maxLength);
 
     //The maxLength includes the NULL character
-    std::vector<char> errorLog(maxLength);
+    vector<char> errorLog(maxLength);
     glGetProgramInfoLog(program_token, maxLength, &maxLength, &errorLog[0]);
 
-    std::cerr << "Invalid program " << program_token << " with error code " << validation_ok << std::endl;
+    cerr << "Invalid program " << program_token << " with error code " << validation_ok << endl;
     for(auto c: errorLog) {
-      std::cerr << c;
+      cerr << c;
     }
     exit(-1);
   }

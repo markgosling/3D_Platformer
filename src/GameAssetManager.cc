@@ -1,16 +1,18 @@
 #include "GameAssetManager.h"
 
 // required to fix build issue on Windows using cygwin using make,
-//which was returning " error: ‘exit’ was not declared in this scope".
+//which was returning " error: ï¿½exitï¿½ was not declared in this scope".
 #include <cstdlib>
+
+using namespace std;
 
 /**
  * Creates a GameAssetManager to load the correct shaders based on the
  * ApplicationMode.
  */
 GameAssetManager::GameAssetManager(ApplicationMode mode) {
-  std::string vertex_shader("shaders/translate.vs");
-  std::string fragment_shader("shaders/fragment.fs");
+  string vertex_shader("shaders/translate.vs");
+  string fragment_shader("shaders/fragment.fs");
 
   switch(mode) {
   case ROTATE:
@@ -62,7 +64,7 @@ void GameAssetManager::operator=(GameAssetManager const& the_manager) {
 /**
  * Adds a GameAsset to the scene graph.
  */
-void GameAssetManager::AddAsset(std::shared_ptr<GameAsset> the_asset) {
+void GameAssetManager::AddAsset(shared_ptr<GameAsset> the_asset) {
   draw_list.push_back(the_asset);
 }
 
@@ -82,8 +84,8 @@ void GameAssetManager::Draw() {
  *
  * @return the GL "token" referring to the gl program.
  */
-GLuint GameAssetManager::CreateGLProgram(std::string & vertex_shader
-                                         , std::string & fragment_shader) {
+GLuint GameAssetManager::CreateGLProgram(string & vertex_shader
+                                         , string & fragment_shader) {
   auto v_shader_token = CreateGLESShader(GL_VERTEX_SHADER, vertex_shader);
   auto f_shader_token = CreateGLESShader(GL_FRAGMENT_SHADER, fragment_shader);
 
@@ -97,7 +99,7 @@ GLuint GameAssetManager::CreateGLProgram(std::string & vertex_shader
 
   glGetProgramiv(program, GL_LINK_STATUS, &program_ok);
   if (!program_ok) {
-    std::cerr << "Failed to link shader program:" << std::endl;
+    cerr << "Failed to link shader program:" << endl;
     glDeleteProgram(program);
     exit(-1);
   }
@@ -111,7 +113,7 @@ GLuint GameAssetManager::CreateGLProgram(std::string & vertex_shader
  *
  * @return the GL "token" for the requested shader.
  */
-GLuint GameAssetManager::CreateGLESShader(GLenum type, std::string & shader) {
+GLuint GameAssetManager::CreateGLESShader(GLenum type, string & shader) {
   GLuint shader_token;
   GLint shader_ok;
   auto source = ReadShader(shader);
@@ -130,13 +132,13 @@ GLuint GameAssetManager::CreateGLESShader(GLenum type, std::string & shader) {
     glGetShaderiv(shader_token, GL_INFO_LOG_LENGTH, &maxLength);
 
     //The maxLength includes the NULL character
-    std::vector<char> errorLog(maxLength);
+    vector<char> errorLog(maxLength);
     glGetShaderInfoLog(shader_token, maxLength, &maxLength, &errorLog[0]);
 
     //Provide the infolog in whatever manor you deem best.
-    std::cerr << "Failed to compile " << shader << " with error code " << shader_ok << std::endl;
+    cerr << "Failed to compile " << shader << " with error code " << shader_ok << endl;
     for(auto c: errorLog) {
-      std::cerr << c;
+      cerr << c;
     }
 
     glDeleteShader(shader_token); //Don't leak the shader.
@@ -152,19 +154,19 @@ GLuint GameAssetManager::CreateGLESShader(GLenum type, std::string & shader) {
  * @return a pair consisting of the shader file contents and a holder for the
  *         OpenGL "token".
  */
-std::pair<GLchar *, GLint> GameAssetManager::ReadShader(std::string & shader) {
-  std::ifstream input_file;
+pair<GLchar *, GLint> GameAssetManager::ReadShader(string & shader) {
+  ifstream input_file;
   GLint length;
-  input_file.open(shader, std::ios::in);
+  input_file.open(shader, ios::in);
 
-  input_file.seekg(0, std::ios::end);  // go to the end of the file
+  input_file.seekg(0, ios::end);  // go to the end of the file
   length = input_file.tellg();    // get length of the file
-  input_file.seekg(0, std::ios::beg);  // go to beginning of the file
+  input_file.seekg(0, ios::beg);  // go to beginning of the file
 
   GLchar * buffer = new GLchar[length+1];
   input_file.read(buffer, length);
   buffer[length+1]='\0';  // Ensure null terminated
 
   input_file.close();
-  return std::make_pair(buffer, length);
+  return make_pair(buffer, length);
 }

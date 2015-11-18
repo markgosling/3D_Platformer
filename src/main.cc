@@ -12,6 +12,8 @@
 #include "common.h"
 #include "GameWorld.h"
 
+using namespace std;
+
 /*
  * SDL timers run in separate threads.  In the timer thread
  * push an event onto the event queue.  This event signifies
@@ -44,11 +46,11 @@ void Draw(const std::shared_ptr<SDL_Window> window, const std::shared_ptr<GameWo
   SDL_GL_SwapWindow(window.get());
 }
 
-std::shared_ptr<SDL_Window> InitWorld() {
+shared_ptr<SDL_Window> InitWorld() {
   Uint32 width = 640;
   Uint32 height = 480;
   SDL_Window * _window;
-  std::shared_ptr<SDL_Window> window;
+  shared_ptr<SDL_Window> window;
 
   // Glew will later ensure that OpenGL 3 *is* supported
   SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
@@ -62,7 +64,7 @@ std::shared_ptr<SDL_Window> InitWorld() {
   // Initialise SDL - when using C/C++ it's common to have to
   // initialise libraries by calling a function within them.
   if (SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO|SDL_INIT_TIMER)<0) {
-    std::cout << "Failed to initialise SDL: " << SDL_GetError() << std::endl;
+    cout << "Failed to initialise SDL: " << SDL_GetError() << endl;
     return nullptr;
   }
 
@@ -77,13 +79,13 @@ std::shared_ptr<SDL_Window> InitWorld() {
                              , height
                              , SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
   if (!_window) {
-    std::cout << "Failed to create SDL window: " << SDL_GetError() << std::endl;
+    cout << "Failed to create SDL window: " << SDL_GetError() << endl;
     return nullptr;
   }
 
   SDL_GLContext glContext = SDL_GL_CreateContext(_window);
   if (!glContext) {
-    std::cout << "Failed to create OpenGL context: " << SDL_GetError() << std::endl;
+    cout << "Failed to create OpenGL context: " << SDL_GetError() << endl;
     return nullptr;
   }
 
@@ -92,7 +94,7 @@ std::shared_ptr<SDL_Window> InitWorld() {
   // OpenGL context to test.
   glewInit();
   if (!glewIsSupported("GL_VERSION_3_0")) {
-    std::cerr << "OpenGL 3.0 not available" << std::endl;
+    cerr << "OpenGL 3.0 not available" << endl;
     return nullptr;
   }
 
@@ -121,7 +123,7 @@ ApplicationMode ParseOptions (int argc, char ** argv) {
   po::notify(vm);
 
   if(vm.count("help")) {
-    std::cout << desc << std::endl;
+    cout << desc << endl;
     exit(0);
   }
 
@@ -142,7 +144,7 @@ int main(int argc, char ** argv) {
 
   auto mode = ParseOptions(argc, argv);
   auto window = InitWorld();
-  auto game_world = std::make_shared<GameWorld>(mode);
+  auto game_world = make_shared<GameWorld>(mode);
   if(!window) {
     SDL_Quit();
   }
