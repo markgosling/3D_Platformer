@@ -1,7 +1,7 @@
 #include "GameAssetManager.h"
 
-// required to fix build issue on Windows using cygwin using make,
-//which was returning " error: �exit� was not declared in this scope".
+// Required to fix build issue on Windows and cygwin using 'make'
+//which was returning "error: exit was not declared in this scope".
 #include <cstdlib>
 
 using namespace std;

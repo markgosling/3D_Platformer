@@ -4,7 +4,7 @@ using namespace std;
 
 CubeAsset::CubeAsset() {
   // model coordinates, origin at centre.
-  GLfloat vertex_buffer [] {
+  GLfloat vertex_buffer_data [] {
 
 	//Position of vertices for the front of the cube.
 	-0.5, -0.5, 0.5,   //0
@@ -22,7 +22,7 @@ CubeAsset::CubeAsset() {
   };
 
   element_buffer_length = 36;
-  GLuint element_buffer []  {
+  GLuint vertex_buffer []  {
 
     //Put cube front vertices in element buffer.
 	0, 1, 2, //Triangle 1.
@@ -58,11 +58,11 @@ CubeAsset::CubeAsset() {
 
   // immediately bind the buffer and transfer the data
   glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer_token);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 24, vertex_buffer, GL_STATIC_DRAW);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 24, vertex_buffer_data, GL_STATIC_DRAW);
 
   glGenBuffers(1, &element_buffer_token);
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, element_buffer_token);
-  glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint) * element_buffer_length, element_buffer, GL_STATIC_DRAW);
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint) * element_buffer_length, vertex_buffer, GL_STATIC_DRAW);
 }
 
 CubeAsset::~CubeAsset() {
@@ -84,13 +84,16 @@ void checkError(string file, int line) {
 }
 
 void CubeAsset::Draw(GLuint program_token) {
+
   if(!glIsProgram(program_token)) {
     cerr << "Drawing Cube with invalid program" << endl;
     return;
   }
+
   GLint validation_ok;
   glValidateProgram(program_token);
   glGetProgramiv(program_token, GL_VALIDATE_STATUS, &validation_ok);
+
   if(!validation_ok) {
     GLint maxLength = 0;
     glGetProgramiv(program_token, GL_INFO_LOG_LENGTH, &maxLength);

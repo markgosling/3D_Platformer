@@ -36,16 +36,6 @@ struct SDLWindowDeleter {
   }
 };
 
-void Draw(const std::shared_ptr<SDL_Window> window, const std::shared_ptr<GameWorld> game_world) {
-  glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
-  glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-
-  game_world->Draw();
-
-  // Don't forget to swap the buffers
-  SDL_GL_SwapWindow(window.get());
-}
-
 shared_ptr<SDL_Window> InitWorld() {
   Uint32 width = 640;
   Uint32 height = 480;
@@ -139,12 +129,34 @@ ApplicationMode ParseOptions (int argc, char ** argv) {
   return TRANSFORM;
 }
 
+void Draw(const shared_ptr<SDL_Window> window, const shared_ptr<GameWorld> game_world) {
+
+  //Set the background colour to a light blue.
+  glClearColor(0.6f, 0.6f, 0.90f, 1.0f);
+  glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+
+  game_world->Draw();
+
+  // Don't forget to swap the buffers
+  SDL_GL_SwapWindow(window.get());
+}
+
+/**
+ * Main function which starts the game, initialises the game
+ * window and other objects, creates a timer and handles the
+ * SDL event loop.
+ *
+ * @param argc - Integer - Arguments passed the game at run time.
+ * @param argv - char - Arguments passed to the game at run time.
+ */
 int main(int argc, char ** argv) {
+
   Uint32 delay = 1000/60; // in milliseconds
 
   auto mode = ParseOptions(argc, argv);
   auto window = InitWorld();
   auto game_world = make_shared<GameWorld>(mode);
+
   if(!window) {
     SDL_Quit();
   }
@@ -155,14 +167,52 @@ int main(int argc, char ** argv) {
   // Add the main event loop
   SDL_Event event;
   while (SDL_WaitEvent(&event)) {
+
     switch (event.type) {
     case SDL_QUIT:
       SDL_Quit();
       break;
     case SDL_USEREVENT:
       Draw(window, game_world);
-
       break;
+    case SDL_KEYDOWN:
+
+    	//Key press events implemented as described at https://www.libsdl.org/release/SDL-1.2.15/docs/html/guideinputkeyboard.html
+      switch(event.key.keysym.sym){
+      case SDLK_a:
+    	  cout << "a key pressed" << endl;
+    	  break;
+      case SDLK_s:
+    	  cout << "s key pressed" << endl;
+    	  break;
+      case SDLK_d:
+    	  cout << "d key pressed" << endl;
+    	  break;
+      case SDLK_w:
+    	  cout << "w key pressed" << endl;
+    	  break;
+
+      }
+      break;
+
+    //Detect key release events.
+    case SDL_KEYUP:
+      switch(event.key.keysym.sym){
+      case SDLK_a:
+    	  cout << "a key released" << endl;
+    	  break;
+      case SDLK_s:
+    	  cout << "s key released" << endl;
+    	  break;
+      case SDLK_d:
+    	  cout << "d key released" << endl;
+    	  break;
+      case SDLK_w:
+    	  cout << "w key released" << endl;
+    	  break;
+      }
+      break;
+
     default:
       break;
     }
