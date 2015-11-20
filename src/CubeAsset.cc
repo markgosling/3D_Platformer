@@ -2,8 +2,15 @@
 
 using namespace std;
 
+/**
+ * Constructor which sets the position of each
+ * of the vertices required to create the cube,
+ * stores them in a buffer then transfers them
+ * to the GPU.
+ */
 CubeAsset::CubeAsset() {
-  // model coordinates, origin at centre.
+
+  //Model coordinates with origin at centre.
   GLfloat vertex_buffer_data [] {
 
 	//Position of vertices for the front of the cube.
@@ -50,13 +57,12 @@ CubeAsset::CubeAsset() {
 
   };
 
-  // Transfer buffers to the GPU
-  //
+  //Transfer buffers to the GPU.
 
-  // create buffer
+  //Create buffer.
   glGenBuffers(1, &vertex_buffer_token);
 
-  // immediately bind the buffer and transfer the data
+  //Immediately bind the buffer and transfer the data.
   glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer_token);
   glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 24, vertex_buffer_data, GL_STATIC_DRAW);
 
@@ -65,6 +71,9 @@ CubeAsset::CubeAsset() {
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint) * element_buffer_length, vertex_buffer, GL_STATIC_DRAW);
 }
 
+/**
+ * Unused destructor.
+ */
 CubeAsset::~CubeAsset() {
 }
 
