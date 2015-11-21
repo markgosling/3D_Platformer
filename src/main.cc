@@ -153,8 +153,12 @@ int main(int argc, char ** argv) {
 
   Uint32 delay = 1000/60; // in milliseconds
 
+  //Set the mode (i.e. change the shader if the parameters request it).
   auto mode = ParseOptions(argc, argv);
+
+  //Calls the method to initialise SDL and create the window.
   auto window = InitWorld();
+
   auto game_world = make_shared<GameWorld>(mode);
 
   if(!window) {
