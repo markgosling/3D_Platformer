@@ -27,16 +27,17 @@ class GameAssetManager {
   void operator=(GameAssetManager const&); // assignment
   void AddAsset(std::shared_ptr<GameAsset>);
   void Draw();
+  GLuint CreateGLProgram(std::string &, std::string &);
 
  private:
-  GLuint CreateGLProgram(std::string &, std::string &);
   GLuint CreateGLESShader(GLenum, std::string &);
   // As this is private and we're writing to the GPU, we will use raw pointers.
   std::pair<GLchar *, GLint>  ReadShader(std::string &);
 
   // The internal scene graph is a simple list.
   std::vector<std::shared_ptr<GameAsset>> draw_list;
-  GLuint program_token;
+  GLuint program_token_red;
+  GLuint program_token_green;
 };
 
 #endif // GAMEASSETMANAGER_H

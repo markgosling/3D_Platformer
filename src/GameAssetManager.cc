@@ -11,61 +11,37 @@ using namespace std;
  * ApplicationMode.
  */
 GameAssetManager::GameAssetManager(ApplicationMode mode) {
-  string vertex_shader("shaders/translate.vs");
-  string fragment_shader("shaders/fragment.fs");
+  string vertex_shader("shaders/camera.vs");
+  string fragment_shader_red("shaders/fragmentred.fs");
+  string fragment_shader_green("shaders/fragmentgreen.fs");
 
   switch(mode) {
   case ROTATE:
-    vertex_shader = "shaders/rotate.vs";
+    //vertex_shader = "shaders/rotate.vs";
     break;
   case SCALE:
-    vertex_shader = "shaders/scale.vs";
+  //  vertex_shader = "shaders/scale.vs";
     break;
   case TRANSFORM:
   default:
     break;
   };
 
-  program_token = CreateGLProgram(vertex_shader, fragment_shader);
-}
+  //The idea for using fragment shader programs for different colours came from
+  //http://learnopengl.com/#!Getting-started/Hello-Triangle.
+  program_token_red = CreateGLProgram(vertex_shader, fragment_shader_red);
+  program_token_green = CreateGLProgram(vertex_shader, fragment_shader_green);
 
-/**
- * Deletes a GameAssetManager, in particular it will clean up any modifications
- * to the OpenGL state.
- */
-GameAssetManager::~GameAssetManager() {
-  glDeleteProgram(program_token);
-}
-
-/**
- * Unimplemented copy constructor -- this means that the GameAssetManager
- * may not work as you'd expect when being copied.
- */
-GameAssetManager::GameAssetManager(GameAssetManager const& the_manager) {
-  // TODO: implement this
-}
-
-/**
- * Unimplemented move constructor -- this unimplemented method violates the
- * C++11 move semantics for GameAssetManager.
- */
-GameAssetManager::GameAssetManager(GameAssetManager const&& the_manager) {
-  // TODO: implement this
-}
-
-/**
- * Unimplemented assisgnment operator -- violates the expected semantics for
- * assignment in C++11.
- */
-void GameAssetManager::operator=(GameAssetManager const& the_manager) {
-  // TODO: implement this
 }
 
 /**
  * Adds a GameAsset to the scene graph.
  */
 void GameAssetManager::AddAsset(shared_ptr<GameAsset> the_asset) {
+
+
   draw_list.push_back(the_asset);
+
 }
 
 /**
@@ -73,7 +49,8 @@ void GameAssetManager::AddAsset(shared_ptr<GameAsset> the_asset) {
  */
 void GameAssetManager::Draw() {
   for(auto ga: draw_list) {
-    ga->Draw(program_token);
+
+    ga->Draw(program_token_green);
   }
 }
 
@@ -103,6 +80,7 @@ GLuint GameAssetManager::CreateGLProgram(string & vertex_shader
     glDeleteProgram(program);
     exit(-1);
   }
+
   return program;
 }
 
@@ -169,4 +147,38 @@ pair<GLchar *, GLint> GameAssetManager::ReadShader(string & shader) {
 
   input_file.close();
   return make_pair(buffer, length);
+}
+
+/**
+ * Deletes a GameAssetManager, in particular it will clean up any modifications
+ * to the OpenGL state.
+ */
+GameAssetManager::~GameAssetManager() {
+  glDeleteProgram(program_token_green);
+  glDeleteProgram(program_token_red);
+}
+
+
+/**
+ * Unimplemented assisgnment operator -- violates the expected semantics for
+ * assignment in C++11.
+ */
+void GameAssetManager::operator=(GameAssetManager const& the_manager) {
+  // TODO: implement this
+}
+
+/**
+ * Unimplemented copy constructor -- this means that the GameAssetManager
+ * may not work as you'd expect when being copied.
+ */
+GameAssetManager::GameAssetManager(GameAssetManager const& the_manager) {
+  // TODO: implement this
+}
+
+/**
+ * Unimplemented move constructor -- this unimplemented method violates the
+ * C++11 move semantics for GameAssetManager.
+ */
+GameAssetManager::GameAssetManager(GameAssetManager const&& the_manager) {
+  // TODO: implement this
 }

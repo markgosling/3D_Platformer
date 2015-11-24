@@ -14,7 +14,7 @@ PyramidAsset::PyramidAsset() {
   GLfloat vertex_buffer_data [] {
 
 	//Position of vertices for the top of the pyramid.
-	0, 0.5, 0,          //0
+	0, 1.0, 0,          //0
 
 	//Position of vertices for the bottom front of the pyramid.
 	-0.5, -0.5, 0.5,   //1
