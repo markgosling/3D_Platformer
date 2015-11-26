@@ -9,6 +9,7 @@
 #include "GameAssetManager.h"
 #include "CubeAsset.h"
 #include "PyramidAsset.h"
+#include "GameAsset.h"
 
 /**
  * GameWorld allows us to separate the management of the game world from the

@@ -49,6 +49,10 @@ PyramidAsset::PyramidAsset() {
   glGenBuffers(1, &element_buffer_token);
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, element_buffer_token);
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint) * element_buffer_length, element_buffer, GL_STATIC_DRAW);
+
+  ///Set the asset type. This is required to determine the object type
+  //when deciding which shader program to use to colour the object.
+  assetType = PYRAMID;
 }
 
 /**
@@ -130,4 +134,8 @@ void PyramidAsset::Draw(GLuint program_token) {
   checkGLError();
 
   glDisableVertexAttribArray(position_attrib);
+}
+
+GameAsset::AssetType PyramidAsset::GetAssetType(){
+	return assetType;
 }

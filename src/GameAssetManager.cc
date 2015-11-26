@@ -48,9 +48,15 @@ void GameAssetManager::AddAsset(shared_ptr<GameAsset> the_asset) {
  * Draws each GameAsset in the scene graph.
  */
 void GameAssetManager::Draw() {
-  for(auto ga: draw_list) {
 
-    ga->Draw(program_token_green);
+
+   for(auto ga: draw_list) {
+
+     if(ga->GetAssetType() == GameAsset::CUBE){
+    	 ga->Draw(program_token_green);
+     }else if(ga->GetAssetType() == GameAsset::PYRAMID){
+    	 ga->Draw(program_token_red);
+     }
   }
 }
 

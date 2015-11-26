@@ -16,6 +16,7 @@ class PyramidAsset : public GameAsset {
   PyramidAsset();
   ~PyramidAsset();
   virtual void Draw(GLuint);
+  virtual AssetType GetAssetType();
 
  private:
   GLuint element_buffer_length;
