@@ -155,6 +155,10 @@ pair<GLchar *, GLint> GameAssetManager::ReadShader(string & shader) {
   return make_pair(buffer, length);
 }
 
+void GameAssetManager::UpdateCameraPosition(){
+
+}
+
 /**
  * Deletes a GameAssetManager, in particular it will clean up any modifications
  * to the OpenGL state.

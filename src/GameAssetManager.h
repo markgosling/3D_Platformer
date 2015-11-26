@@ -29,6 +29,10 @@ class GameAssetManager {
   void Draw();
   GLuint CreateGLProgram(std::string &, std::string &);
 
+  //Method which accepts player directional inputs from main.cc
+  //and updates the camera matrix accordingly.
+  void UpdateCameraPosition();
+
  private:
   GLuint CreateGLESShader(GLenum, std::string &);
   // As this is private and we're writing to the GPU, we will use raw pointers.

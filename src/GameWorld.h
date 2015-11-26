@@ -29,6 +29,11 @@ class GameWorld {
    * Calling Draw() will draw the entire world.
    */
   void Draw();
+
+  //Method which passes player directional inputs from the player from main.cc
+  //to GameAssetManager so the camera position can be updated.
+  void UpdateCameraPosition();
+
  private:
   std::shared_ptr<GameAssetManager> asset_manager;
 };
