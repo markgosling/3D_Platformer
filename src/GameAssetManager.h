@@ -40,8 +40,19 @@ class GameAssetManager {
 
   // The internal scene graph is a simple list.
   std::vector<std::shared_ptr<GameAsset>> draw_list;
-  GLuint program_token_red;
-  GLuint program_token_green;
+  GLuint program_token;
+
+  //Uniform variables used to communicate with the shaders.
+  GLuint camera_x_position;
+  GLuint camera_y_position;
+  GLuint camera_z_position;
+  GLuint shape_red_value;
+  GLuint shape_green_value;
+  GLuint shape_blue_value;
+
+  float player_z_position;
+
+
 };
 
 #endif // GAMEASSETMANAGER_H

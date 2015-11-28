@@ -3,6 +3,9 @@
 // Required to fix build issue on Windows and cygwin using 'make'
 //which was returning "error: exit was not declared in this scope".
 #include <cstdlib>
+#include <glm/glm.hpp>
+#include <glm/ext.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 using namespace std;
 
@@ -12,25 +15,25 @@ using namespace std;
  */
 GameAssetManager::GameAssetManager(ApplicationMode mode) {
   string vertex_shader("shaders/camera.vs");
-  string fragment_shader_red("shaders/fragmentred.fs");
-  string fragment_shader_green("shaders/fragmentgreen.fs");
+  string fragment_shader_red("shaders/fragmentshader.fs");
 
-  switch(mode) {
-  case ROTATE:
-    //vertex_shader = "shaders/rotate.vs";
-    break;
-  case SCALE:
-  //  vertex_shader = "shaders/scale.vs";
-    break;
-  case TRANSFORM:
-  default:
-    break;
-  };
+  //Create the shader program using the vertex and fragment shaders.
+  program_token = CreateGLProgram(vertex_shader, fragment_shader_red);
 
-  //The idea for using fragment shader programs for different colours came from
-  //http://learnopengl.com/#!Getting-started/Hello-Triangle.
-  program_token_red = CreateGLProgram(vertex_shader, fragment_shader_red);
-  program_token_green = CreateGLProgram(vertex_shader, fragment_shader_green);
+  //Create links to the colour uniform values stored in the fragment shader.
+  shape_red_value = glGetUniformLocation(program_token, "red");
+  shape_green_value = glGetUniformLocation(program_token, "green");
+  shape_blue_value = glGetUniformLocation(program_token, "blue");
+
+ // camera_x_position = glGetUniformLocation(program_token_green, "camera_x_position");
+ // camera_y_position = glGetUniformLocation(program_token_green, "camera_y_position");
+ // camera_z_position = glGetUniformLocation(program_token_green, "camera_z_position");
+  camera_z_position = glGetUniformLocation(program_token, "camera_z_position");
+
+  player_z_position = -0.5f;
+
+  //Set the camera starting position to the position of the player.
+  glUniform1f(camera_z_position, player_z_position);
 
 }
 
@@ -53,9 +56,20 @@ void GameAssetManager::Draw() {
    for(auto ga: draw_list) {
 
      if(ga->GetAssetType() == GameAsset::CUBE){
-    	 ga->Draw(program_token_green);
+
+    	 //Set the color to green before drawing the shape.
+    	 glUniform1f(shape_red_value, 0.0f);
+    	 glUniform1f(shape_green_value, 1.0f);
+    	 glUniform1f(shape_blue_value, 0.0f);
+    	 ga->Draw(program_token);
+
      }else if(ga->GetAssetType() == GameAsset::PYRAMID){
-    	 ga->Draw(program_token_red);
+
+    	 //Set the color to red before drawing the shape.
+    	 glUniform1f(shape_red_value, 1.0f);
+    	 glUniform1f(shape_green_value, 0.0f);
+    	 glUniform1f(shape_blue_value, 0.0f);
+    	 ga->Draw(program_token);
      }
   }
 }
@@ -157,6 +171,21 @@ pair<GLchar *, GLint> GameAssetManager::ReadShader(string & shader) {
 
 void GameAssetManager::UpdateCameraPosition(){
 
+  //http://www.opengl-tutorial.org/beginners-tutorials/tutorial-3-matrices/
+
+  cout << "Button press detected in asset manager";
+
+
+  //Camera_z_position defined in constructor
+
+  if(camera_z_position != -1){
+	  cout << "Variable not -1" << endl;
+	  player_z_position -= 0.1;
+	  glUniform1f(camera_z_position, player_z_position);
+  }
+
+  //glm::mat4 view = glm::lookAt(camera_position, camera_target, up_vector);
+
 }
 
 /**
@@ -164,8 +193,7 @@ void GameAssetManager::UpdateCameraPosition(){
  * to the OpenGL state.
  */
 GameAssetManager::~GameAssetManager() {
-  glDeleteProgram(program_token_green);
-  glDeleteProgram(program_token_red);
+  glDeleteProgram(program_token);
 }
 
 
