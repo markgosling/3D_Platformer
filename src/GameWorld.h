@@ -32,7 +32,7 @@ class GameWorld {
 
   //Method which passes player directional inputs from the player from main.cc
   //to GameAssetManager so the camera position can be updated.
-  void UpdateCameraPosition();
+  void UpdateCameraPosition(InputDirection);
 
  private:
   std::shared_ptr<GameAssetManager> asset_manager;

@@ -31,7 +31,7 @@ class GameAssetManager {
 
   //Method which accepts player directional inputs from main.cc
   //and updates the camera matrix accordingly.
-  void UpdateCameraPosition();
+  void UpdateCameraPosition(InputDirection);
 
  private:
   GLuint CreateGLESShader(GLenum, std::string &);
@@ -50,6 +50,7 @@ class GameAssetManager {
   GLuint shape_green_value;
   GLuint shape_blue_value;
 
+  float player_x_position;
   float player_z_position;
 
 

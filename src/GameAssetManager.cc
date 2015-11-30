@@ -25,11 +25,12 @@ GameAssetManager::GameAssetManager(ApplicationMode mode) {
   shape_green_value = glGetUniformLocation(program_token, "green");
   shape_blue_value = glGetUniformLocation(program_token, "blue");
 
- // camera_x_position = glGetUniformLocation(program_token_green, "camera_x_position");
+  camera_x_position = glGetUniformLocation(program_token, "camera_x_position");
  // camera_y_position = glGetUniformLocation(program_token_green, "camera_y_position");
  // camera_z_position = glGetUniformLocation(program_token_green, "camera_z_position");
   camera_z_position = glGetUniformLocation(program_token, "camera_z_position");
 
+  player_x_position = 0.0f;
   player_z_position = -0.5f;
 
   //Set the camera starting position to the position of the player.
@@ -169,7 +170,7 @@ pair<GLchar *, GLint> GameAssetManager::ReadShader(string & shader) {
   return make_pair(buffer, length);
 }
 
-void GameAssetManager::UpdateCameraPosition(){
+void GameAssetManager::UpdateCameraPosition(InputDirection inputDirection){
 
   //http://www.opengl-tutorial.org/beginners-tutorials/tutorial-3-matrices/
 
@@ -178,11 +179,21 @@ void GameAssetManager::UpdateCameraPosition(){
 
   //Camera_z_position defined in constructor
 
-  if(camera_z_position != -1){
-	  cout << "Variable not -1" << endl;
+
+  if(inputDirection == UP){
+	  player_z_position += 0.1;
+	  glUniform1f(camera_z_position, player_z_position);
+  }else if(inputDirection == DOWN){
 	  player_z_position -= 0.1;
 	  glUniform1f(camera_z_position, player_z_position);
+  }else if(inputDirection == LEFT){
+	  player_x_position += 0.1;
+	  glUniform1f(camera_x_position, player_x_position);
+  }else if(inputDirection == RIGHT){
+	  player_x_position -= 0.1;
+	  glUniform1f(camera_x_position, player_x_position);
   }
+
 
   //glm::mat4 view = glm::lookAt(camera_position, camera_target, up_vector);
 

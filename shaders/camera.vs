@@ -34,6 +34,6 @@ mat4 translate(float x, float y, float z) {
 
 void main() {
       gl_Position = projection(radians(45.0), 4.0/3.0, -0.1, -1000.0)
-                      * translate(0.0, 0.0, camera_z_position)
+                      * translate(camera_x_position, 0.0, camera_z_position)
                       * vec4(position, 0.5);
 }

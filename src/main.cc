@@ -184,19 +184,19 @@ int main(int argc, char ** argv) {
     	//Key press events implemented as described at https://www.libsdl.org/release/SDL-1.2.15/docs/html/guideinputkeyboard.html
       switch(event.key.keysym.sym){
       case SDLK_a:
-    	  game_world->UpdateCameraPosition();
+    	  game_world->UpdateCameraPosition(InputDirection::LEFT);
     	  cout << "a key pressed" << endl;
     	  break;
       case SDLK_s:
-    	  game_world->UpdateCameraPosition();
+    	  game_world->UpdateCameraPosition(InputDirection::DOWN);
     	  cout << "s key pressed" << endl;
     	  break;
       case SDLK_d:
-    	  game_world->UpdateCameraPosition();
+    	  game_world->UpdateCameraPosition(InputDirection::RIGHT);
     	  cout << "d key pressed" << endl;
     	  break;
       case SDLK_w:
-    	  game_world->UpdateCameraPosition();
+    	  game_world->UpdateCameraPosition(InputDirection::UP);
     	  cout << "w key pressed" << endl;
     	  break;
 
