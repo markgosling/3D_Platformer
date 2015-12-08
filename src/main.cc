@@ -185,19 +185,19 @@ int main(int argc, char ** argv) {
       switch(event.key.keysym.sym){
       case SDLK_a:
     	  game_world->UpdateCameraPosition(InputDirection::LEFT);
-    	  cout << "a key pressed" << endl;
+    	  //cout << "a key pressed" << endl;
     	  break;
       case SDLK_s:
     	  game_world->UpdateCameraPosition(InputDirection::DOWN);
-    	  cout << "s key pressed" << endl;
+    	  //cout << "s key pressed" << endl;
     	  break;
       case SDLK_d:
     	  game_world->UpdateCameraPosition(InputDirection::RIGHT);
-    	  cout << "d key pressed" << endl;
+    	  //cout << "d key pressed" << endl;
     	  break;
       case SDLK_w:
     	  game_world->UpdateCameraPosition(InputDirection::UP);
-    	  cout << "w key pressed" << endl;
+    	  //cout << "w key pressed" << endl;
     	  break;
 
       }
@@ -207,16 +207,16 @@ int main(int argc, char ** argv) {
     case SDL_KEYUP:
       switch(event.key.keysym.sym){
       case SDLK_a:
-    	  cout << "a key released" << endl;
+    	//  cout << "a key released" << endl;
     	  break;
       case SDLK_s:
-    	  cout << "s key released" << endl;
+    	//  cout << "s key released" << endl;
     	  break;
       case SDLK_d:
-    	  cout << "d key released" << endl;
+    	//  cout << "d key released" << endl;
     	  break;
       case SDLK_w:
-    	  cout << "w key released" << endl;
+    	//  cout << "w key released" << endl;
     	  break;
       }
       break;

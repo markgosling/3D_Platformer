@@ -20,21 +20,24 @@ GameAssetManager::GameAssetManager(ApplicationMode mode) {
   //Create the shader program using the vertex and fragment shaders.
   program_token = CreateGLProgram(vertex_shader, fragment_shader_red);
 
-  //Create links to the colour uniform values stored in the fragment shader.
+  //Create links to the colour uniform values stored in the shaders.
   shape_red_value = glGetUniformLocation(program_token, "red");
   shape_green_value = glGetUniformLocation(program_token, "green");
   shape_blue_value = glGetUniformLocation(program_token, "blue");
-
-  camera_x_position = glGetUniformLocation(program_token, "camera_x_position");
- // camera_y_position = glGetUniformLocation(program_token_green, "camera_y_position");
- // camera_z_position = glGetUniformLocation(program_token_green, "camera_z_position");
-  camera_z_position = glGetUniformLocation(program_token, "camera_z_position");
+  translate_matrix_link = glGetUniformLocation(program_token, "translate_matrix");
+  view_matrix_link = glGetUniformLocation(program_token, "view_matrix");
 
   player_x_position = 0.0f;
-  player_z_position = -0.5f;
+  player_z_position = -5.0f;
 
-  //Set the camera starting position to the position of the player.
-  glUniform1f(camera_z_position, player_z_position);
+  //https://www.reddit.com/r/opengl/comments/2ztqjo/problem_with_glms_translate_matrix_call
+  //translate_matrix = glm::translate(glm::mat4(), glm::vec3(0.0f, 0.0f, -1.0f));
+  //Need to change to translate matrix.
+  translate_matrix = {1.0, 0.0, 0.0, 0.0,
+		              0.0, 1.0, 0.0, 0.0,
+			          0.0, 0.0, 1.0, 0.0,
+			          0.0, 0.0, 0.0, 1.0
+                      };
 
 }
 
@@ -53,6 +56,11 @@ void GameAssetManager::AddAsset(shared_ptr<GameAsset> the_asset) {
  */
 void GameAssetManager::Draw() {
 
+   view_matrix = glm::lookAt(glm::vec3(player_x_position, 0.0f, player_z_position),
+	 		                 glm::vec3(player_x_position, 0.0f, player_z_position + 2),
+	 					     glm::vec3(0.0f, 1.0f, 0.0f));
+
+   glUniformMatrix4fv(view_matrix_link, 1, GL_FALSE, &view_matrix[0][0]);
 
    for(auto ga: draw_list) {
 
@@ -73,6 +81,8 @@ void GameAssetManager::Draw() {
     	 ga->Draw(program_token);
      }
   }
+
+
 }
 
 /**
@@ -174,26 +184,30 @@ void GameAssetManager::UpdateCameraPosition(InputDirection inputDirection){
 
   //http://www.opengl-tutorial.org/beginners-tutorials/tutorial-3-matrices/
 
-  cout << "Button press detected in asset manager";
-
 
   //Camera_z_position defined in constructor
 
-
   if(inputDirection == UP){
 	  player_z_position += 0.1;
-	  glUniform1f(camera_z_position, player_z_position);
+	  cout << "up " << player_z_position << endl;
   }else if(inputDirection == DOWN){
 	  player_z_position -= 0.1;
-	  glUniform1f(camera_z_position, player_z_position);
+	  cout << "down " << player_z_position << endl;
   }else if(inputDirection == LEFT){
 	  player_x_position += 0.1;
-	  glUniform1f(camera_x_position, player_x_position);
+	  cout << "left " << player_x_position << endl;
   }else if(inputDirection == RIGHT){
 	  player_x_position -= 0.1;
-	  glUniform1f(camera_x_position, player_x_position);
+	  cout << "right " << player_x_position << endl;
   }
 
+
+  //Set the position of the camera.
+  view_matrix = glm::lookAt(glm::vec3(player_x_position, 0.0f, player_z_position),
+		                    glm::vec3(player_x_position, 0.0f, player_z_position + 2),
+							glm::vec3(0.0f, 1.0f, 0.0f));
+
+  glUniformMatrix4fv(view_matrix_link, 1, GL_FALSE, &view_matrix[0][0]);
 
   //glm::mat4 view = glm::lookAt(camera_position, camera_target, up_vector);
 

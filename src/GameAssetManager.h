@@ -9,6 +9,7 @@
 #include <iostream>
 
 #include <GL/gl.h>
+#include <glm/ext.hpp>
 
 #include "common.h"
 #include "GameAsset.h"
@@ -49,9 +50,16 @@ class GameAssetManager {
   GLuint shape_red_value;
   GLuint shape_green_value;
   GLuint shape_blue_value;
+  GLuint translate_matrix_link;
+  GLuint view_matrix_link;
+
+  glm::mat4 translate_matrix; //The position of the model.
+  glm::mat4 view_matrix;	//The position of the camera.
 
   float player_x_position;
   float player_z_position;
+
+
 
 
 };
