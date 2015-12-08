@@ -6,6 +6,7 @@
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <SDL2/SDL.h>
 
 using namespace std;
 
@@ -180,32 +181,34 @@ pair<GLchar *, GLint> GameAssetManager::ReadShader(string & shader) {
   return make_pair(buffer, length);
 }
 
-void GameAssetManager::UpdateCameraPosition(InputDirection inputDirection){
+void GameAssetManager::UpdateCameraPosition(InputDirection inputDirection, int mouse_x, int mouse_y){
 
   //http://www.opengl-tutorial.org/beginners-tutorials/tutorial-3-matrices/
 
-
-  //Camera_z_position defined in constructor
-
   if(inputDirection == UP){
 	  player_z_position += 0.1;
-	  cout << "up " << player_z_position << endl;
+	 // cout << "up " << player_z_position << endl;
   }else if(inputDirection == DOWN){
 	  player_z_position -= 0.1;
-	  cout << "down " << player_z_position << endl;
+	  //cout << "down " << player_z_position << endl;
   }else if(inputDirection == LEFT){
 	  player_x_position += 0.1;
-	  cout << "left " << player_x_position << endl;
+	  //cout << "left " << player_x_position << endl;
   }else if(inputDirection == RIGHT){
 	  player_x_position -= 0.1;
-	  cout << "right " << player_x_position << endl;
+	  //cout << "right " << player_x_position << endl;
   }
 
 
+  horizontal_angle += 2 * float(640/2 - mouse_x);
+  vertical_angle += 2 * float(480/2 - mouse_y);
+
   //Set the position of the camera.
   view_matrix = glm::lookAt(glm::vec3(player_x_position, 0.0f, player_z_position),
-		                    glm::vec3(player_x_position, 0.0f, player_z_position + 2),
+		                    glm::vec3(cos(vertical_angle * sin(horizontal_angle)), sin(vertical_angle), cos(vertical_angle) * cos(horizontal_angle)),
 							glm::vec3(0.0f, 1.0f, 0.0f));
+
+  cout << cos(vertical_angle * sin(horizontal_angle)) << endl;
 
   glUniformMatrix4fv(view_matrix_link, 1, GL_FALSE, &view_matrix[0][0]);
 
