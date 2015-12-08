@@ -22,7 +22,7 @@
  */
 class GameAssetManager {
  public:
-  explicit GameAssetManager(ApplicationMode); // constructor
+  GameAssetManager(); // constructor
   virtual ~GameAssetManager();
   GameAssetManager(GameAssetManager const&); // copy constructor
   GameAssetManager(GameAssetManager const&&); // move constructor

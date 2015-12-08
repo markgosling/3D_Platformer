@@ -3,9 +3,9 @@
 
 using namespace std;
 
-GameWorld::GameWorld (ApplicationMode mode) {
+GameWorld::GameWorld () {
 
-  asset_manager = make_shared<GameAssetManager>(mode);
+  asset_manager = make_shared<GameAssetManager>();
 
   //Add the blocks to make the ground.
   asset_manager->AddAsset(make_shared<CubeAsset>(), 0, 0, 0);

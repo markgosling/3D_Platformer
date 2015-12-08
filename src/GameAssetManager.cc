@@ -19,7 +19,7 @@ using namespace std;
  * Creates a GameAssetManager to load the correct shaders based on the
  * ApplicationMode.
  */
-GameAssetManager::GameAssetManager(ApplicationMode mode) {
+GameAssetManager::GameAssetManager() {
   string vertex_shader("shaders/camera.vs");
   string fragment_shader_red("shaders/fragmentshader.fs");
 

@@ -97,37 +97,6 @@ shared_ptr<SDL_Window> InitWorld() {
   return window;
 }
 
-ApplicationMode ParseOptions (int argc, char ** argv) {
-  namespace po = boost::program_options;
-
-  po::options_description desc("Allowed options");
-  desc.add_options()
-     ("help", "print this help message")
-     ("translate", "Show translation example (default)")
-     ("rotate", "Show rotation example")
-     ("scale", "Show scale example")
-  ;
-
-  po::variables_map vm;
-  po::store(po::parse_command_line(argc, argv, desc), vm);
-  po::notify(vm);
-
-  if(vm.count("help")) {
-    cout << desc << endl;
-    exit(0);
-  }
-
-  if(vm.count("rotate")) {
-    return ROTATE;
-  }
-
-  if(vm.count("scale")) {
-    return SCALE;
-  }
-
-  // The default
-  return TRANSFORM;
-}
 
 void Draw(const shared_ptr<SDL_Window> window, const shared_ptr<GameWorld> game_world) {
 
@@ -153,13 +122,10 @@ int main(int argc, char ** argv) {
 
   Uint32 delay = 1000/60; // in milliseconds
 
-  //Set the mode (i.e. change the shader if the parameters request it).
-  auto mode = ParseOptions(argc, argv);
-
   //Calls the method to initialise SDL and create the window.
   auto window = InitWorld();
 
-  auto game_world = make_shared<GameWorld>(mode);
+  auto game_world = make_shared<GameWorld>();
 
   int mouse_x;
   int mouse_y;
