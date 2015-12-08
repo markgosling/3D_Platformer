@@ -6,7 +6,7 @@
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include <SDL2/SDL.h>
+
 
 using namespace std;
 
@@ -30,12 +30,10 @@ GameAssetManager::GameAssetManager(ApplicationMode mode) {
   shape_red_value = glGetUniformLocation(program_token, "red");
   shape_green_value = glGetUniformLocation(program_token, "green");
   shape_blue_value = glGetUniformLocation(program_token, "blue");
+
   translate_matrix_link = glGetUniformLocation(program_token, "translate_matrix");
   view_matrix_link = glGetUniformLocation(program_token, "view_matrix");
 
-  player_x_position = -3.0f;
-  camera_y_position = 1.5f;
-  player_z_position = 0.0f;
 
 
   //Code to set up the 3d world array adapted from an example at
@@ -55,9 +53,7 @@ GameAssetManager::GameAssetManager(ApplicationMode mode) {
  */
 void GameAssetManager::AddAsset(shared_ptr<GameAsset> the_asset, int x, int y, int z) {
 
-
   world_array[x][y][z] = the_asset;
-  //draw_list.push_back(the_asset);
 
 }
 
@@ -208,41 +204,7 @@ pair<GLchar *, GLint> GameAssetManager::ReadShader(string & shader) {
 
 void GameAssetManager::UpdateCameraPosition(InputDirection inputDirection, int mouse_x, int mouse_y){
 
-  //http://www.opengl-tutorial.org/beginners-tutorials/tutorial-3-matrices/
-
-  if(inputDirection == UP){
-	  player_z_position += 0.1;
-	 // cout << "up " << player_z_position << endl;
-  }else if(inputDirection == DOWN){
-	  player_z_position -= 0.1;
-	  //cout << "down " << player_z_position << endl;
-  }else if(inputDirection == LEFT){
-	  player_x_position += 0.1;
-	  //cout << "left " << player_x_position << endl;
-  }else if(inputDirection == RIGHT){
-	  player_x_position -= 0.1;
-	  //cout << "right " << player_x_position << endl;
-  }
-
-  //http://www.opengl-tutorial.org/beginners-tutorials/tutorial-6-keyboard-and-mouse/
-
-  horizontal_angle += 2 * float(640/2 - mouse_x);
-  vertical_angle += 2 * float(480/2 - mouse_y);
-
-  view_matrix = glm::lookAt(glm::vec3(player_x_position, camera_y_position, player_z_position),
-		                    glm::vec3(player_x_position, 0.0f, player_z_position + 2),
-							glm::vec3(0.0f, 1.0f, 0.0f));
-
-  //Set the position of the camera.
-  //view_matrix = glm::lookAt(glm::vec3(player_x_position, 0.0f, player_z_position),
-	//	                    glm::vec3(cos(vertical_angle * sin(horizontal_angle)), sin(vertical_angle), cos(vertical_angle) * cos(horizontal_angle)),
-	//						glm::vec3(0.0f, 1.0f, 0.0f));
-
- // cout << cos(vertical_angle * sin(horizontal_angle)) << endl;
-
-  //glUniformMatrix4fv(view_matrix_link, 1, GL_FALSE, &view_matrix[0][0]);
-
-  //glm::mat4 view = glm::lookAt(camera_position, camera_target, up_vector);
+  view_matrix = camera.UpdateCameraPosition(inputDirection, mouse_x, mouse_y);
 
 }
 
