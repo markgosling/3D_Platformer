@@ -34,7 +34,9 @@ class GameWorld {
   //to GameAssetManager so the camera position can be updated.
   void UpdateCameraPosition(InputDirection, int mouse_x, int mouse_y);
 
+
  private:
   std::shared_ptr<GameAssetManager> asset_manager;
+
 };
 #endif // GAMEWORLD_H

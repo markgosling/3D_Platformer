@@ -7,7 +7,7 @@
 #include <utility>
 #include <fstream>
 #include <iostream>
-
+#include <vector>
 #include <GL/gl.h>
 #include <glm/ext.hpp>
 
@@ -26,7 +26,7 @@ class GameAssetManager {
   GameAssetManager(GameAssetManager const&); // copy constructor
   GameAssetManager(GameAssetManager const&&); // move constructor
   void operator=(GameAssetManager const&); // assignment
-  void AddAsset(std::shared_ptr<GameAsset>);
+  void AddAsset(std::shared_ptr<GameAsset>, int x, int y, int z);
   void Draw();
   GLuint CreateGLProgram(std::string &, std::string &);
 
@@ -62,6 +62,7 @@ class GameAssetManager {
   float horizontal_angle;
   float vertical_angle;
 
+  std::vector<std::vector<std::vector<std::shared_ptr<GameAsset>>>> world_array;
 
 };
 

@@ -10,6 +10,11 @@
 
 using namespace std;
 
+//Define the size of the game_world array (i.e. the mazimum size of the block world).
+#define HEIGHT 20
+#define WIDTH 20
+#define DEPTH 20
+
 /**
  * Creates a GameAssetManager to load the correct shaders based on the
  * ApplicationMode.
@@ -28,27 +33,31 @@ GameAssetManager::GameAssetManager(ApplicationMode mode) {
   translate_matrix_link = glGetUniformLocation(program_token, "translate_matrix");
   view_matrix_link = glGetUniformLocation(program_token, "view_matrix");
 
-  player_x_position = 0.0f;
-  player_z_position = -5.0f;
+  player_x_position = -3.0f;
+  camera_y_position = 1.5f;
+  player_z_position = 0.0f;
 
-  //https://www.reddit.com/r/opengl/comments/2ztqjo/problem_with_glms_translate_matrix_call
-  //translate_matrix = glm::translate(glm::mat4(), glm::vec3(0.0f, 0.0f, -1.0f));
-  //Need to change to translate matrix.
-  translate_matrix = {1.0, 0.0, 0.0, 0.0,
-		              0.0, 1.0, 0.0, 0.0,
-			          0.0, 0.0, 1.0, 0.0,
-			          0.0, 0.0, 0.0, 1.0
-                      };
 
+  //Code to set up the 3d world array adapted from an example at
+  //http://www.cplusplus.com/forum/articles/7459/
+  world_array.resize(HEIGHT);
+  for(int i = 0; i < HEIGHT; ++i){
+	  world_array[i].resize(WIDTH);
+
+	  for(int j = 0; j < WIDTH; ++j){
+		  world_array[i][j].resize(DEPTH);
+	  }
+  }
 }
 
 /**
  * Adds a GameAsset to the scene graph.
  */
-void GameAssetManager::AddAsset(shared_ptr<GameAsset> the_asset) {
+void GameAssetManager::AddAsset(shared_ptr<GameAsset> the_asset, int x, int y, int z) {
 
 
-  draw_list.push_back(the_asset);
+  world_array[x][y][z] = the_asset;
+  //draw_list.push_back(the_asset);
 
 }
 
@@ -57,33 +66,49 @@ void GameAssetManager::AddAsset(shared_ptr<GameAsset> the_asset) {
  */
 void GameAssetManager::Draw() {
 
-   view_matrix = glm::lookAt(glm::vec3(player_x_position, 0.0f, player_z_position),
-	 		                 glm::vec3(player_x_position, 0.0f, player_z_position + 2),
-	 					     glm::vec3(0.0f, 1.0f, 0.0f));
+	//Update the uniform variables inside the shader program before
+	//drawing the object.
+	//view_matrix = glm::lookAt(glm::vec3(player_x_position, 0.0f, player_z_position),
+	 //		                 glm::vec3(player_x_position, 0.0f, player_z_position + 2),
+	 //					     glm::vec3(0.0f, 1.0f, 0.0f));
+	glUniformMatrix4fv(view_matrix_link, 1, GL_FALSE, &view_matrix[0][0]);
 
-   glUniformMatrix4fv(view_matrix_link, 1, GL_FALSE, &view_matrix[0][0]);
+    for(int x = 0; x < world_array.size(); x++){
 
-   for(auto ga: draw_list) {
+    	for(int y = 0; y < world_array[x].size(); y++){
 
-     if(ga->GetAssetType() == GameAsset::CUBE){
+    		for(int z = 0; z < world_array[x][y].size(); z++){
 
-    	 //Set the color to green before drawing the shape.
-    	 glUniform1f(shape_red_value, 0.0f);
-    	 glUniform1f(shape_green_value, 1.0f);
-    	 glUniform1f(shape_blue_value, 0.0f);
-    	 ga->Draw(program_token);
+    			//Check that an object exists before attempting to draw it.
+    			if(world_array[x][y][z] != NULL){
 
-     }else if(ga->GetAssetType() == GameAsset::PYRAMID){
+        			auto ga = world_array[x][y][z];
 
-    	 //Set the color to red before drawing the shape.
-    	 glUniform1f(shape_red_value, 1.0f);
-    	 glUniform1f(shape_green_value, 0.0f);
-    	 glUniform1f(shape_blue_value, 0.0f);
-    	 ga->Draw(program_token);
-     }
-  }
+        			//Working glm::translate method obtained from
+        			//https://www.reddit.com/r/opengl/comments/2ztqjo/problem_with_glms_translate_matrix_call.
+        			//Translate the shapes position on screen to match the position in the 3d array.
+        			//The x coordinate is negated so objects are seen to be translated right instead of left.
+        			translate_matrix = glm::translate(glm::mat4(), glm::vec3(-x, y, z));
+        			glUniformMatrix4fv(translate_matrix_link, 1, GL_FALSE, &translate_matrix[0][0]);
 
-
+        			//Check the asset type and draw it using the correct colour.
+        		    if(ga->GetAssetType() == GameAsset::CUBE){
+        		    	//Set the color to green before drawing the shape.
+        		        glUniform1f(shape_red_value, 0.0f);
+        		        glUniform1f(shape_green_value, 1.0f);
+        		        glUniform1f(shape_blue_value, 0.0f);
+        		    	ga->Draw(program_token);
+        		    }else if(ga->GetAssetType() == GameAsset::PYRAMID){
+        		        //Set the color to red before drawing the shape.
+        		    	glUniform1f(shape_red_value, 1.0f);
+        		    	glUniform1f(shape_green_value, 0.0f);
+        		    	glUniform1f(shape_blue_value, 0.0f);
+        		    	ga->Draw(program_token);
+        		    }
+    			}
+    		}
+    	}
+    }
 }
 
 /**
@@ -199,18 +224,23 @@ void GameAssetManager::UpdateCameraPosition(InputDirection inputDirection, int m
 	  //cout << "right " << player_x_position << endl;
   }
 
+  //http://www.opengl-tutorial.org/beginners-tutorials/tutorial-6-keyboard-and-mouse/
 
   horizontal_angle += 2 * float(640/2 - mouse_x);
   vertical_angle += 2 * float(480/2 - mouse_y);
 
-  //Set the position of the camera.
-  view_matrix = glm::lookAt(glm::vec3(player_x_position, 0.0f, player_z_position),
-		                    glm::vec3(cos(vertical_angle * sin(horizontal_angle)), sin(vertical_angle), cos(vertical_angle) * cos(horizontal_angle)),
+  view_matrix = glm::lookAt(glm::vec3(player_x_position, camera_y_position, player_z_position),
+		                    glm::vec3(player_x_position, 0.0f, player_z_position + 2),
 							glm::vec3(0.0f, 1.0f, 0.0f));
 
-  cout << cos(vertical_angle * sin(horizontal_angle)) << endl;
+  //Set the position of the camera.
+  //view_matrix = glm::lookAt(glm::vec3(player_x_position, 0.0f, player_z_position),
+	//	                    glm::vec3(cos(vertical_angle * sin(horizontal_angle)), sin(vertical_angle), cos(vertical_angle) * cos(horizontal_angle)),
+	//						glm::vec3(0.0f, 1.0f, 0.0f));
 
-  glUniformMatrix4fv(view_matrix_link, 1, GL_FALSE, &view_matrix[0][0]);
+ // cout << cos(vertical_angle * sin(horizontal_angle)) << endl;
+
+  //glUniformMatrix4fv(view_matrix_link, 1, GL_FALSE, &view_matrix[0][0]);
 
   //glm::mat4 view = glm::lookAt(camera_position, camera_target, up_vector);
 
