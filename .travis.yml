@@ -3,7 +3,9 @@ compiler: gcc
 sudo: required
 before_install:
  - chmod +x configure
+ - sudo add-apt-repository ppa:apokluda/boost1.53 --yes
 os:
   -windows
   -linux
 
+#Code to install boost was found here http://stackoverflow.com/questions/22572384/how-to-build-with-boost-build-on-travis-ci
