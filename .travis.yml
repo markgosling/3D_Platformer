@@ -1,6 +1,8 @@
 language: cpp
 compiler: gcc
 sudo: required
+before_install:
+ - chmod +x configure
 os:
   -windows
   -linux
