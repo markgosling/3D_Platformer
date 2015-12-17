@@ -5,7 +5,7 @@ before_install:
  - chmod +x configure
 before_script:
   - sudo apt-get update -qq
-  - sudo apt-get install libboost-dev libboost-test-dev libboost-thread-dev libboost-system-dev mpi-default-bin mpi-default-dev libboost-all-dev glew-devel SDL2_* glm-devel
+  - sudo apt-get install libboost-dev libboost-test-dev libboost-thread-dev libboost-system-dev mpi-default-bin mpi-default-dev libboost-all-dev libglm-dev
 os:
   -windows
   -linux
