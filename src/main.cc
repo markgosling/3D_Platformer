@@ -130,6 +130,8 @@ int main(int argc, char ** argv) {
   int mouse_x;
   int mouse_y;
 
+  const Uint8 *keyboard_state;
+
   InputDirection input_direction = NONE;
 
   if(!window) {
@@ -143,71 +145,39 @@ int main(int argc, char ** argv) {
   SDL_Event event;
   while (SDL_WaitEvent(&event)) {
 
-	//SDL mouse event code adapted from example at:
-	//https://wiki.libsdl.org/SDL_GetMouseState
-    SDL_GetMouseState(&mouse_x, &mouse_y);
-
     switch (event.type) {
     case SDL_QUIT:
       SDL_Quit();
       break;
     case SDL_USEREVENT:
+    {
+    	//SDL mouse event code adapted from example at:
+    	//https://wiki.libsdl.org/SDL_GetMouseState
+        SDL_GetMouseState(&mouse_x, &mouse_y);
+
+        //Keyboard presses implemented as per the example on
+    	//https://wiki.libsdl.org/SDL_GetKeyboardState
+    	keyboard_state = SDL_GetKeyboardState(NULL);
+    	if(keyboard_state[SDL_SCANCODE_A]){
+    		input_direction = LEFT;
+    	}else if(keyboard_state[SDL_SCANCODE_S]){
+    		input_direction = DOWN;
+    	}else if(keyboard_state[SDL_SCANCODE_D]){
+    		input_direction = RIGHT;
+    	}else if(keyboard_state[SDL_SCANCODE_W]){
+    		input_direction = UP;
+    	}else{
+    		input_direction = NONE;
+    	}
+
+      game_world->UpdateCameraPosition(input_direction, mouse_x, mouse_y);
       Draw(window, game_world);
       break;
-    case SDL_KEYDOWN:
-
-      //Key press events implemented as described at https://www.libsdl.org/release/SDL-1.2.15/docs/html/guideinputkeyboard.html
-      switch(event.key.keysym.sym){
-      case SDLK_a:
-    	 // game_world->UpdateCameraPosition(InputDirection::LEFT);
-    	  //cout << "a key pressed" << endl;
-    	  input_direction = LEFT;
-    	  break;
-      case SDLK_s:
-    	  //game_world->UpdateCameraPosition(InputDirection::DOWN);
-    	  //cout << "s key pressed" << endl;
-    	  input_direction = DOWN;
-    	  break;
-      case SDLK_d:
-    	  //game_world->UpdateCameraPosition(InputDirection::RIGHT);
-    	  //cout << "d key pressed" << endl;
-    	  input_direction = RIGHT;
-    	  break;
-      case SDLK_w:
-    	  //game_world->UpdateCameraPosition(InputDirection::UP);
-    	  //cout << "w key pressed" << endl;
-    	  input_direction = UP;
-    	  break;
-
-      }
-      break;
-
-    //Detect key release events.
-    case SDL_KEYUP:
-      switch(event.key.keysym.sym){
-      case SDLK_a:
-    	//  cout << "a key released" << endl;
-    	  input_direction = NONE;
-    	  break;
-      case SDLK_s:
-    	//  cout << "s key released" << endl;
-    	  input_direction = NONE;
-    	  break;
-      case SDLK_d:
-    	//  cout << "d key released" << endl;
-    	  input_direction = NONE;
-    	  break;
-      case SDLK_w:
-    	//  cout << "w key released" << endl;
-    	  input_direction = NONE;
-    	  break;
-      }
-      break;
+    }
 
     default:
       break;
     }
 
-    game_world->UpdateCameraPosition(input_direction, mouse_x, mouse_y);
   }
 }
