@@ -5,4 +5,4 @@ os:
   -windows
   -linux
 
-script: ./configure && make
+script: make
