@@ -5,7 +5,7 @@ before_install:
  - chmod +x configure
 before_script:
   - sudo apt-get update -qq
-  - sudo apt-get install libboost-dev
+  - sudo apt-get install libboost-dev libboost-test-dev
 os:
   -windows
   -linux
