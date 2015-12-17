@@ -1,5 +1,6 @@
 #include "Camera.h"
 #include <glm/ext.hpp>
+#include <iostream>
 
 /*
  * Camera.cc
@@ -41,7 +42,8 @@ glm::mat4 Camera::UpdateCameraPosition(InputDirection inputDirection, int mouse_
 	  horizontal_angle += 2 * float(640/2 - mouse_x);
 	  vertical_angle += 2 * float(480/2 - mouse_y);
 
-
+	  std::cout << "Hoz: " << horizontal_angle << std::endl;
+	  std::cout << "Vert: " << vertical_angle << std::endl;
 
 	  return glm::lookAt(glm::vec3(camera_x_position, camera_y_position, camera_z_position),
 			                    glm::vec3(camera_x_position, 0.0f, camera_z_position + 2),
