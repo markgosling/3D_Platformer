@@ -4,3 +4,5 @@ sudo: required
 os:
   -windows
   -linux
+
+script: ./configure && make
