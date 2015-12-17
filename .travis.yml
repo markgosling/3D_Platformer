@@ -1,3 +1,6 @@
 language: cpp
 compiler: gcc
 sudo: required
+os:
+  -windows
+  -linux
