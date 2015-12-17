@@ -141,6 +141,10 @@ int main(int argc, char ** argv) {
   // Call the function "tick" every delay milliseconds
   SDL_AddTimer(delay, tick, NULL);
 
+  //Let the window grab and hide the mouse pointer.
+  //https://wiki.libsdl.org/SDL_SetRelativeMouseMode
+  SDL_SetRelativeMouseMode(SDL_TRUE);
+
   // Add the main event loop
   SDL_Event event;
   while (SDL_WaitEvent(&event)) {
