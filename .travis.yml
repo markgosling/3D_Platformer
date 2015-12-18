@@ -9,7 +9,7 @@ before_script:
 
   - sudo apt-get update -qq
 
-  - sudo apt-get install -y -q libboost-dev libboost-test-dev libboost-thread-dev libboost-system-dev mpi-default-bin mpi-default-dev libboost-all-dev libglm-dev libglew-dev libglewmx-dev libasound2-dev libgl1-mesa-dev libglu1-mesa-dev libpulse-dev libdbus-1-dev libegl1-mesa-dev libgles2-mesa-dev libsndio-dev libudev-dev libwayland-dev libxkbcommon-dev libxss-dev libxv-dev libxxf86vm-dev libwayland0 libwayland-egl1-mesa libxkbcommon0
+  - sudo apt-get install -y -q libboost-dev libboost-test-dev libboost-thread-dev libboost-system-dev mpi-default-bin mpi-default-dev libboost-all-dev libglm-dev libglew-dev libglewmx-dev libasound2-dev libegl1-mesa-drivers libgl1-mesa-dev libglu1-mesa-dev libpulse-dev libdbus-1-dev libegl1-mesa-dev libgles2-mesa-dev libsndio-dev libudev-dev libwayland-dev libxkbcommon-dev libxss-dev libxv-dev libxxf86vm-dev libwayland0 libwayland-egl1-mesa libxkbcommon0
 
   - sudo dpkg -i libsdl2-2.0-0_2.0.2+dfsg1-8_amd64.deb
   - sudo dpkg -i libsdl2-dev_2.0.2+dfsg1-8_amd64.deb
