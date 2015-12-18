@@ -5,7 +5,12 @@ before_install:
  - chmod +x configure
 before_script:
   - wget http://ftp.us.debian.org/debian/pool/main/libs/libsdl2/libsdl2-dev_2.0.2+dfsg1-8_amd64.deb
+  - wget http://ftp.us.debian.org/debian/pool/main/libs/libsdl2/libsdl2-dev_2.0.2+dfsg1-8_amd64.deb
+
   - sudo apt-get update -qq
+
+  - sudo dpkg -i libsdl2-dev_2.0.2+dfsg1-8_amd64.deb
+
   - sudo apt-get install -y -q libboost-dev libboost-test-dev libboost-thread-dev libboost-system-dev mpi-default-bin mpi-default-dev libboost-all-dev libglm-dev libglew-dev libglewmx-dev libasound2-dev libgl1-mesa-dev libglu1-mesa-dev libpulse-dev libdbus-1-dev libegl1-mesa-dev libgl1-mesa-dev libgles2-mesa-dev libglu1-mesa-dev libts-dev libudev-dev libwayland-dev libx11-dev libxcursor-dev libxext-dev libxi-dev libxinerama-dev libxkbcommon-dev libxrandr-dev libxss-dev libxt-dev libxv-dev libxxf86vm-dev
   - sudo dpkg -i libsdl2-dev_2.0.2+dfsg1-8_amd64.deb
 os:
