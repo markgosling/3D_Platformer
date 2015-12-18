@@ -34,6 +34,7 @@
 							<tool id="cdt.managedbuild.tool.gnu.cpp.linker.1425977728" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker">
 								<option id="gnu.cpp.link.option.paths.723899662" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="&quot;C:\cygwin64\boost_1_59_0_setup_files\libs&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;C:\Boost\include&quot;"/>
 								</option>
 								<option id="gnu.cpp.link.option.libs.313161353" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="&quot;C:\cygwin64\boost_1_59_0_setup_files\libs&quot;"/>
@@ -52,6 +53,8 @@
 									<listOptionValue builtIn="false" value="__cplusplus=201103L"/>
 									<listOptionValue builtIn="false" value="GL3_PROTOTYPES"/>
 									<listOptionValue builtIn="false" value="GL_GLEXT_PROTOTYPES"/>
+									<listOptionValue builtIn="false" value="SDL2"/>
+									<listOptionValue builtIn="false" value="SDLmain"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.21779505" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
@@ -61,6 +64,8 @@
 									<listOptionValue builtIn="false" value="__cplusplus=201103L"/>
 									<listOptionValue builtIn="false" value="GL3_PROTOTYPES"/>
 									<listOptionValue builtIn="false" value="GL_GLEXT_PROTOTYPES"/>
+									<listOptionValue builtIn="false" value="SDL2"/>
+									<listOptionValue builtIn="false" value="SDLmain"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1034274971" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
@@ -537,6 +542,20 @@
 				<stopOnError>true</stopOnError>
 				<useDefaultCommand>true</useDefaultCommand>
 				<runAllBuilders>false</runAllBuilders>
+			</target>
+			<target name="y" path="src" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
+				<buildCommand>make</buildCommand>
+				<buildTarget>y</buildTarget>
+				<stopOnError>true</stopOnError>
+				<useDefaultCommand>true</useDefaultCommand>
+				<runAllBuilders>true</runAllBuilders>
+			</target>
+			<target name="yy" path="src" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
+				<buildCommand>make</buildCommand>
+				<buildTarget>yy</buildTarget>
+				<stopOnError>true</stopOnError>
+				<useDefaultCommand>true</useDefaultCommand>
+				<runAllBuilders>true</runAllBuilders>
 			</target>
 		</buildTargets>
 	</storageModule>

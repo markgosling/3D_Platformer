@@ -45,9 +45,10 @@ glm::mat4 Camera::UpdateCameraPosition(InputDirection inputDirection, int mouse_
 	//multiplying the delta by a value < 1.
 	horizontal_angle += 0.01 * mouse_delta_x;
 
-	//if(vertical_angle += mouse_delta_y < 0.5){
+	//Restrict the vertical viewing angle to prevent the camera from flipping upside down.
+	if((vertical_angle + (0.01 * mouse_delta_y)) < 1 && (vertical_angle + (0.01 * mouse_delta_y)) > -1 ){
 		vertical_angle += 0.01 * mouse_delta_y;
-	//}
+	}
 
 
 	direction = glm::vec3(
@@ -62,7 +63,6 @@ glm::mat4 Camera::UpdateCameraPosition(InputDirection inputDirection, int mouse_
 
 	up = glm::cross(right, direction);
 
-	std::cout << up[3] << std::endl;
 
 	if(inputDirection == UP){
 
