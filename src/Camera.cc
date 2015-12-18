@@ -50,17 +50,19 @@ glm::mat4 Camera::UpdateCameraPosition(InputDirection inputDirection, int mouse_
 		vertical_angle += 0.01 * mouse_delta_y;
 	}
 
-
+	//Calculate the new direction to look at.
 	direction = glm::vec3(
 			cos(vertical_angle) * sin(horizontal_angle),
 			sin(vertical_angle),
 			cos(vertical_angle) * cos(horizontal_angle));
 
+	//Create a angle to the right of the right of the horizontal angle.
 	right = glm::vec3(
 			sin(horizontal_angle - 3.14/2.0f),
 			0,
 			cos(horizontal_angle - 3.14/2.0f));
 
+	//Create an angle directly up and between the forward and right angles.
 	up = glm::cross(right, direction);
 
 
