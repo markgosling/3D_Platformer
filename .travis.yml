@@ -4,14 +4,19 @@ sudo: required
 before_install:
  - chmod +x configure #needed to change permissions to fix build problems.
 before_script:
+  #Download dependacies not available on apt.
+  - wget http://ftp.us.debian.org/debian/pool/main/g/glibc/libc6_2.19-18+deb8u1_amd64.deb
   - wget http://ftp.us.debian.org/debian/pool/main/libs/libsdl2/libsdl2-2.0-0_2.0.2+dfsg1-8_amd64.deb
   - wget http://ftp.us.debian.org/debian/pool/main/libs/libsdl2/libsdl2-dev_2.0.2+dfsg1-8_amd64.deb
   - wget http://ftp.us.debian.org/debian/pool/main/s/sndio/libsndio6.0_1.0.1-2_amd64.deb
 
   - sudo apt-get update -qq
 
+  #install all dependicies available on apt first.
   - sudo apt-get install -y -q libboost-dev libboost-test-dev libboost-thread-dev libboost-system-dev mpi-default-bin mpi-default-dev libboost-all-dev libglm-dev libglew-dev
 
+  #Install manually downloaded dependancies.
+  - sudo dpkg -i libc6_2.19-18+deb8u1_amd64.deb
   - sudo dpkg -i libsndio6.0_1.0.1-2_amd64.deb
 
   - sudo dpkg -i libsdl2-2.0-0_2.0.2+dfsg1-8_amd64.deb
