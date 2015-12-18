@@ -12,6 +12,7 @@ before_script:
   - wget http://ftp.us.debian.org/debian/pool/main/libs/libsdl2/libsdl2-dev_2.0.2+dfsg1-8_amd64.deb
   - wget http://ftp.us.debian.org/debian/pool/main/s/sndio/libsndio6.0_1.0.1-2_amd64.deb
 
+  - wget http://security.ubuntu.com/ubuntu/pool/main/libx/libxcb/libxcb-dri2-0_1.8.1-1ubuntu0.2_amd64.deb
   - wget http://security.ubuntu.com/ubuntu/pool/main/w/wayland-lts-trusty/libwayland-ltst-server0_1.4.0-1ubuntu1~precise2_amd64.deb
   - wget http://security.ubuntu.com/ubuntu/pool/main/w/wayland-lts-trusty/libwayland-ltst-client0_1.4.0-1ubuntu1~precise2_amd64.deb
   - wget http://security.ubuntu.com/ubuntu/pool/main/l/llvm-toolchain-3.4/libllvm3.4_3.4-1ubuntu3~precise2_amd64.deb
@@ -31,6 +32,7 @@ before_script:
   - sudo dpkg -i libwayland-client0_1.4.0-1ubuntu1_amd64.deb
   - sudo dpkg -i libwayland-cursor0_1.4.0-1ubuntu1_amd64.deb
 
+  - sudo dpkg -i libxcb-dri2-0_1.8.1-1ubuntu0.2_amd64.deb
   - sudo dpkg -i libwayland-ltst-server0_1.4.0-1ubuntu1~precise2_amd64.deb
   - sudo dpkg -i libwayland-ltst-client0_1.4.0-1ubuntu1~precise2_amd64.deb
   - sudo dpkg -i libllvm3.4_3.4-1ubuntu3~precise2_amd64.deb
