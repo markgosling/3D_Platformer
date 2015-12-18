@@ -22,9 +22,19 @@ private:
 	float camera_y_position;
 	float camera_z_position;
 
+	glm::vec3 camera_position;
+
+	glm::vec3 direction;
+	glm::vec3 right;
+	glm::vec3 up;
+
 	float horizontal_angle;
 	float vertical_angle;
 
+	float mouse_delta_x;
+	float mouse_delta_y;
+
+	float camera_movement_speed;
 
 };
 

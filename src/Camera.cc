@@ -15,39 +15,87 @@ Camera::Camera(){
 	  camera_y_position = 1.5f;
 	  camera_z_position = 0.0f;
 
+	  camera_position = glm::vec3(-3.0f, 1.5f, 0.0f);
+	  direction = glm::vec3(0,0,0);
+	  right = glm::vec3(0,0,0);
+	  up = glm::vec3(0,0,0);
+
 	  horizontal_angle = 0;
 	  vertical_angle = 0;
+
+	  mouse_delta_x = 0;
+	  mouse_delta_y = 0;
+
+	  camera_movement_speed = 0.1;
 
 }
 
 glm::mat4 Camera::UpdateCameraPosition(InputDirection inputDirection, int mouse_x, int mouse_y){
 
+	//The camera matrix code and code to look around were based on and adapted from
+	//tutorials found at the following links:
+	//http://www.opengl-tutorial.org/beginners-tutorials/tutorial-3-matrices/
+	//http://www.opengl-tutorial.org/beginners-tutorials/tutorial-6-keyboard-and-mouse/
+
+	//Get the relative mouse delta position (passed to the method as a parameter) and invert it.
+	mouse_delta_x = -mouse_x;
+	mouse_delta_y = -mouse_y;
+
+    //Add the delta value onto the angle values and slow the movement speed down by
+	//multiplying the delta by a value < 1.
+	horizontal_angle += 0.01 * mouse_delta_x;
+
+	//if(vertical_angle += mouse_delta_y < 0.5){
+		vertical_angle += 0.01 * mouse_delta_y;
+	//}
+
+
+	direction = glm::vec3(
+			cos(vertical_angle) * sin(horizontal_angle),
+			sin(vertical_angle),
+			cos(vertical_angle) * cos(horizontal_angle));
+
+	right = glm::vec3(
+			sin(horizontal_angle - 3.14/2.0f),
+			0,
+			cos(horizontal_angle - 3.14/2.0f));
+
+	up = glm::cross(right, direction);
+
+	std::cout << up[3] << std::endl;
+
 	if(inputDirection == UP){
-		  camera_z_position += 0.1;
-		 // cout << "up " << player_z_position << endl;
-	  }else if(inputDirection == DOWN){
-		  camera_z_position -= 0.1;
-		  //cout << "down " << player_z_position << endl;
-	  }else if(inputDirection == LEFT){
-		  camera_x_position += 0.1;
-		  //cout << "left " << player_x_position << endl;
-	  }else if(inputDirection == RIGHT){
-		  camera_x_position -= 0.1;
-		  //cout << "right " << player_x_position << endl;
-	  }
 
-	  //http://www.opengl-tutorial.org/beginners-tutorials/tutorial-3-matrices/
-	  //http://www.opengl-tutorial.org/beginners-tutorials/tutorial-6-keyboard-and-mouse/
+	  //camera_z_position += 0.1;
+	  // cout << "up " << player_z_position << endl;
+	  //camera_position += direction * camera_movement_speed;
+	  camera_position += glm::vec3(cos(vertical_angle) * sin(horizontal_angle),
+							       0,
+								   cos(vertical_angle) * cos(horizontal_angle))
+								   * camera_movement_speed;
+	}else if(inputDirection == DOWN){
+	  //camera_z_position -= 0.1;
+	  //cout << "down " << player_z_position << endl;
+	  //camera_position -= direction * camera_movement_speed;
+	  camera_position -= glm::vec3(cos(vertical_angle) * sin(horizontal_angle),
+								   0,
+								   cos(vertical_angle) * cos(horizontal_angle))
+                                   * camera_movement_speed;
+	}else if(inputDirection == LEFT){
+	  //camera_x_position += 0.1;
+	  //cout << "left " << player_x_position << endl;
+		camera_position -= right * camera_movement_speed;
+	}else if(inputDirection == RIGHT){
+	  //camera_x_position -= 0.1;
+	  //cout << "right " << player_x_position << endl;
+		camera_position += right * camera_movement_speed;
+	}
 
-	 // horizontal_angle += 0.1 * 0.1 * float(640/2 - mouse_x);
-	 // vertical_angle += 0.1 * 0.1 * float(480/2 - mouse_y);
 
-	  std::cout << "Hoz: " << horizontal_angle << std::endl;
-	  std::cout << "Vert: " << vertical_angle << std::endl;
 
-	  return glm::lookAt(glm::vec3(camera_x_position, camera_y_position, camera_z_position),
-			                    glm::vec3(camera_x_position + (cos(vertical_angle) * sin(horizontal_angle)), camera_y_position + (sin(vertical_angle)), camera_z_position + (cos(vertical_angle) * cos(horizontal_angle))),
-								glm::vec3(0.0f, 1.0f, 0.0f));
+	  return glm::lookAt(camera_position,
+			  	  	     camera_position + direction,
+						 up);
 }
 
 

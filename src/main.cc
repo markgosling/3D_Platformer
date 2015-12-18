@@ -156,8 +156,8 @@ int main(int argc, char ** argv) {
     case SDL_USEREVENT:
     {
     	//SDL mouse event code adapted from example at:
-    	//https://wiki.libsdl.org/SDL_GetMouseState
-        SDL_GetMouseState(&mouse_x, &mouse_y);
+    	//https://wiki.libsdl.org/SDL_GetRelativeMouseState
+        SDL_GetRelativeMouseState(&mouse_x, &mouse_y);
 
         //Keyboard presses implemented as per the example on
     	//https://wiki.libsdl.org/SDL_GetKeyboardState
