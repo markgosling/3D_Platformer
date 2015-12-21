@@ -40,6 +40,7 @@ before_script:
   - wget http://mirrors.kernel.org/ubuntu/pool/main/x/xorg-lts-transitional/libegl1-mesa-lts-quantal_5_amd64.deb
   - wget http://mirrors.kernel.org/ubuntu/pool/main/m/mesa/libegl1-mesa_10.1.0-4ubuntu5_amd64.deb
   - wget http://mirrors.kernel.org/ubuntu/pool/main/x/xorg-lts-transitional/libegl1-mesa-lts-raring_5_amd64.deb
+  - wget http://mirrors.kernel.org/ubuntu/pool/main/m/mesa/libegl1-mesa_10.1.0-4ubuntu5_amd64.deb
 
   - sudo apt-get update -qq
 
@@ -80,6 +81,7 @@ before_script:
   - sudo dpkg -i libwayland-ltsr0_1.0.5-0ubuntu1~precise2_amd64.deb
   - sudo dpkg -i libgbm1-lts-raring_9.1.4-0ubuntu0.1~precise2_amd64.deb
  # - sudo dpkg -i libegl1-mesa-lts-raring_9.1.4-0ubuntu0.1~precise2_amd64.deb
+  - sudo dpkg -i libegl1-mesa_10.1.0-4ubuntu5_amd64.deb
   - sudo dpkg -i libegl1-mesa-lts-raring_5_amd64.deb
   - sudo dpkg -i libegl1-mesa-lts-quantal_5_amd64.deb
 #  - sudo dpkg -i libegl1-mesa-lts-quantal_9.0.3-0ubuntu0.1~precise3_amd64.deb
