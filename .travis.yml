@@ -36,6 +36,7 @@ before_script:
   - wget http://security.ubuntu.com/ubuntu/pool/main/m/mesa/libgl1-mesa-glx_8.0.4-0ubuntu0.6_amd64.deb
   - wget http://security.ubuntu.com/ubuntu/pool/main/m/mesa/libglapi-mesa_8.0.4-0ubuntu0.6_amd64.deb
   - wget http://security.ubuntu.com/ubuntu/pool/main/m/mesa/libgles2-mesa-dev_8.0.4-0ubuntu0.6_amd64.deb
+  - wget http://mirrors.kernel.org/ubuntu/pool/main/x/xorg-lts-transitional/libglapi-mesa-lts-raring_5_amd64.deb
 
   - sudo apt-get update -qq
 
@@ -70,7 +71,8 @@ before_script:
  # - sudo dpkg -i libglapi-mesa_8.0.4-0ubuntu0.6_amd64.deb
  # - sudo dpkg -i libgl1-mesa-glx_8.0.4-0ubuntu0.6_amd64.deb
   - sudo dpkg -i libllvm3.2_3.2-2ubuntu5~precise1_amd64.deb
-  - sudo dpkg -i libglapi-mesa-lts-raring_9.1.4-0ubuntu0.1~precise2_amd64.deb
+  - sudo dpkg -i libglapi-mesa-lts-raring_5_amd64.deb
+#  - sudo dpkg -i libglapi-mesa-lts-raring_9.1.4-0ubuntu0.1~precise2_amd64.deb
   - sudo dpkg -i libgl1-mesa-dri-lts-raring_9.1.4-0ubuntu0.1~precise2_amd64.deb
   - sudo dpkg -i libwayland-ltsr0_1.0.5-0ubuntu1~precise2_amd64.deb
   - sudo dpkg -i libgbm1-lts-raring_9.1.4-0ubuntu0.1~precise2_amd64.deb
