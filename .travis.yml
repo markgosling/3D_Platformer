@@ -9,8 +9,8 @@ before_script:
   - wget http://mirrors.kernel.org/ubuntu/pool/main/w/wayland/libwayland-server0_1.4.0-1ubuntu1_amd64.deb
   - wget http://mirrors.kernel.org/ubuntu/pool/main/w/wayland/libwayland-cursor0_1.4.0-1ubuntu1_amd64.deb
   - wget http://security.ubuntu.com/ubuntu/pool/main/e/eglibc/libc6_2.19-0ubuntu6.6_amd64.deb
-  - wget http://ftp.us.debian.org/debian/pool/main/libs/libsdl2/libsdl2-2.0-0_2.0.2+dfsg1-8_amd64.deb
-  - wget http://ftp.us.debian.org/debian/pool/main/libs/libsdl2/libsdl2-dev_2.0.2+dfsg1-8_amd64.deb
+  - wget http://mirrors.kernel.org/ubuntu/pool/universe/libs/libsdl2/libsdl2-2.0-0_2.0.2+dfsg1-3ubuntu1_amd64.deb
+  - wget http://mirrors.kernel.org/ubuntu/pool/universe/libs/libsdl2/libsdl2-dev_2.0.2+dfsg1-3ubuntu1_amd64.deb
   - wget http://ftp.us.debian.org/debian/pool/main/s/sndio/libsndio6.0_1.0.1-2_amd64.deb
 
   - wget http://mirrors.kernel.org/ubuntu/pool/main/libx/libxkbcommon/libxkbcommon0_0.5.0-1ubuntu2_amd64.deb
@@ -66,22 +66,22 @@ before_script:
   - sudo dpkg -i libwayland0_1.4.0-1ubuntu1_all.deb
   - sudo dpkg -i libwayland-cursor0_1.4.0-1ubuntu1_amd64.deb
 
-  - sudo dpkg -i libglapi-mesa_8.0.4-0ubuntu0.6_amd64.deb
-  - sudo dpkg -i libgl1-mesa-glx_8.0.4-0ubuntu0.6_amd64.deb
-  - sudo dpkg -i libllvm3.2_3.2-2ubuntu5~precise1_amd64.deb
-  - sudo dpkg -i libglapi-mesa-lts-raring_9.1.4-0ubuntu0.1~precise2_amd64.deb
-  - sudo dpkg -i libgl1-mesa-dri-lts-raring_9.1.4-0ubuntu0.1~precise2_amd64.deb
-  - sudo dpkg -i libwayland-ltsr0_1.0.5-0ubuntu1~precise2_amd64.deb
-  - sudo dpkg -i libgbm1-lts-raring_9.1.4-0ubuntu0.1~precise2_amd64.deb
+ # - sudo dpkg -i libglapi-mesa_8.0.4-0ubuntu0.6_amd64.deb
+ # - sudo dpkg -i libgl1-mesa-glx_8.0.4-0ubuntu0.6_amd64.deb
+ # - sudo dpkg -i libllvm3.2_3.2-2ubuntu5~precise1_amd64.deb
+ # - sudo dpkg -i libglapi-mesa-lts-raring_9.1.4-0ubuntu0.1~precise2_amd64.deb
+ # - sudo dpkg -i libgl1-mesa-dri-lts-raring_9.1.4-0ubuntu0.1~precise2_amd64.deb
+ # - sudo dpkg -i libwayland-ltsr0_1.0.5-0ubuntu1~precise2_amd64.deb
+ # - sudo dpkg -i libgbm1-lts-raring_9.1.4-0ubuntu0.1~precise2_amd64.deb
  # - sudo dpkg -i libegl1-mesa-lts-raring_9.1.4-0ubuntu0.1~precise2_amd64.deb
-  - sudo dpkg -i libegl1-mesa-lts-quantal_9.0.3-0ubuntu0.1~precise3_amd64.deb
-  - sudo dpkg -i libegl1-mesa_8.0.4-0ubuntu0.6_amd64.deb
-  - sudo dpkg -i libegl1-mesa-dev_8.0.4-0ubuntu0.6_amd64.deb
+ # - sudo dpkg -i libegl1-mesa-lts-quantal_9.0.3-0ubuntu0.1~precise3_amd64.deb
+ # - sudo dpkg -i libegl1-mesa_8.0.4-0ubuntu0.6_amd64.deb
+ # - sudo dpkg -i libegl1-mesa-dev_8.0.4-0ubuntu0.6_amd64.deb
 
 
 
-  - sudo dpkg -i libsdl2-2.0-0_2.0.2+dfsg1-8_amd64.deb
-  - sudo dpkg -i libsdl2-dev_2.0.2+dfsg1-8_amd64.deb
+  - sudo dpkg -i libsdl2-2.0-0_2.0.2+dfsg1-3ubuntu1_amd64.deb
+  - sudo dpkg -i libsdl2-dev_2.0.2+dfsg1-3ubuntu1_amd64.deb
 
 
 os:
