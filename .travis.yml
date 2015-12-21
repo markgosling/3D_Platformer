@@ -48,9 +48,10 @@ before_script:
 
   #Install problematic conflicting packages.
 
+  - sudo dpkg -i libwayland-client0_1.4.0-1ubuntu1_amd64.deb
   - sudo dpkg -i libwayland0_1.4.0-1ubuntu1_all.deb
   - sudo dpkg -i libwayland-server0_1.4.0-1ubuntu1_amd64.deb
-  - sudo dpkg -i libwayland-client0_1.4.0-1ubuntu1_amd64.deb
+
 
 
   - sudo dpkg -i libsdl2-2.0-0_2.0.2+dfsg1-8_amd64.deb
