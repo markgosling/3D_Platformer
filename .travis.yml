@@ -28,7 +28,9 @@ before_script:
   - sudo apt-get update -qq
 
   #install all dependicies available on apt first.
-  - sudo apt-get install -y -q libboost-dev libboost-test-dev libboost-thread-dev libboost-system-dev mpi-default-bin mpi-default-dev libboost-all-dev libglm-dev libglew-dev libasound2-dev libdbus-1-dev libegl1-mesa-dev libgles2-mesa-dev libpulse-dev
+  - sudo apt-get install -y -q libboost-dev libboost-test-dev libboost-thread-dev libboost-system-dev mpi-default-bin mpi-default-dev libboost-all-dev libglm-dev libglew-dev libasound2-dev libdbus-1-dev libpulse-dev
+
+#libegl1-mesa-dev libgles2-mesa-dev
 
   #Install manually downloaded dependancies.
   - sudo dpkg -i libc6_2.19-0ubuntu6.6_amd64.deb
@@ -41,7 +43,7 @@ before_script:
   - sudo dpkg -i libwayland-ltst-server0_1.4.0-1ubuntu1~precise2_amd64.deb
   - sudo dpkg -i libwayland-ltst-client0_1.4.0-1ubuntu1~precise2_amd64.deb
   - sudo dpkg -i libllvm3.4_3.4-1ubuntu3~precise2_amd64.deb
-  - sudo dpkg -i libgl1-mesa-dri-lts-trusty_10.1.3-0ubuntu0.2~precise2_amd64.deb
+  #- sudo dpkg -i libgl1-mesa-dri-lts-trusty_10.1.3-0ubuntu0.2~precise2_amd64.deb
   #- sudo dpkg -i libgbm1-lts-trusty_10.1.3-0ubuntu0.2~precise2_amd64.deb
   #- sudo dpkg -i libegl1-mesa-lts-trusty_10.1.3-0ubuntu0.2~precise2_amd64.deb
   #- sudo dpkg -i libwayland-egl1-mesa-lts-trusty_10.1.3-0ubuntu0.2~precise2_amd64.deb
