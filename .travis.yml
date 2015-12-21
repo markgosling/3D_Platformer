@@ -35,6 +35,7 @@ before_script:
   - wget http://mirrors.kernel.org/ubuntu/pool/main/l/llvm-3.2/libllvm3.2_3.2-2ubuntu5~precise1_amd64.deb
   - wget http://security.ubuntu.com/ubuntu/pool/main/m/mesa/libgl1-mesa-glx_8.0.4-0ubuntu0.6_amd64.deb
   - wget http://security.ubuntu.com/ubuntu/pool/main/m/mesa/libglapi-mesa_8.0.4-0ubuntu0.6_amd64.deb
+  - wget http://security.ubuntu.com/ubuntu/pool/main/m/mesa/libgles2-mesa-dev_8.0.4-0ubuntu0.6_amd64.deb
 
   - sudo apt-get update -qq
 
@@ -76,7 +77,8 @@ before_script:
  # - sudo dpkg -i libegl1-mesa-lts-raring_9.1.4-0ubuntu0.1~precise2_amd64.deb
  # - sudo dpkg -i libegl1-mesa-lts-quantal_9.0.3-0ubuntu0.1~precise3_amd64.deb
  # - sudo dpkg -i libegl1-mesa_8.0.4-0ubuntu0.6_amd64.deb
- # - sudo dpkg -i libegl1-mesa-dev_8.0.4-0ubuntu0.6_amd64.deb
+  - sudo dpkg -i libegl1-mesa-dev_8.0.4-0ubuntu0.6_amd64.deb
+  - sudo dpkg -i libgles2-mesa-dev_8.0.4-0ubuntu0.6_amd64.deb
 
 
 
