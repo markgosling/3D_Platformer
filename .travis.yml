@@ -36,7 +36,7 @@ before_script:
   - sudo dpkg -i libc6_2.19-0ubuntu6.6_amd64.deb
   - sudo dpkg -i libsndio6.0_1.0.1-2_amd64.deb
 
-  #- sudo dpkg -i libwayland-cursor0_1.4.0-1ubuntu1_amd64.deb
+
   - sudo dpkg -i libxkbcommon0_0.5.0-1ubuntu2_amd64.deb
   - sudo dpkg -i libxcb-xfixes0_1.8.1-1ubuntu0.2_amd64.deb
   - sudo dpkg -i libxcb-dri2-0_1.8.1-1ubuntu0.2_amd64.deb
@@ -53,6 +53,7 @@ before_script:
   - sudo dpkg -i libwayland-client0_1.4.0-1ubuntu1_amd64.deb
   - sudo dpkg -i libwayland-server0_1.4.0-1ubuntu1_amd64.deb
   - sudo dpkg -i libwayland0_1.4.0-1ubuntu1_all.deb
+  - sudo dpkg -i libwayland-cursor0_1.4.0-1ubuntu1_amd64.deb
 
 
 
