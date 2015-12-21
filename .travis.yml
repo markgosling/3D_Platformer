@@ -53,11 +53,11 @@ before_script:
   - sudo dpkg -i libxcb-dri2-0_1.8.1-1ubuntu0.2_amd64.deb
   - sudo dpkg -i libwayland-ltst-server0_1.4.0-1ubuntu1~precise2_amd64.deb
   - sudo dpkg -i libwayland-ltst-client0_1.4.0-1ubuntu1~precise2_amd64.deb
- # - sudo dpkg -i libllvm3.4_3.4-1ubuntu3~precise2_amd64.deb
-  #- sudo dpkg -i libgl1-mesa-dri-lts-trusty_10.1.3-0ubuntu0.2~precise2_amd64.deb
-  #- sudo dpkg -i libgbm1-lts-trusty_10.1.3-0ubuntu0.2~precise2_amd64.deb
-  #- sudo dpkg -i libegl1-mesa-lts-trusty_10.1.3-0ubuntu0.2~precise2_amd64.deb
-  #- sudo dpkg -i libwayland-egl1-mesa-lts-trusty_10.1.3-0ubuntu0.2~precise2_amd64.deb
+  - sudo dpkg -i libllvm3.4_3.4-1ubuntu3~precise2_amd64.deb
+  - sudo dpkg -i libgl1-mesa-dri-lts-trusty_10.1.3-0ubuntu0.2~precise2_amd64.deb
+  - sudo dpkg -i libgbm1-lts-trusty_10.1.3-0ubuntu0.2~precise2_amd64.deb
+  - sudo dpkg -i libegl1-mesa-lts-trusty_10.1.3-0ubuntu0.2~precise2_amd64.deb
+  - sudo dpkg -i libwayland-egl1-mesa-lts-trusty_10.1.3-0ubuntu0.2~precise2_amd64.deb
 
   #Install problematic conflicting packages.
 
