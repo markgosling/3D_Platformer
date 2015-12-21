@@ -80,7 +80,7 @@ before_script:
 #  - sudo dpkg -i libglapi-mesa-lts-raring_9.1.4-0ubuntu0.1~precise2_amd64.deb
   - sudo dpkg -i libgl1-mesa-dri-lts-raring_9.1.4-0ubuntu0.1~precise2_amd64.deb
   - sudo dpkg -i libwayland-ltsr0_1.0.5-0ubuntu1~precise2_amd64.deb
-#  - sudo dpkg -i libgbm1-lts-raring_9.1.4-0ubuntu0.1~precise2_amd64.deb
+ # - sudo dpkg -i libgbm1-lts-raring_9.1.4-0ubuntu0.1~precise2_amd64.deb
  # - sudo dpkg -i libegl1-mesa-lts-raring_9.1.4-0ubuntu0.1~precise2_amd64.deb
   - sudo dpkg -i libgbm1_10.1.0-4ubuntu5_amd64.deb
   - sudo dpkg -i libegl1-mesa_10.1.0-4ubuntu5_amd64.deb
