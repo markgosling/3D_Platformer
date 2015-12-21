@@ -67,7 +67,7 @@ before_script:
   - sudo dpkg -i libwayland0_1.4.0-1ubuntu1_all.deb
   - sudo dpkg -i libwayland-cursor0_1.4.0-1ubuntu1_amd64.deb
 
- # - sudo dpkg -i libglapi-mesa_8.0.4-0ubuntu0.6_amd64.deb
+  - sudo dpkg -i libglapi-mesa_8.0.4-0ubuntu0.6_amd64.deb
   - sudo dpkg -i libgl1-mesa-glx_8.0.4-0ubuntu0.6_amd64.deb
   - sudo dpkg -i libllvm3.2_3.2-2ubuntu5~precise1_amd64.deb
   - sudo dpkg -i libglapi-mesa-lts-raring_9.1.4-0ubuntu0.1~precise2_amd64.deb
