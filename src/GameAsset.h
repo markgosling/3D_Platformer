@@ -10,6 +10,8 @@
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
 
+#include "common.h"
+
 class GameAsset {
 
  public:
@@ -19,7 +21,7 @@ class GameAsset {
   bool DetectXCollision(float camera_x_position);
   bool DetectYCollision(float camera_y_position);
   bool DetectZCollision(float camera_z_position);
-  bool DetectCollision(float camera_x_position, float camera_y_position, float camera_z_position);
+  CollisionType DetectCollision(float camera_left, float camera_right, float camera_top, float camera_bottom, float camera_front, float camera_back);
 
 
  protected:

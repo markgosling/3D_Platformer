@@ -22,6 +22,7 @@
  */
 class GameAssetManager {
  public:
+
   GameAssetManager(); // constructor
   virtual ~GameAssetManager();
   GameAssetManager(GameAssetManager const&); // copy constructor
@@ -30,6 +31,7 @@ class GameAssetManager {
   void AddAsset(std::shared_ptr<GameAsset>, int x, int y, int z);
   void Draw();
   GLuint CreateGLProgram(std::string &, std::string &);
+  CollisionType DetectCollisionWithAsset();
 
   //Method which accepts player directional inputs from main.cc
   //and updates the camera matrix accordingly.
@@ -59,6 +61,8 @@ class GameAssetManager {
 
 
   std::vector<std::vector<std::vector<std::shared_ptr<GameAsset>>>> world_array;
+
+  CollisionType collision_type_detected;
 
 };
 

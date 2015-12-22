@@ -27,6 +27,11 @@ Camera::Camera(){
 
 	  camera_movement_speed = 0.1;
 
+	  //The size parameters are used to create the bounding box for the camera.
+	  width = 1;
+	  depth = 1;
+	  height = 1;
+
 }
 
 glm::mat4 Camera::UpdateCameraPosition(InputDirection inputDirection, int mouse_x, int mouse_y){
@@ -92,6 +97,7 @@ glm::mat4 Camera::UpdateCameraPosition(InputDirection inputDirection, int mouse_
 		camera_position += right * camera_movement_speed;
 	}
 
+	//Set the updated position of the camera.
 	//Invert the X coordinate of the camera as the x coordinates of the blocks are also inverted
      camera_x_position = -camera_position[0];
 
@@ -104,14 +110,26 @@ glm::mat4 Camera::UpdateCameraPosition(InputDirection inputDirection, int mouse_
 						 up);
 }
 
-float Camera::getX(){
-	return camera_x_position;
+float Camera::GetLeft(){
+	return camera_x_position - width/2;
 }
 
-float Camera::getY(){
-	return camera_y_position;
+float Camera::GetRight(){
+	return camera_x_position + width/2;
 }
 
-float Camera::getZ(){
-	return camera_z_position;
+float Camera::GetTop(){
+	return camera_y_position + height/2;
+}
+
+float Camera::GetBottom(){
+	return camera_y_position - height/2;
+}
+
+float Camera::GetFront(){
+	return camera_z_position + depth/2;
+}
+
+float Camera::GetBack(){
+	return camera_z_position - depth/2;
 }

@@ -1,4 +1,5 @@
-#include <GameAsset.h>
+#include "GameAsset.h"
+#include "GameAssetManager.h"
 
 /*
  * GameAsset.cc
@@ -7,14 +8,64 @@
  *      Author: mark
  */
 
-bool GameAsset::DetectCollision(float camera_x_position, float camera_y_position, float camera_z_position){
+CollisionType GameAsset::DetectCollision(float camera_left, float camera_right, float camera_top, float camera_bottom, float camera_front, float camera_back){
 
-	if(DetectXCollision(camera_x_position) &&
-			DetectYCollision(camera_y_position) &&
-			DetectZCollision(camera_z_position)){
-		return true;
-	}
-	return false;
+	//If all three methods return true, then we know the camera has collided with
+	//an object and we need to check which side of the asset has been collided with.
+	//if(DetectXCollision(camera_x_position) &&
+	//		DetectYCollision(camera_y_position) &&
+	//		DetectZCollision(camera_z_position)){
+
+		std::cout << "Camera left: " << camera_left << std::endl;
+		std::cout << "Camera right: " << camera_right << std::endl;
+		std::cout << "Camera top: " << camera_top << std::endl;
+		std::cout << "Camera bottom: "<< camera_bottom << std::endl;
+		std::cout << "Camera front: "<< camera_front << std::endl;
+		std::cout << "Camera back: "<< camera_back << std::endl;
+
+		float left_side_test;
+		float right_side_test;
+		float top_side_test;
+		float bottom_side_test;
+		float front_side_test;
+		float back_side_test;
+
+		//Find the distance between the camera X position and the left side of the cube.
+		//left_side_test = camera_x_position - (x_position - (width/2));
+		//std::cout << "left " << left_side_test << std::endl;
+
+		//Find the distance between the camera X position and the right side of the cube.
+		//right_side_test = camera_x_position - (x_position + (width/2));
+		//std::cout << "right " << right_side_test << std::endl;
+
+		//Find the distance between the camera Z position and the front side of the cube.
+		//front_side_test  = camera_z_position - (z_position - (depth/2));
+		//std::cout << "front " << front_side_test << std::endl;
+
+		//Find the distance between the camera Z position and the back side of the cube.
+		//back_side_test = camera_z_position - (z_position + (depth/2));
+		//std::cout << "back " << back_side_test << std::endl;
+
+		//These tests are disabled as they are not currently required.
+		//bottom_side_test = camera_y_position - (y_position - (height/2));
+		//top_side_test  = camera_y_position - (y_position + (height/2));
+
+		if(left_side_test < right_side_test && left_side_test < front_side_test && left_side_test < back_side_test){
+			//std::cout << "right side collision" << std::endl;
+		}else if(right_side_test < left_side_test && right_side_test < front_side_test && right_side_test < back_side_test){
+			//std::cout << "left side collision" << std::endl;
+		}else if(front_side_test < left_side_test && front_side_test < right_side_test && front_side_test < back_side_test){
+			//std::cout << "back side collision" << std::endl;
+		}else if(back_side_test < front_side_test && back_side_test < left_side_test && back_side_test < right_side_test){
+			//std::cout << "front side collision" << std::endl;
+		}else{
+			//std::cout << "no collision" << std::endl;
+			return NOCOLLISION;
+		}
+
+
+	//}
+	return NOCOLLISION;
 }
 
 bool GameAsset::DetectXCollision(float camera_x_position){
@@ -22,7 +73,7 @@ bool GameAsset::DetectXCollision(float camera_x_position){
 	//std::cout << "x_position: " << x_position << std::endl;
 	//std::cout << "width/2: " << width/2 << std::endl;
 
-	if(camera_x_position >= x_position - (width/2) && camera_x_position <= x_position + (width/2)){
+	if(camera_x_position > x_position - (width/2) && camera_x_position < x_position + (width/2)){
 		//std::cout << "X collision detected" << std::endl;
 		return true;
 	}
@@ -33,7 +84,7 @@ bool GameAsset::DetectYCollision(float camera_y_position){
 	//std::cout << "camera_y_position: " << camera_y_position << std::endl;
 	//std::cout << "y_position: " << y_position << std::endl;
 	if(camera_y_position >= y_position - (height/2) && camera_y_position <= y_position + (height/2)){
-		//std::cout << "y collision detected" << std::endl;
+	    //std::cout << "y collision detected" << std::endl;
 		return true;
 	}
 	return false;
@@ -43,7 +94,7 @@ bool GameAsset::DetectYCollision(float camera_y_position){
 bool GameAsset::DetectZCollision(float camera_z_position){
 	//std::cout << "camera_z_position: " << camera_z_position << std::endl;
 	//std::cout << "z_position: " << z_position << std::endl;
-	if(camera_z_position >= z_position - (depth/2) && camera_z_position <= z_position + (depth/2)){
+	if(camera_z_position > z_position - (depth/2) && camera_z_position < z_position + (depth/2)){
 		//std::cout << "z collision detected" << std::endl;
 		return true;
 	}
@@ -60,7 +111,7 @@ bool GameAsset::DetectZCollision(float camera_z_position){
 void GameAsset::Draw(GLuint program_token) {
 
   if(!glIsProgram(program_token)) {
-    std::cerr << "Drawing Cube with invalid program" << std::endl;
+    std::cerr << "Drawing asset with invalid program" << std::endl;
     return;
   }
 

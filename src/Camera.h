@@ -15,15 +15,21 @@ class Camera{
 public:
 	Camera();
 	glm::mat4 UpdateCameraPosition(InputDirection inputDirection, int mouse_x, int mouse_y);
-	float getX();
-	float getY();
-	float getZ();
+	float GetLeft();
+	float GetRight();
+	float GetTop();
+	float GetBottom();
+	float GetFront();
+	float GetBack();
 
 private:
 
 	float camera_x_position;
 	float camera_y_position;
 	float camera_z_position;
+	  float width;
+	  float depth;
+	  float height;
 
 	glm::vec3 camera_position;
 
