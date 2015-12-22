@@ -8,7 +8,7 @@ using namespace std;
  * stores them in a buffer then transfers them
  * to the GPU.
  */
-PyramidAsset::PyramidAsset() {
+PyramidAsset::PyramidAsset(float x_position, float y_position, float z_position) {
 
   //Model coordinates with origin at centre.
   GLfloat vertex_buffer_data [] {
@@ -53,6 +53,14 @@ PyramidAsset::PyramidAsset() {
   ///Set the asset type. This is required to determine the object type
   //when deciding which shader program to use to colour the object.
   assetType = PYRAMID;
+
+  this->width = 1;
+  this->depth = 1;
+  this->height = 1;
+
+  this->x_position = x_position;
+  this->y_position = y_position;
+  this->z_position = z_position;
 }
 
 /**

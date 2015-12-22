@@ -80,7 +80,7 @@ void GameAssetManager::Draw() {
 
         			auto ga = world_array[x][y][z];
 
-        			//Working glm::translate method obtained from
+        			//Working glm::translate function code obtained from
         			//https://www.reddit.com/r/opengl/comments/2ztqjo/problem_with_glms_translate_matrix_call.
         			//Translate the shapes position on screen to match the position in the 3d array.
         			//The x coordinate is negated so objects are seen to be translated right instead of left.
@@ -204,7 +204,30 @@ pair<GLchar *, GLint> GameAssetManager::ReadShader(string & shader) {
 
 void GameAssetManager::UpdateCameraPosition(InputDirection inputDirection, int mouse_x, int mouse_y){
 
-  view_matrix = camera.UpdateCameraPosition(inputDirection, mouse_x, mouse_y);
+    for(int x = 0; x < world_array.size(); x++){
+    	for(int y = 0; y < world_array[x].size(); y++){
+    		for(int z = 0; z < world_array[x][y].size(); z++){
+
+    			//Check that an object exists before attempting to access it.
+    			if(world_array[x][y][z] != NULL){
+
+        			auto ga = world_array[x][y][z];
+
+
+        			if(ga->DetectCollision(camera.getX(), camera.getY(), camera.getZ())){
+        				cout << "Pillar collided" << endl;
+        			}
+
+    			}
+    		}
+    	}
+    }
+
+   // cout << "X " << x_collision << endl;
+   // cout << "Y " << y_collision << endl;
+   // cout << "Z " << z_collision << endl;
+
+    view_matrix = camera.UpdateCameraPosition(inputDirection, mouse_x, mouse_y);
 
 }
 

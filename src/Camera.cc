@@ -9,7 +9,6 @@
  *      Author: mark
  */
 
-
 Camera::Camera(){
 	  camera_x_position = -3.0f;
 	  camera_y_position = 1.5f;
@@ -93,11 +92,26 @@ glm::mat4 Camera::UpdateCameraPosition(InputDirection inputDirection, int mouse_
 		camera_position += right * camera_movement_speed;
 	}
 
+	//Invert the X coordinate of the camera as the x coordinates of the blocks are also inverted
+     camera_x_position = -camera_position[0];
 
+     camera_y_position = camera_position[1];
+
+     camera_z_position = camera_position[2];
 
 	  return glm::lookAt(camera_position,
 			  	  	     camera_position + direction,
 						 up);
 }
 
+float Camera::getX(){
+	return camera_x_position;
+}
 
+float Camera::getY(){
+	return camera_y_position;
+}
+
+float Camera::getZ(){
+	return camera_z_position;
+}

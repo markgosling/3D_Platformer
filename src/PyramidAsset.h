@@ -13,7 +13,7 @@ using namespace std;
 
 class PyramidAsset : public GameAsset {
  public:
-  PyramidAsset();
+  PyramidAsset(float x_position, float y_position, float z_position);
   ~PyramidAsset();
 };
 

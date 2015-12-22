@@ -7,13 +7,47 @@
  *      Author: mark
  */
 
-bool DetectXCollision(){
-	return 0;
+bool GameAsset::DetectCollision(float camera_x_position, float camera_y_position, float camera_z_position){
+
+	if(DetectXCollision(camera_x_position) &&
+			DetectYCollision(camera_y_position) &&
+			DetectZCollision(camera_z_position)){
+		return true;
+	}
+	return false;
+}
+
+bool GameAsset::DetectXCollision(float camera_x_position){
+	//std::cout << "camera_x_position: " << camera_x_position << std::endl;
+	//std::cout << "x_position: " << x_position << std::endl;
+	//std::cout << "width/2: " << width/2 << std::endl;
+
+	if(camera_x_position >= x_position - (width/2) && camera_x_position <= x_position + (width/2)){
+		//std::cout << "X collision detected" << std::endl;
+		return true;
+	}
+	return false;
+}
+
+bool GameAsset::DetectYCollision(float camera_y_position){
+	//std::cout << "camera_y_position: " << camera_y_position << std::endl;
+	//std::cout << "y_position: " << y_position << std::endl;
+	if(camera_y_position >= y_position - (height/2) && camera_y_position <= y_position + (height/2)){
+		//std::cout << "y collision detected" << std::endl;
+		return true;
+	}
+	return false;
 }
 
 
-bool DetectZCollision(){
-	return 0;
+bool GameAsset::DetectZCollision(float camera_z_position){
+	//std::cout << "camera_z_position: " << camera_z_position << std::endl;
+	//std::cout << "z_position: " << z_position << std::endl;
+	if(camera_z_position >= z_position - (depth/2) && camera_z_position <= z_position + (depth/2)){
+		//std::cout << "z collision detected" << std::endl;
+		return true;
+	}
+	return false;
 }
 
 #ifdef DEBUG

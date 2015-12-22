@@ -15,6 +15,9 @@ class Camera{
 public:
 	Camera();
 	glm::mat4 UpdateCameraPosition(InputDirection inputDirection, int mouse_x, int mouse_y);
+	float getX();
+	float getY();
+	float getZ();
 
 private:
 

@@ -11,7 +11,7 @@
 
 class CubeAsset : public GameAsset {
  public:
-  CubeAsset();
+  CubeAsset(float x_position, float y_position, float z_position);
   ~CubeAsset();
   void Draw(GLuint);
 
