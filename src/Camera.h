@@ -1,24 +1,23 @@
+#ifndef SRC_CAMERA_H_
+#define SRC_CAMERA_H_
+
 #include <glm/ext.hpp>
 #include "common.h"
 #include <vector>
 #include <memory>
-
 #include "GameAsset.h"
 
-/*
- * Camera.h
- *
- *  Created on: 8 Dec 2015
- *      Author: mark
+/**
+ * The Camera class is used to store the position of the camera and define a
+ * boundary box around it. It is also used to generate a view matrix based on
+ * the cameras current position and also checks for collisions with assets to
+ * prevent the cameras position being moved if it is colliding with another object.
  */
-
-#ifndef SRC_CAMERA_H_
-#define SRC_CAMERA_H_
 class Camera{
 
 public:
 	Camera();
-	glm::mat4 UpdateCameraPosition(InputDirection inputDirection, int mouse_x, int mouse_y, std::vector<std::vector<std::vector<std::shared_ptr<GameAsset>>>> &world_array);
+	glm::mat4 UpdateCameraPosition(InputDirection input_direction, int mouse_x, int mouse_y, std::vector<std::vector<std::vector<std::shared_ptr<GameAsset>>>> &world_array);
 	float GetLeft();
 	float GetRight();
 	float GetTop();
@@ -37,9 +36,9 @@ private:
 	float camera_old_y_position;
 	float camera_old_z_position;
 
-	  float width;
-	  float depth;
-	  float height;
+	float width;
+	float depth;
+	float height;
 
 	glm::vec3 camera_position;
 	glm::vec3 camera_old_position;
@@ -56,12 +55,6 @@ private:
 
 	float camera_movement_speed;
 	CollisionType collision_type;
-
-
-
 };
-
-
-
 
 #endif /* SRC_CAMERA_H_ */
