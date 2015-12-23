@@ -18,9 +18,9 @@ class GameAsset {
   enum AssetType {CUBE, PYRAMID};
   void Draw(GLuint);
   AssetType GetAssetType();
-  bool DetectXCollision(float camera_x_position);
-  bool DetectYCollision(float camera_y_position);
-  bool DetectZCollision(float camera_z_position);
+  bool DetectXCollision(float camera_left, float camera_right);
+  bool DetectYCollision(float camera_top, float camera_bottom);
+  bool DetectZCollision(float camera_front, float camera_back);
   CollisionType DetectCollision(float camera_left, float camera_right, float camera_top, float camera_bottom, float camera_front, float camera_back);
 
 

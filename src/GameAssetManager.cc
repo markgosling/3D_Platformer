@@ -204,41 +204,18 @@ pair<GLchar *, GLint> GameAssetManager::ReadShader(string & shader) {
 
 void GameAssetManager::UpdateCameraPosition(InputDirection inputDirection, int mouse_x, int mouse_y){
 
-	collision_type_detected = DetectCollisionWithAsset();
+	//collision_type_detected = DetectCollisionWithAsset();
 
 	//std::cout << " Collision type: " << collision_type_detected << endl;
 
    // cout << "X " << x_collision << endl;
    // cout << "Y " << y_collision << endl;
    // cout << "Z " << z_collision << endl;
-
-    view_matrix = camera.UpdateCameraPosition(inputDirection, mouse_x, mouse_y);
+    view_matrix = camera.UpdateCameraPosition(inputDirection, mouse_x, mouse_y, world_array);
 
 }
 
-CollisionType GameAssetManager::DetectCollisionWithAsset(){
 
-	for(int x = 0; x < world_array.size(); x++){
-    	for(int y = 0; y < world_array[x].size(); y++){
-    		for(int z = 0; z < world_array[x][y].size(); z++){
-
-    			//Check that an object exists in the array before attempting to access it.
-    			if(world_array[x][y][z] != NULL){
-
-        			auto ga = world_array[x][y][z];
-
-
-        			if(ga->DetectCollision(camera.GetLeft(), camera.GetRight(), camera.GetTop(), camera.GetBottom(), camera.GetFront(), camera.GetBack()) != NOCOLLISION){
-
-        				return ga->DetectCollision(camera.GetLeft(), camera.GetRight(), camera.GetTop(), camera.GetBottom(), camera.GetFront(), camera.GetBack());
-        			}
-    			}
-    		}
-    	}
-    }
-
-	return NOCOLLISION;
-}
 
 /**
  * Deletes a GameAssetManager, in particular it will clean up any modifications

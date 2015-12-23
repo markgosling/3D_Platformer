@@ -91,6 +91,7 @@ shared_ptr<SDL_Window> InitWorld() {
   // OpenGL settings
   glDisable(GL_CULL_FACE);
   glEnable(GL_DEPTH_TEST);
+  glDepthMask(GL_TRUE);
   glDepthFunc(GL_LESS);
 
   window.reset(_window, SDL_DestroyWindow);
