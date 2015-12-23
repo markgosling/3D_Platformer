@@ -125,7 +125,7 @@ std::shared_ptr<SDL_Window> InitWorld() {
  * @param window - shared_ptr - A shared pointer to the game window.
  * @param game_world - shared_ptr - A shared pointer to the instance of game_world.
  */
-void Draw(const std::shared_ptr<SDL_Window> window, const std::shared_ptr<GameWorld> game_world) {
+void Draw(const std::shared_ptr<SDL_Window> &window, const std::shared_ptr<GameWorld> &game_world) {
 
 
 	//Set the background colour to a light blue.
