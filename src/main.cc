@@ -91,7 +91,6 @@ shared_ptr<SDL_Window> InitWorld() {
   // OpenGL settings
   glDisable(GL_CULL_FACE);
   glEnable(GL_DEPTH_TEST);
-  glDepthMask(GL_TRUE);
   glDepthFunc(GL_LESS);
 
   window.reset(_window, SDL_DestroyWindow);
@@ -100,6 +99,7 @@ shared_ptr<SDL_Window> InitWorld() {
 
 
 void Draw(const shared_ptr<SDL_Window> window, const shared_ptr<GameWorld> game_world) {
+
 
   //Set the background colour to a light blue.
   glClearColor(0.6f, 0.6f, 0.90f, 1.0f);

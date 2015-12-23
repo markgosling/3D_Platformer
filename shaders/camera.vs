@@ -4,6 +4,7 @@ in vec3 position;
 
 out vec3 frag_color;
 
+uniform mat4 projection_matrix;
 uniform mat4 translate_matrix;
 uniform mat4 view_matrix;
 
@@ -36,7 +37,7 @@ mat4 translate(float x, float y, float z) {
 void main() {
 
 
-      gl_Position = projection(radians(45.0), 4.0/3.0, -0.1, -1000.0)
+      gl_Position = projection_matrix
                       * view_matrix
                       * translate_matrix
                       * vec4(position, 1.0);

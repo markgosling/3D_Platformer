@@ -52,9 +52,11 @@ class GameAssetManager {
   GLuint shape_red_value;
   GLuint shape_green_value;
   GLuint shape_blue_value;
+  GLuint projection_matrix_link;
   GLuint translate_matrix_link;
   GLuint view_matrix_link;
 
+  glm::mat4 projection_matrix; //The projection view.
   glm::mat4 translate_matrix; //The position of the model.
   glm::mat4 view_matrix;	//The position of the camera.
 

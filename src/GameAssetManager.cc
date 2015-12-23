@@ -20,6 +20,8 @@ using namespace std;
  * ApplicationMode.
  */
 GameAssetManager::GameAssetManager() {
+
+
   string vertex_shader("shaders/camera.vs");
   string fragment_shader_red("shaders/fragmentshader.fs");
 
@@ -31,10 +33,11 @@ GameAssetManager::GameAssetManager() {
   shape_green_value = glGetUniformLocation(program_token, "green");
   shape_blue_value = glGetUniformLocation(program_token, "blue");
 
+  projection_matrix_link = glGetUniformLocation(program_token, "projection_matrix");
   translate_matrix_link = glGetUniformLocation(program_token, "translate_matrix");
   view_matrix_link = glGetUniformLocation(program_token, "view_matrix");
 
-
+  projection_matrix = glm::perspective(glm::radians(45.0f), (float) 640 / (float) 480, 0.1f, 1000.0f);
 
   //Code to set up the 3d world array adapted from an example at
   //http://www.cplusplus.com/forum/articles/7459/
@@ -67,6 +70,7 @@ void GameAssetManager::Draw() {
 	//view_matrix = glm::lookAt(glm::vec3(player_x_position, 0.0f, player_z_position),
 	 //		                 glm::vec3(player_x_position, 0.0f, player_z_position + 2),
 	 //					     glm::vec3(0.0f, 1.0f, 0.0f));
+	glUniformMatrix4fv(projection_matrix_link, 1, GL_FALSE, &projection_matrix[0][0]);
 	glUniformMatrix4fv(view_matrix_link, 1, GL_FALSE, &view_matrix[0][0]);
 
     for(int x = 0; x < world_array.size(); x++){
