@@ -11,6 +11,14 @@ before_install:
  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install -y gcc-4.8 g++-4.8 libsdl-* libglm-dev libglew-dev libboost-all-dev libsdl2-dev; fi
  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 90; fi
 
+ - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew update; fi
+ - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install sdl; fi
+ - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install sdl2; fi
+ - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install go; fi
+ - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install glew; fi
+ - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install glm; fi
+ - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install homebrew/x11/mesalib-glw; fi
+
 script:
  - autoreconf -i
  - ./configure
@@ -18,5 +26,10 @@ script:
 
 os:
  - linux
+ - osx
+
+matrix:
+  allow_failures:
+    - os: osx
 
 sudo: true
