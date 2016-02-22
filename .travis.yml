@@ -19,6 +19,7 @@ before_install:
  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install homebrew/x11/mesalib-glw; fi
 
 script:
+ - chmod 755 configure
  - autoreconf -i
  - ./configure
  - make
