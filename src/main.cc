@@ -5,10 +5,23 @@
 #include <iostream>
 #include <memory>
 
-#ifdef __APPLE__
+/**#ifdef __APPLE__
 #include <OpenGL/gl.h>
 #else
 #include <GL/gl.h>
+#endif**/
+
+//Code from http://stackoverflow.com/questions/3907818/opengl-headers-for-os-x-linux
+#ifdef __APPLE__
+#include <OpenGL/gl.h>
+#include <OpenGL/glu.h>
+#include <GLUT/glut.h>
+#else
+#ifdef _WIN32
+  #include <windows.h>
+#endif
+#include <GL/gl.h>
+#include <GL/glu.h>
 #endif
 
 #include <boost/program_options.hpp>
