@@ -17,8 +17,8 @@ before_install:
  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install glew; fi
  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install glm; fi
  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install homebrew/x11/mesalib-glw; fi
- - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install glfw2
- - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install glfw3
+ - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install glfw2; fi
+ - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install glfw3; fi
 
 script:
  - chmod 755 configure
