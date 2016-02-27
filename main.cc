@@ -1,15 +1,9 @@
 #define GLEW_STATIC // Easier debugging
 #include <GL/glew.h>
-//#include <GL/gl.h>
+#include <GL/gl.h>
 #include <SDL2/SDL.h>
 #include <iostream>
 #include <memory>
-
-#ifdef __APPLE__
-#include <OpenGL/gl.h>
-#else
-#include <GL/gl.h>
-#endif
 
 #include <boost/program_options.hpp>
 #include "common.h"
