@@ -1,6 +1,15 @@
 #ifndef GAMEASSETMANAGER_H
 #define GAMEASSETMANAGER_H
 
+#ifdef __APPLE__
+#include <OpenGL/gl.h>
+#else
+#ifdef _WIN32
+  #include <windows.h>
+#endif
+#include <GL/gl.h>
+#endif
+
 #include <memory>
 #include <vector>
 #include <string>
@@ -8,7 +17,6 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
-#include <GL/gl.h>
 #include <glm/ext.hpp>
 #include "common.h"
 #include "GameAsset.h"

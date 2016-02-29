@@ -1,8 +1,16 @@
 #ifndef PYRAMIDASSET_H
 #define PYRAMIDASSET_H
 
-#include <vector>
+#ifdef __APPLE__
+#include <OpenGL/gl.h>
+#else
+#ifdef _WIN32
+  #include <windows.h>
+#endif
 #include <GL/gl.h>
+#endif
+
+#include <vector>
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
 #include "GameAsset.h"
