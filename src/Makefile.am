@@ -12,7 +12,7 @@ AM_CPPFLAGS += $(gl_CFLAGS) $(glew_CFLAGS) $(sdl2_CFLAGS) $(BOOST_CPPFLAGS)
 # Testing for OS X v Linux
 OS = $(shell uname -s)
 
-ifeq ($(OS), Darwin)
+if ($(OS), Darwin)
      LIBS += -framework GLUT -framework OpenGL -framework Cocoa $(glew_LIBS) $(sdl2_LIBS) $(BOOST_THREAD_LIBS) $(BOOST_PROGRAM_OPTIONS_LIBS)
 else
      LIBS += $(gl_LIBS) $(glew_LIBS) $(sdl2_LIBS) $(BOOST_THREAD_LIBS) $(BOOST_PROGRAM_OPTIONS_LIBS)
