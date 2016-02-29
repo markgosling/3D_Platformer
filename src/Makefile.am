@@ -1,3 +1,20 @@
+# Extra code below taken from http://goanna.cs.rmit.edu.au/~gl/teaching/Interactive3D/2012/compiling.html
+# Linux (default)
+EXE = assignment1
+LDFLAGS = -lGL -lGLU -lglut
+
+# Windows (cygwin)
+ifeq "$(OS)" "Windows_NT"
+EXE = assignment1.exe
+LDFLAGS = -lopengl32 -lglu32 -lglut32
+endif
+
+# OS X
+ifeq "$(OSTYPE)" "darwin"
+LDFLAGS = -framework Carbon -framework OpenGL -framework GLUT
+endif
+
+
 EXTRA_DIST = GameWorld.h GameAssetManager.h GameAsset.h CubeAsset.h PyramidAsset.h Camera.h
 
 bin_PROGRAMS = shaderexample
