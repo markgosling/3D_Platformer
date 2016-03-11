@@ -1,17 +1,12 @@
 #define GLEW_STATIC // Easier debugging
 #include <GL/glew.h>
-//#include <GL/gl.h>
 #include <SDL2/SDL.h>
 #include <iostream>
 #include <memory>
 
-/**#ifdef __APPLE__
-#include <OpenGL/gl.h>
-#else
-#include <GL/gl.h>
-#endif**/
 
-//Code from http://stackoverflow.com/questions/3907818/opengl-headers-for-os-x-linux
+//Code from http://stackoverflow.com/questions/3907818/opengl-headers-for-os-x-linux.
+//Allows the code to be compiled for linux and osx devices (which have the opengl libaries in a different location to linux).
 #ifdef __APPLE__
 #include <OpenGL/gl.h>
 #include <OpenGL/glu.h>
@@ -227,16 +222,27 @@ int main(int argc, char ** argv) {
 				input_direction = RIGHT;
 			}else if(keyboard_state[SDL_SCANCODE_W]){
 				input_direction = UP;
+			}else if(keyboard_state[SDL_SCANCODE_ESCAPE]){
+				SDL_SetRelativeMouseMode(SDL_FALSE);
 			}else{
 				input_direction = NONE;
 			}
 
-			//Call the method in 'game_world' to update the game state based on the directional input,
-			//entered by the user and the mouse x and y coordinates.
-			game_world->UpdateCameraPosition(input_direction, mouse_x, mouse_y);
+			//If the left button is clicked, let the window grab the mouse.
+			if (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
+				SDL_SetRelativeMouseMode(SDL_TRUE);
+			}
 
-			//Call the 'Draw' method to show the updated game state on screen.
-			Draw(window, game_world);
+			//Only update the game state if the mouse is captured by the window.
+			if(SDL_GetRelativeMouseMode() == true){
+				//Call the method in 'game_world' to update the game state based on the directional input,
+				//entered by the user and the mouse x and y coordinates.
+				game_world->UpdateCameraPosition(input_direction, mouse_x, mouse_y);
+
+				//Call the 'Draw' method to show the updated game state on screen.
+				Draw(window, game_world);
+			}
+
 			break;
 		}
 

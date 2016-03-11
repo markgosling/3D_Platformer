@@ -219,8 +219,11 @@ INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 LD = @LD@
-LDFLAGS = @LDFLAGS@
+
+#new code adapted from example at http://nuclear.mutantstargoat.com/articles/make/#a-makefile-for-99-of-your-programs
+LDFLAGS = -framework OpenGL -framework GLUT
 LIBOBJS = @LIBOBJS@
+####end of new code
 LIBS = @LIBS@ $(gl_LIBS) $(glew_LIBS) $(sdl2_LIBS) \
 	$(BOOST_THREAD_LIBS) $(BOOST_PROGRAM_OPTIONS_LIBS)
 LIBTOOL = @LIBTOOL@
@@ -279,8 +282,6 @@ datarootdir = @datarootdir@
 docdir = @docdir@
 dvidir = @dvidir@
 exec_prefix = @exec_prefix@
-gl_CFLAGS = @gl_CFLAGS@
-gl_LIBS = @gl_LIBS@
 glew_CFLAGS = @glew_CFLAGS@
 glew_LIBS = @glew_LIBS@
 host = @host@
