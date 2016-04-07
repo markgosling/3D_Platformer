@@ -10,11 +10,13 @@
 #include <GL/gl.h>
 #endif
 
+#include <memory>
 #include <iostream>
 #include <vector>
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
 #include "common.h"
+#include "BoundingBox.h"
 
 /**
  * GameAsset is a superclass which forms the base for all 3D assets used
@@ -25,9 +27,11 @@
 class GameAsset {
 
 public:
+	GameAsset(float, float, float);
 	enum AssetType {CUBE, PYRAMID};
 	void Draw(GLuint);
 	AssetType GetAssetType();
+	std::shared_ptr<BoundingBox> boundingBox;
 	bool DetectXCollision(float camera_left, float camera_right);
 	bool DetectYCollision(float camera_top, float camera_bottom);
 	bool DetectZCollision(float camera_front, float camera_back);

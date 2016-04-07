@@ -1,6 +1,9 @@
 #include "GameAsset.h"
 #include "GameAssetManager.h"
 
+#include "BoundingBox.h"
+#include <memory>
+
 /**
  * @file GameAsset.cc
  * @version 1.0
@@ -12,6 +15,15 @@
  * methods to implement collision detection, to find the asset type and
  * also to draw the asset on screen.
  */
+
+//new code
+GameAsset::GameAsset(float x_position, float y_position, float z_position){
+	//glm::mat4 model_matrix = glm::mat4(1,1,1,1,,1,1,1,1,1,1,1,1,1,1,1,1);
+
+	boundingBox = std::make_shared<BoundingBox>(x_position, y_position, z_position);
+
+
+}
 
 /**
  * The 'DetectCollision' method is used to detect a collision between the camera and

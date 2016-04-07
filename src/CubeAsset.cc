@@ -21,7 +21,7 @@
  * @param y_position - float - The center Y position of the asset.
  * @param z_position - float - The center Z position of the asset.
  */
-CubeAsset::CubeAsset(float x_position, float y_position, float z_position) {
+CubeAsset::CubeAsset(float x_position, float y_position, float z_position) : GameAsset(x_position, y_position, z_position) {
 
 	//Model coordinates with origin at centre.
 	GLfloat vertex_buffer_data [] {
