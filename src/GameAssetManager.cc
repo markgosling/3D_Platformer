@@ -19,16 +19,11 @@
  * and sends it parameters allowing the camera position to be updated.
  */
 
-//Define the size of the game_world array (i.e. the mazimum size of the block world).
-#define HEIGHT 20
-#define WIDTH 20
-#define DEPTH 20
-
 /**
  * Constructor which sets the location of the shader programs and calls the
  * methods to construct them into a shader program. It also sets the uniform
- * variables needed to communicate with the shaders, sets up the projection
- * matrix and sets the size of the 3D array used to store game assets.
+ * variables needed to communicate with the shaders and sets up the projection
+ * matrix.
  */
 GameAssetManager::GameAssetManager() {
 
@@ -50,38 +45,24 @@ GameAssetManager::GameAssetManager() {
 
 	//Create the projection matrix based on the size of the game window.
 	projection_matrix = glm::perspective(glm::radians(45.0f), (float) 640 / (float) 480, 0.1f, 1000.0f);
-
-	//Set the size of the 3D array.
-	//Code to set up the 3d world array adapted from an example at
-	//http://www.cplusplus.com/forum/articles/7459/
-	world_array.resize(HEIGHT);
-	for(int i = 0; i < HEIGHT; ++i){
-		world_array[i].resize(WIDTH);
-
-		for(int j = 0; j < WIDTH; ++j){
-			world_array[i][j].resize(DEPTH);
-		}
-	}
 }
 
 /**
- * AddAsset allows a GameAsset to be added to the 3D array.
+ * AddAsset allows a GameAsset to be added to the world_array.
  *
- * @param the_asset - shared_ptr - A pointer to the game asset to be added.
- * @param x - Integer - The X position which the asset should be placed on screen.
- * @param y - Integer - The Y position which the asset should be placed on screen.
- * @param z - Integer - The Z position which the asset should be placed on screen.
+ * @param the_asset - shared_ptr - A pointer to a game asset.
  */
-void GameAssetManager::AddAsset(std::shared_ptr<GameAsset> the_asset, int x, int y, int z) {
+void GameAssetManager::AddAsset(std::shared_ptr<GameAsset> the_asset) {
 
-	world_array[x][y][z] = the_asset;
+	world_array.push_back(the_asset);
 
 }
 
+//UPDATE METHOD DESCRIPTION!!!!
 /**
  * The 'Draw' method sets the value of the uniform variables in the shader program
- * then loops through the 3D array to find assets to draw. It then translates them
- * to the correct position on screen, then sets the draw colour based on the type
+ * then loops through the world_array to find assets to draw. It then translates them
+ * to the correct position on screen and sets the draw colour based on the type
  * of asset being drawn. Finally it calls the assets 'Draw' method to draw it on screen.
  */
 void GameAssetManager::Draw() {
@@ -90,40 +71,32 @@ void GameAssetManager::Draw() {
 	glUniformMatrix4fv(projection_matrix_link, 1, GL_FALSE, &projection_matrix[0][0]);
 	glUniformMatrix4fv(view_matrix_link, 1, GL_FALSE, &view_matrix[0][0]);
 
-	//Loop through the entire 3D array to find assets to draw.
-	for(int x = 0; x < world_array.size(); x++){
+	//Loop through the world_array to find assets to draw.
+	for(int i = 0; i < world_array.size(); i++){
 
-		for(int y = 0; y < world_array[x].size(); y++){
+		//Check that an object exists before attempting to draw it.
+		if(world_array[i] != NULL){
 
-			for(int z = 0; z < world_array[x][y].size(); z++){
+			//Create a new variable to store the pointer of the current asset.
+			auto ga = world_array.at(i);
 
-				//Check that an object exists before attempting to draw it.
-				if(world_array[x][y][z] != NULL){
+			//Get the translation matrix directly from the model.
+			translate_matrix = ga->GetTranslationMatrix();
+			glUniformMatrix4fv(translate_matrix_link, 1, GL_FALSE, &translate_matrix[0][0]);
 
-					//Create a new variable to store the pointer of the current asset.
-					auto ga = world_array[x][y][z];
-
-					//Translate the shapes position on screen to match the position in the 3d array.
-					//The x coordinate is negated so objects are translated to the right instead of left.
-					//Working glm::translate function code obtained from https://www.reddit.com/r/opengl/comments/2ztqjo/problem_with_glms_translate_matrix_call.
-					translate_matrix = glm::translate(glm::mat4(), glm::vec3(-x, y, z));
-					glUniformMatrix4fv(translate_matrix_link, 1, GL_FALSE, &translate_matrix[0][0]);
-
-					//Check the asset type and draw it using the correct colour.
-					if(ga->GetAssetType() == GameAsset::CUBE){
-						//Set the color to green before drawing the shape.
-						glUniform1f(shape_red_value, 0.0f);
-						glUniform1f(shape_green_value, 1.0f);
-						glUniform1f(shape_blue_value, 0.0f);
-						ga->Draw(program_token);
-					}else if(ga->GetAssetType() == GameAsset::PYRAMID){
-						//Set the color to red before drawing the shape.
-						glUniform1f(shape_red_value, 1.0f);
-						glUniform1f(shape_green_value, 0.0f);
-						glUniform1f(shape_blue_value, 0.0f);
-						ga->Draw(program_token);
-					}
-				}
+			//Check the asset type and draw it using the correct colour.
+			if(ga->GetAssetType() == GameAsset::CUBE){
+				//Set the color to green before drawing the shape.
+				glUniform1f(shape_red_value, 0.0f);
+				glUniform1f(shape_green_value, 1.0f);
+				glUniform1f(shape_blue_value, 0.0f);
+				ga->Draw(program_token);
+			}else if(ga->GetAssetType() == GameAsset::PYRAMID){
+				//Set the color to red before drawing the shape.
+				glUniform1f(shape_red_value, 1.0f);
+				glUniform1f(shape_green_value, 0.0f);
+				glUniform1f(shape_blue_value, 0.0f);
+				ga->Draw(program_token);
 			}
 		}
 	}

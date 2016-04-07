@@ -134,8 +134,8 @@ GameWorld::GameWorld () {
 	//asset_manager->AddAsset(std::make_shared<PyramidAsset>(6, 3, 10), 6, 3, 10);
 
 	//Add the pillars on the screen position closest to the player.
-	asset_manager->AddAsset(std::make_shared<CubeAsset>(1, 1, 0), 1, 1, 0);
-	//asset_manager->AddAsset(std::make_shared<CubeAsset>(6, 1, 0), 6, 1, 0);
+	asset_manager->AddAsset(std::make_shared<CubeAsset>(1, 1, 0));
+	asset_manager->AddAsset(std::make_shared<CubeAsset>(6, 1, 0));
 
 	//asset_manager->AddAsset(std::make_shared<CubeAsset>(1, 2, 0), 1, 2, 0);
 	//asset_manager->AddAsset(std::make_shared<CubeAsset>(6, 2, 0), 6, 2, 0);

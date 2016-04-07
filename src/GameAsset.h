@@ -36,6 +36,7 @@ public:
 	bool DetectYCollision(float camera_top, float camera_bottom);
 	bool DetectZCollision(float camera_front, float camera_back);
 	CollisionType DetectCollision(float camera_left, float camera_right, float camera_top, float camera_bottom, float camera_front, float camera_back);
+	glm::mat4 GetTranslationMatrix();
 
 protected:
 	AssetType assetType;
@@ -44,9 +45,6 @@ protected:
 	float width;
 	float depth;
 	float height;
-	float x_position;
-	float y_position;
-	float z_position;
 
 	float left_side_test;
 	float right_side_test;
@@ -54,6 +52,10 @@ protected:
 	float bottom_side_test;
 	float front_side_test;
 	float back_side_test;
+
+	float x_position;
+	float y_position;
+	float z_position;
 
 private:
 	void checkError(std::string file, int line);

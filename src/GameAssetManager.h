@@ -39,7 +39,7 @@ public:
 	GameAssetManager(GameAssetManager const&); // copy constructor
 	GameAssetManager(GameAssetManager const&&); // move constructor
 	void operator=(GameAssetManager const&); // assignment
-	void AddAsset(std::shared_ptr<GameAsset>, int x, int y, int z);
+	void AddAsset(std::shared_ptr<GameAsset>);
 	void Draw();
 	GLuint CreateGLProgram(std::string &, std::string &);
 	void UpdateCameraPosition(InputDirection, int mouse_x, int mouse_y);
@@ -69,7 +69,8 @@ private:
 	glm::mat4 view_matrix;	//The position of the camera.
 
 	//The 3D vector array used to store game assets.
-	std::vector<std::vector<std::vector<std::shared_ptr<GameAsset>>>> world_array;
+	//std::vector<std::vector<std::vector<std::shared_ptr<GameAsset>>>> world_array;
+	std::vector<std::shared_ptr<GameAsset>> world_array;
 };
 
 #endif // GAMEASSETMANAGER_H

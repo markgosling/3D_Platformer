@@ -24,8 +24,15 @@ BoundingBox::BoundingBox(float x_position, float y_position, float z_position){
 
 }
 
-void BoundingBox::Translate(){
-	//model_matrix = glm:::translate()
+
+glm::mat4 BoundingBox::GetTranslationMatrix(){
+
+	//Translate the shapes position on screen to match the XYZ coordinates.
+	//The x coordinate is negated so objects are translated to the right instead of left.
+	//Working glm::translate function code obtained from https://www.reddit.com/r/opengl/comments/2ztqjo/problem_with_glms_translate_matrix_call.
+	translate_matrix = glm::translate(glm::mat4(), glm::vec3(-x_position, y_position, z_position));
+
+	return translate_matrix;
 }
 
 /**

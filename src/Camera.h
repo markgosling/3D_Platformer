@@ -17,7 +17,7 @@ class Camera{
 
 public:
 	Camera();
-	glm::mat4 UpdateCameraPosition(InputDirection input_direction, int mouse_x, int mouse_y, std::vector<std::vector<std::vector<std::shared_ptr<GameAsset>>>> &world_array);
+	glm::mat4 UpdateCameraPosition(InputDirection input_direction, int mouse_x, int mouse_y, std::vector<std::shared_ptr<GameAsset>> &world_array);
 	float GetLeft();
 	float GetRight();
 	float GetTop();
@@ -25,7 +25,7 @@ public:
 	float GetFront();
 	float GetBack();
 
-	CollisionType DetectCollisionWithAsset(std::vector<std::vector<std::vector<std::shared_ptr<GameAsset>>>> &world_array);
+	CollisionType DetectCollisionWithAsset(std::vector<std::shared_ptr<GameAsset>> &world_array);
 
 private:
 

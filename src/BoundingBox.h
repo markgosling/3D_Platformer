@@ -18,7 +18,7 @@ public:
 	//std_shared_prglm::mat4 model_matrix;
 
 	BoundingBox(float, float, float);
-	void Translate();
+	glm::mat4 GetTranslationMatrix();
 	void Scale();
 	void RotateX();
 	void RotateY();
@@ -28,6 +28,8 @@ private:
 	float x_position;
 	float y_position;
 	float z_position;
+
+	glm::mat4 translate_matrix;
 
 	/**float GetX();
 	float GetY();

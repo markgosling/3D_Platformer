@@ -67,11 +67,11 @@ Camera::Camera(){
  * @param inputDirection - InputDirection - An Enum value indicating the direction being entered by the player.
  * @param mouse_x - Integer - The mouse X coordinates.
  * @param mouse_y - Integer - The mouse Y coordinates.
- * @param world_array - vector<vector<vector<shared_ptr<GameAsset>>>> - A reference to the 3D array storing assets.
+ * @param world_array - vector<shared_ptr<GameAsset>> - A reference to the array containing pointers to assets.
  *
  * @return an updated 4x4 view matrix.
  */
-glm::mat4 Camera::UpdateCameraPosition(InputDirection input_direction, int mouse_x, int mouse_y, std::vector<std::vector<std::vector<std::shared_ptr<GameAsset>>>> &world_array){
+glm::mat4 Camera::UpdateCameraPosition(InputDirection input_direction, int mouse_x, int mouse_y, std::vector<std::shared_ptr<GameAsset>> &world_array){
 
 	//The camera matrix code and code to look around were based on and adapted from
 	//tutorials found at the following links:
@@ -155,34 +155,30 @@ glm::mat4 Camera::UpdateCameraPosition(InputDirection input_direction, int mouse
 }
 
 /**
- * The 'DetectCollisionWithAsset' method looks through the entire 3D array of assets and
+ * The 'DetectCollisionWithAsset' method looks through the world array of assets and
  * checks them for collisions with the camera. If a collision is detected it returns the
  * side of the asset which was collided with. If no collision was detected it returns 'NOCOLLISION'.
  *
- * @param world_array - vector<vector<vector<shared_ptr<GameAsset>>>> - a 3D array containing assets.
+ * @param world_array - vector<shared_ptr<GameAsset>> - an array containing pointers to the assets.
  *
  * @return an Enum which indicates the side of the asset the camera collided with.
  */
-CollisionType Camera::DetectCollisionWithAsset(std::vector<std::vector<std::vector<std::shared_ptr<GameAsset>>>> &world_array){
+CollisionType Camera::DetectCollisionWithAsset(std::vector<std::shared_ptr<GameAsset>> &world_array){
 
 	//Loop through the 3D array of assets.
 	for(int x = 0; x < world_array.size(); x++){
-		for(int y = 0; y < world_array[x].size(); y++){
-			for(int z = 0; z < world_array[x][y].size(); z++){
 
-				//Check that an object exists in the array before attempting to access it.
-				if(world_array[x][y][z] != NULL){
+		//Check that an object exists in the array before attempting to access it.
+		if(world_array[x] != NULL){
 
-					//Create a variable which points to the current asset in the array.
-					auto ga = world_array[x][y][z];
+			//Create a variable which points to the current asset in the array
+			auto ga = world_array.at(x);
 
-					//Check for collisions with the cameras bounding box. If a collision is detected then
-					//return the side of the asset which was collided with.
-					if(ga->DetectCollision(this->GetLeft(), this->GetRight(), this->GetTop(), this->GetBottom(), this->GetFront(), this->GetBack()) != NOCOLLISION){
+			//Check for collisions with the cameras bounding box. If a collision is detected then
+			//return the side of the asset which was collided with.
+			if(ga->DetectCollision(this->GetLeft(), this->GetRight(), this->GetTop(), this->GetBottom(), this->GetFront(), this->GetBack()) != NOCOLLISION){
 
-						return ga->DetectCollision(this->GetLeft(), this->GetRight(), this->GetTop(), this->GetBottom(), this->GetFront(), this->GetBack());
-					}
-				}
+				return ga->DetectCollision(this->GetLeft(), this->GetRight(), this->GetTop(), this->GetBottom(), this->GetFront(), this->GetBack());
 			}
 		}
 	}

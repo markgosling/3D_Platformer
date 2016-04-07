@@ -88,11 +88,6 @@ CubeAsset::CubeAsset(float x_position, float y_position, float z_position) : Gam
 	this->width = 1;
 	this->depth = 1;
 	this->height = 1;
-
-	//Set the center position of the asset.
-	this->x_position = x_position;
-	this->y_position = y_position;
-	this->z_position = z_position;
 }
 
 /**

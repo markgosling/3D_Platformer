@@ -16,13 +16,22 @@
  * also to draw the asset on screen.
  */
 
+
+
 //new code
 GameAsset::GameAsset(float x_position, float y_position, float z_position){
-	//glm::mat4 model_matrix = glm::mat4(1,1,1,1,,1,1,1,1,1,1,1,1,1,1,1,1);
+
 
 	boundingBox = std::make_shared<BoundingBox>(x_position, y_position, z_position);
+	this->x_position = x_position;
+	this->y_position = y_position;
+	this->z_position = z_position;
 
 
+}
+
+glm::mat4 GameAsset::GetTranslationMatrix(){
+	return boundingBox->GetTranslationMatrix();
 }
 
 /**
