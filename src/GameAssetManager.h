@@ -61,11 +61,11 @@ private:
 	GLuint shape_green_value;
 	GLuint shape_blue_value;
 	GLuint projection_matrix_link;
-	GLuint translate_matrix_link;
+	GLuint model_transformation_matrix_link;
 	GLuint view_matrix_link;
 
 	glm::mat4 projection_matrix; //The projection view.
-	glm::mat4 translate_matrix; //The position of the model.
+	glm::mat4 model_transformation_matrix; //The translated position, rotation and scaling of the model.
 	glm::mat4 view_matrix;	//The position of the camera.
 
 	//The 3D vector array used to store game assets.

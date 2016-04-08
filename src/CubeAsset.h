@@ -23,7 +23,8 @@
  */
 class CubeAsset : public GameAsset {
 public:
-	CubeAsset(float x_position, float y_position, float z_position);
+	CubeAsset(float x_position, float y_position, float z_position, float scale,
+			float x_rotation, float y_rotation, float z_rotation);
 	~CubeAsset();
 	void Draw(GLuint);
 

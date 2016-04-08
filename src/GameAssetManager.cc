@@ -40,7 +40,7 @@ GameAssetManager::GameAssetManager() {
 	shape_blue_value = glGetUniformLocation(program_token, "blue");
 
 	projection_matrix_link = glGetUniformLocation(program_token, "projection_matrix");
-	translate_matrix_link = glGetUniformLocation(program_token, "translate_matrix");
+	model_transformation_matrix_link = glGetUniformLocation(program_token, "model_transformation_matrix");
 	view_matrix_link = glGetUniformLocation(program_token, "view_matrix");
 
 	//Create the projection matrix based on the size of the game window.
@@ -58,11 +58,10 @@ void GameAssetManager::AddAsset(std::shared_ptr<GameAsset> the_asset) {
 
 }
 
-//UPDATE METHOD DESCRIPTION!!!!
 /**
  * The 'Draw' method sets the value of the uniform variables in the shader program
- * then loops through the world_array to find assets to draw. It then translates them
- * to the correct position on screen and sets the draw colour based on the type
+ * then loops through the world_array to find assets to draw. It sends the model transformation
+ * matrix to the shader program and sets the draw colour based on the type
  * of asset being drawn. Finally it calls the assets 'Draw' method to draw it on screen.
  */
 void GameAssetManager::Draw() {
@@ -80,9 +79,9 @@ void GameAssetManager::Draw() {
 			//Create a new variable to store the pointer of the current asset.
 			auto ga = world_array.at(i);
 
-			//Get the translation matrix directly from the model.
-			translate_matrix = ga->GetTranslationMatrix();
-			glUniformMatrix4fv(translate_matrix_link, 1, GL_FALSE, &translate_matrix[0][0]);
+			//Get the transform matrix (with translation, rotation and scaling already calculated) directly from the model.
+			model_transformation_matrix = ga->GetCompleteModelTransformationMatrix();
+			glUniformMatrix4fv(model_transformation_matrix_link, 1, GL_FALSE, &model_transformation_matrix[0][0]);
 
 			//Check the asset type and draw it using the correct colour.
 			if(ga->GetAssetType() == GameAsset::CUBE){

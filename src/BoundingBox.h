@@ -17,8 +17,9 @@ public:
 	//BoundingBox() : model_matrix(std::make_shared(1.0));
 	//std_shared_prglm::mat4 model_matrix;
 
-	BoundingBox(float, float, float);
-	glm::mat4 GetTranslationMatrix();
+	BoundingBox(float, float, float, float, float, float, float);
+	glm::mat4 GetCompleteModelTransformationMatrix();
+	glm::mat4 Translate();
 	void Scale();
 	void RotateX();
 	void RotateY();
@@ -29,7 +30,12 @@ private:
 	float y_position;
 	float z_position;
 
-	glm::mat4 translate_matrix;
+	float scale;
+	float x_rotation;
+	float y_rotation;
+	float z_rotation;
+
+	glm::mat4 model_transformation_matrix; //The matrix produced after the model has been translated, rotated and scaled.
 
 	/**float GetX();
 	float GetY();

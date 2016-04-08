@@ -23,7 +23,8 @@
  */
 class PyramidAsset : public GameAsset {
 public:
-	PyramidAsset(float x_position, float y_position, float z_position);
+	PyramidAsset(float x_position, float y_position, float z_position, float scale,
+			float x_rotation, float y_rotation, float z_rotation);
 	~PyramidAsset();
 };
 

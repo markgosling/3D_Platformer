@@ -27,7 +27,7 @@
 class GameAsset {
 
 public:
-	GameAsset(float, float, float);
+	GameAsset(float, float, float, float, float, float, float);
 	enum AssetType {CUBE, PYRAMID};
 	void Draw(GLuint);
 	AssetType GetAssetType();
@@ -36,7 +36,7 @@ public:
 	bool DetectYCollision(float camera_top, float camera_bottom);
 	bool DetectZCollision(float camera_front, float camera_back);
 	CollisionType DetectCollision(float camera_left, float camera_right, float camera_top, float camera_bottom, float camera_front, float camera_back);
-	glm::mat4 GetTranslationMatrix();
+	glm::mat4 GetCompleteModelTransformationMatrix();
 
 protected:
 	AssetType assetType;

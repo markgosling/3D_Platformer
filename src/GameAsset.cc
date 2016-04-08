@@ -19,10 +19,11 @@
 
 
 //new code
-GameAsset::GameAsset(float x_position, float y_position, float z_position){
+GameAsset::GameAsset(float x_position, float y_position, float z_position, float scale,
+		float x_rotation, float y_rotation, float z_rotation){
 
 
-	boundingBox = std::make_shared<BoundingBox>(x_position, y_position, z_position);
+	boundingBox = std::make_shared<BoundingBox>(x_position, y_position, z_position, scale, x_rotation, y_rotation, z_rotation);
 	this->x_position = x_position;
 	this->y_position = y_position;
 	this->z_position = z_position;
@@ -30,8 +31,8 @@ GameAsset::GameAsset(float x_position, float y_position, float z_position){
 
 }
 
-glm::mat4 GameAsset::GetTranslationMatrix(){
-	return boundingBox->GetTranslationMatrix();
+glm::mat4 GameAsset::GetCompleteModelTransformationMatrix(){
+	return boundingBox->GetCompleteModelTransformationMatrix();
 }
 
 /**
