@@ -67,11 +67,6 @@ PyramidAsset::PyramidAsset(float x_position, float y_position, float z_position,
 	///Set the asset type. This is required to determine the object type
 	//when deciding which shader program to use to colour the object.
 	assetType = PYRAMID;
-
-	//Set values used to create the bounding box around the asset.
-	this->width = 1;
-	this->depth = 1;
-	this->height = 1;
 }
 
 /**

@@ -21,9 +21,8 @@ GameWorld::GameWorld () {
 
 	asset_manager = std::make_shared<GameAssetManager>();
 
-	//Add the assets to make the game world. The X, Y, Z coordinates are passed
-	//to both the constructor of the asset upon creation and also to the
-	//'AddAsset' method of 'GameAssetManager'.
+	//Add the assets to make the game world.
+	//The assets constructor parameters are in the form of: X pos, Y pos, Z pos, scale, X rot, Y rot, Z rot.
 
 	//Add the blocks required to make the ground.
 	//asset_manager->AddAsset(std::make_shared<CubeAsset>(0, 0, 0), 0, 0, 0);
@@ -114,8 +113,8 @@ GameWorld::GameWorld () {
 	//asset_manager->AddAsset(std::make_shared<CubeAsset>(6, 0, 9), 6, 0, 9);
 	//asset_manager->AddAsset(std::make_shared<CubeAsset>(7, 0, 9), 7, 0, 9);
 
-	//asset_manager->AddAsset(std::make_shared<CubeAsset>(0, 0, 10), 0, 0, 10);
-	//asset_manager->AddAsset(std::make_shared<CubeAsset>(1, 0, 10), 1, 0, 10);
+	asset_manager->AddAsset(std::make_shared<CubeAsset>(0, 0, 10, 1, 0, 0, 0));
+	asset_manager->AddAsset(std::make_shared<CubeAsset>(1, 0, 10, 1, 0, 0, 0));
 	//asset_manager->AddAsset(std::make_shared<CubeAsset>(2, 0, 10), 2, 0, 10);
 	//asset_manager->AddAsset(std::make_shared<CubeAsset>(3, 0, 10), 3, 0, 10);
 	//asset_manager->AddAsset(std::make_shared<CubeAsset>(4, 0, 10), 4, 0, 10);
@@ -123,18 +122,22 @@ GameWorld::GameWorld () {
 	//asset_manager->AddAsset(std::make_shared<CubeAsset>(6, 0, 10), 6, 0, 10);
 	//asset_manager->AddAsset(std::make_shared<CubeAsset>(7, 0, 10), 7, 0, 10);
 
+	//Add a large cube at the end of the play field to represent a house...?
+	asset_manager->AddAsset(std::make_shared<CubeAsset>(4, 2, 18, 4, 0, 45, 0));
+	asset_manager->AddAsset(std::make_shared<PyramidAsset>(4, 6, 18, 4, 0, 45, 0));
+
 	//Add the pillars on the screen position furtherest from the player.
-	//asset_manager->AddAsset(std::make_shared<CubeAsset>(1, 1, 10), 1, 1, 10);
-	//asset_manager->AddAsset(std::make_shared<CubeAsset>(6, 1, 10), 6, 1, 10);
+	asset_manager->AddAsset(std::make_shared<CubeAsset>(1, 1, 10, 1, 0, 0, 0));
+	asset_manager->AddAsset(std::make_shared<CubeAsset>(6, 1, 10, 1, 0, 0, 0));
 
-	//asset_manager->AddAsset(std::make_shared<CubeAsset>(1, 2, 10), 1, 2, 10);
-	//asset_manager->AddAsset(std::make_shared<CubeAsset>(6, 2, 10), 6, 2, 10);
+	asset_manager->AddAsset(std::make_shared<CubeAsset>(1, 2, 10, 1, 0, 0, 0));
+	asset_manager->AddAsset(std::make_shared<CubeAsset>(6, 2, 10, 1, 0, 0, 0));
 
-	//asset_manager->AddAsset(std::make_shared<PyramidAsset>(1, 3, 10), 1, 3, 10);
+	asset_manager->AddAsset(std::make_shared<PyramidAsset>(1, 3, 10, 1, 0, 0, 0));
 	//asset_manager->AddAsset(std::make_shared<PyramidAsset>(6, 3, 10), 6, 3, 10);
 
 	//Add the pillars on the screen position closest to the player.
-	asset_manager->AddAsset(std::make_shared<CubeAsset>(1, 1, 0, 1, 0, 0, 0)); //X pos, Y pos, Z pos, scale, X rot, Y rot, Z rot.
+	asset_manager->AddAsset(std::make_shared<CubeAsset>(1, 1, 0, 1, 0, 0, 0));
 	asset_manager->AddAsset(std::make_shared<CubeAsset>(6, 1, 0, 1, 0, 0, 0));
 
 	//asset_manager->AddAsset(std::make_shared<CubeAsset>(1, 2, 0), 1, 2, 0);

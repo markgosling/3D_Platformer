@@ -10,6 +10,7 @@
 
 #include <memory.h>
 #include <glm/glm.hpp>
+#include "common.h"
 
 class BoundingBox{
 
@@ -20,6 +21,19 @@ public:
 	BoundingBox(float, float, float, float, float, float, float);
 	glm::mat4 GetCompleteModelTransformationMatrix();
 	glm::mat4 Translate();
+	CollisionType DetectCollision(float, float, float, float, float, float);
+
+	bool DetectXCollision(float, float);
+	bool DetectYCollision(float, float);
+	bool DetectZCollision(float, float);
+
+	float GetLeft();
+	float GetRight();
+	float GetTop();
+	float GetBottom();
+	float GetFront();
+	float GetBack();
+
 	void Scale();
 	void RotateX();
 	void RotateY();
@@ -35,20 +49,20 @@ private:
 	float y_rotation;
 	float z_rotation;
 
+	float left_side_test;
+	float right_side_test;
+	float top_side_test;
+	float bottom_side_test;
+	float front_side_test;
+	float back_side_test;
+
+	glm::vec3 model_center;
+
 	glm::mat4 model_transformation_matrix; //The matrix produced after the model has been translated, rotated and scaled.
 
-	/**float GetX();
-	float GetY();
-	float GetZ();
+	/**
 
 	float GetSize();
-
-	float GetLeft();
-	float GetRight();
-	float GetTop();
-	float GetBottom();
-	float GetFront();
-	float GetBack();
 
 	void SetX(float);
 	void SetY(float);
@@ -56,12 +70,7 @@ private:
 
 	void SetSize(float);
 
-	bool DetectXCollision(float, float, float, float, float);
-	bool DetectYCollision(float, float, float, float, float);
-	bool DetectZCollision(float, float, float, float, float);
-
-	glm::vec3 center;
-	float size;**/
+**/
 
 };
 

@@ -18,29 +18,41 @@
 
 
 
-//new code
+/**
+ * Constructor which takes in the X, Y, Z position of the asset along with the scaling amount. It also
+ * takes in the rotation in degrees around the X, Y and Z axis. It then creates an instance of a bounding
+ * box and passes it information about the assets position.
+ *
+ * @param x_position - float - The center X position of the asset.
+ * @param y_position - float - The center Y position of the asset.
+ * @param z_position - float - The center Z position of the asset.
+ * @param scale - float - The amount the asset should be scaled by.
+ * @param x_rotation - float - The amount in degrees in which to rotate around the X axis.
+ * @param y_rotation - float - The amount in degrees in which to rotate around the Y axis.
+ * @param z_rotation - float - The amount in degrees in which to rotate around the Z axis.
+ */
 GameAsset::GameAsset(float x_position, float y_position, float z_position, float scale,
 		float x_rotation, float y_rotation, float z_rotation){
 
-
 	boundingBox = std::make_shared<BoundingBox>(x_position, y_position, z_position, scale, x_rotation, y_rotation, z_rotation);
-	this->x_position = x_position;
-	this->y_position = y_position;
-	this->z_position = z_position;
-
-
 }
 
+
+/**
+ * Method which calls a method in the bounding box and returns a matrix containing the final
+ * information about the models position, scale and rotation.
+ *
+ * @return a mat4 matrix containing the complete model position transformation.
+ */
 glm::mat4 GameAsset::GetCompleteModelTransformationMatrix(){
 	return boundingBox->GetCompleteModelTransformationMatrix();
 }
 
+
 /**
- * The 'DetectCollision' method is used to detect a collision between the camera and
- * the game object. It compares each side of the cameras bounding box to the sides of
- * the asset being checked to work out if a collision has occurred, then calculates which
- * side of the asset was collided with. It returns an Enum with the side of the asset where
- * the collision occurred.
+ * The 'DetectCollision' method acts as a pass-through to send the position of the sides
+ * of the cameras bounding box to the bounding box of the asset. It returns an Enum containing
+ * the side of the asset where the camera and asset collided, if at all.
  *
  * @param camera_left - float - The left side of the cameras boundary box.
  * @param camera_right- float - The right side of the cameras boundary box.
@@ -55,93 +67,9 @@ glm::mat4 GameAsset::GetCompleteModelTransformationMatrix(){
 CollisionType GameAsset::DetectCollision(float camera_left, float camera_right, float camera_top,
 		float camera_bottom, float camera_front, float camera_back){
 
-	//Call the methods which check for collisions on the X, Y and Z coordinates of the asset.
-	//If all three methods return true, then we know the camera has collided with
-	//an object and we need to check which side of the asset has been collided with.
-	if(DetectXCollision(camera_left, camera_right) &&
-			DetectYCollision(camera_top, camera_bottom) &&
-			DetectZCollision(camera_front, camera_back)){
-
-		//Find the distance between the camera right side and the left side of the asset.
-		left_side_test = camera_right - (x_position - (width/2));
-
-		//Find the distance between the camera left side and the right side of the asset.
-		right_side_test = (x_position + (width/2)) - camera_left;
-
-		//Find the distance between the camera front side and the back side of the asset.
-		back_side_test  = camera_front - (z_position - (depth/2));
-
-		//Find the distance between the camera back side and the front side of the asset.
-		front_side_test = (z_position + (depth/2)) - camera_back;
-
-		//These tests are disabled as they are not currently required or properly implemented.
-		//bottom_side_test = camera_y_position - (y_position - (height/2));
-		//top_side_test  = camera_y_position - (y_position + (height/2));
-
-		//Check to see which distance is shortest. The shortest distance between the sides
-		//indicates which side of the asset was collided with. Return a value to indicate this.
-		if(left_side_test < right_side_test && left_side_test < front_side_test && left_side_test < back_side_test){
-			return LEFTSIDE;
-		}else if(right_side_test < left_side_test && right_side_test < front_side_test && right_side_test < back_side_test){
-			return RIGHTSIDE;
-		}else if(front_side_test < left_side_test && front_side_test < right_side_test && front_side_test < back_side_test){
-			return FRONTSIDE;
-		}else if(back_side_test < front_side_test && back_side_test < left_side_test && back_side_test < right_side_test){
-			return BACKSIDE;
-		}else{
-			return NOCOLLISION;
-		}
-	}
-	return NOCOLLISION;
+	return boundingBox->DetectCollision(camera_left, camera_right, camera_top, camera_bottom, camera_front, camera_back);
 }
 
-/**
- * Detects if the cameras boundary box is within the width of the asset.
- *
- * @param camera_left - float - The coordinate for the left side of the cameras boundary box.
- * @param camera_right - float - The coordinate for the right side of the cameras boundary box.
- *
- * @return true if a collision was detected, otherwise false.
- */
-bool GameAsset::DetectXCollision(float camera_left, float camera_right){
-
-	if(camera_right > x_position - (width/2) && camera_left < x_position + (width/2)){
-		return true;
-	}
-	return false;
-}
-
-/**
- * Detects if the cameras boundary box is within the height of the asset.
- *
- * @param camera_top - float - The coordinate for the top side of the cameras boundary box.
- * @param camera_bottom - float - The coordinate for the bottom side of the cameras boundary box.
- *
- * @return true if a collision was detected, otherwise false.
- */
-bool GameAsset::DetectYCollision(float camera_top, float camera_bottom){
-
-	if(camera_top > y_position - (height/2) && camera_bottom < y_position + (height/2)){
-		return true;
-	}
-	return false;
-}
-
-/**
- * Detects if the cameras boundary box is within the width of the asset.
- *
- * @param camera_front - float - The coordinate for the front side of the cameras boundary box.
- * @param camera_back - float - The coordinate for the back side of the cameras boundary box.
- *
- * @return true if a collision was detected, otherwise false.
- */
-bool GameAsset::DetectZCollision(float camera_front, float camera_back){
-
-	if(camera_front > z_position - (depth/2) && camera_back < z_position + (depth/2)){
-		return true;
-	}
-	return false;
-}
 
 //Define a 'checkGLError' method if not already defined.
 #ifdef DEBUG
@@ -150,6 +78,7 @@ bool GameAsset::DetectZCollision(float camera_front, float camera_back){
 // define symbol to be nothing
 #define checkGLError()
 #endif
+
 
 /**
  * The 'Draw' method is used to draw each asset individually using the shader
