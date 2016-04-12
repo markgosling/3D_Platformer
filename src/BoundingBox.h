@@ -11,6 +11,7 @@
 #include <memory.h>
 #include <glm/glm.hpp>
 #include "common.h"
+#include <vector>
 
 class BoundingBox{
 
@@ -22,10 +23,18 @@ public:
 	glm::mat4 GetCompleteModelTransformationMatrix();
 	glm::mat4 Translate();
 	CollisionType DetectCollision(float, float, float, float, float, float);
+	void SetAnimationParameters(std::vector<glm::vec3>, float, glm::vec3, float);
+	void Animate();
 
 	bool DetectXCollision(float, float);
 	bool DetectYCollision(float, float);
 	bool DetectZCollision(float, float);
+
+	std::vector<glm::vec3> coordinates_array;
+	float movement_speed;
+	glm::vec3 rotation_axis;
+	float rotation_speed;
+	bool is_animated;
 
 	float GetLeft();
 	float GetRight();
@@ -59,19 +68,6 @@ private:
 	glm::vec3 model_center;
 
 	glm::mat4 model_transformation_matrix; //The matrix produced after the model has been translated, rotated and scaled.
-
-	/**
-
-	float GetSize();
-
-	void SetX(float);
-	void SetY(float);
-	void SetZ(float);
-
-	void SetSize(float);
-
-**/
-
 };
 
 

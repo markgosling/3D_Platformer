@@ -59,6 +59,22 @@ void GameAssetManager::AddAsset(std::shared_ptr<GameAsset> the_asset) {
 }
 
 /**
+ * Method which passes the animation parameters to the game asset at the end position of the world_array array.
+ * IMPORTANT - this method should be called immediately after an object has been added to the array if
+ * it should be animated. Calling it at any other time will animate the wrong object.
+ *
+ * @param coordinates_array - std::vector<glm::vec3 - An array of vectors with the coordinate locations the object should be moved to.
+ * @param movement_speed - float The speed the object should be moved at.
+ * @param rotation_axis - glm::vec3 - Each value in the vec3 can be set to 1 to indicate whether the X, Y or Z axis should be rotated around.
+ * @param rotation_speed - float - The speed which the object should rotate.
+ **/
+void GameAssetManager::SetAnimationParameters(std::vector<glm::vec3> coordinates_array, float movement_speed, glm::vec3 rotation_axis, float rotation_speed){
+
+	world_array.back()-> SetAnimationParameters(coordinates_array, movement_speed, rotation_axis, rotation_speed);
+
+}
+
+/**
  * The 'Draw' method sets the value of the uniform variables in the shader program
  * then loops through the world_array to find assets to draw. It sends the model transformation
  * matrix to the shader program and sets the draw colour based on the type

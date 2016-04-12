@@ -1,13 +1,19 @@
-/*
- * BoundingBox.cpp
- *
- *  Created on: 14 Mar 2016
- *      Author: mark
- */
-
 #include "BoundingBox.h"
 #include <iostream>
 #include <glm/ext.hpp>
+
+/**
+ * @BoundingBox.cc
+ * @version 1.0
+ *
+ * @section Description
+ *
+ * BoundingBox is a class which creates a box around all game assets which allows them to use
+ * collision detection. It implements the collision detection method and also has methods allowing
+ * the object to have its scale and rotation set, allows it to be animated and also calculates and
+ * returns a matrix which can be used by the shader program to draw the object in the correct position.
+ */
+
 
 /**
  * Constructor which sets the starting positional information for the bounding box, e.g.
@@ -32,16 +38,21 @@ BoundingBox::BoundingBox(float x_position, float y_position, float z_position, f
 	this->x_rotation = x_rotation;
 	this->y_rotation = y_rotation;
 	this->z_rotation = z_rotation;
+
+	is_animated = false; //By default the object is not animated.
 }
 
 /**
  * Method which calculates a matrix containing the models translation, scaling and
  * rotation and returns it so it can be used in the shader program. It also calculates
- * the center position of the model so it can be used for performing collision detection.
+ * the center position of the model so it can be used for performing collision detection
+ * and calls the 'Animate()' method to animate the object.
  *
  * @return a mat4 matrix containing all the models positional information.
  */
 glm::mat4 BoundingBox::GetCompleteModelTransformationMatrix(){
+
+	this->Animate();
 
 	//First create a scale matrix.
 	glm::mat4 scale_matrix = glm::scale(glm::vec3(scale, scale, scale));
@@ -61,6 +72,48 @@ glm::mat4 BoundingBox::GetCompleteModelTransformationMatrix(){
 	model_center = glm::vec3((model_transformation_matrix * glm::vec4(0.0f,0.0f,0.0f,1.0f)));
 
 	return model_transformation_matrix;
+}
+
+/**
+ * Method which sets the animation parameters for the object and also sets a variable
+ * to indicate that the object should be animated. It accepts an array of vectors containing
+ * coordinates the object should be moved to, along with the movement speed. It also accepts
+ * a vec3 containing the X, Y, Z axis to rotate around and the speed of rotation.
+ *
+ * @param coordinates_array - std::vector<glm::vec3 - An array of vectors with the coordinate locations the object should be moved to.
+ * @param movement_speed - float The speed the object should be moved at.
+ * @param rotation_axis - glm::vec3 - Each value in the vec3 can be set to 1 to indicate whether the X, Y or Z axis should be rotated around.
+ * @param rotation_speed - float - The speed which the object should rotate.
+ **/
+void BoundingBox::SetAnimationParameters(std::vector<glm::vec3> coordinates_array, float movement_speed, glm::vec3 rotation_axis, float rotation_speed){
+
+	this->coordinates_array = coordinates_array;
+	this->movement_speed = movement_speed;
+	this->rotation_axis = rotation_axis;
+	this->rotation_speed = rotation_speed;
+	is_animated = true;
+}
+
+/**
+ * Method which animates the object according to the animation paramaters set. This method needs
+ * to be called constantly in order to animate the object each frame.
+ */
+void BoundingBox::Animate(){
+
+	if(is_animated == true){
+
+		if(rotation_axis[0] >= 1){
+			this->x_rotation = this->x_rotation + rotation_speed;
+		}
+
+		if(rotation_axis[1] >= 1){
+			this->y_rotation = this->y_rotation + rotation_speed;
+		}
+
+		if(rotation_axis[2] >= 1){
+			this->z_rotation = this->z_rotation + rotation_speed;
+		}
+	}
 }
 
 /**
@@ -151,7 +204,6 @@ bool BoundingBox::DetectXCollision(float camera_left, float camera_right){
  */
 bool BoundingBox::DetectYCollision(float camera_top, float camera_bottom){
 
-	std::cout << "test" << std::endl;
 	if(GetTop() > camera_bottom && GetBottom() < camera_top){
 		return true;
 	}
@@ -182,7 +234,6 @@ bool BoundingBox::DetectZCollision(float camera_front, float camera_back){
  * @return a float containing the left side position.
  */
 float BoundingBox::GetLeft(){
-
 	return (-model_center[0]) - (scale * 0.5);
 }
 
@@ -193,7 +244,6 @@ float BoundingBox::GetLeft(){
  * @return a float containing the right side position.
  */
 float BoundingBox::GetRight(){
-
 	return (-model_center[0]) + (scale * 0.5);
 }
 
@@ -204,7 +254,6 @@ float BoundingBox::GetRight(){
  * @return a float containing the top side position.
  */
 float BoundingBox::GetTop(){
-
 	return model_center[1] + (scale * 0.5);
 }
 
@@ -215,7 +264,6 @@ float BoundingBox::GetTop(){
  * @return a float containing the bottom side position.
  */
 float BoundingBox::GetBottom(){
-
 	return model_center[1] - (scale * 0.5);
 }
 
@@ -225,7 +273,6 @@ float BoundingBox::GetBottom(){
  * @return a float containing the front side position.
  */
 float BoundingBox::GetFront(){
-	std::cout << "asset front = " << (model_center[2] - (scale * 0.5)) << std::endl;
 	return model_center[2] + (scale * 0.5);
 }
 
@@ -236,6 +283,5 @@ float BoundingBox::GetFront(){
  * @return a float containing the back side position.
  */
 float BoundingBox::GetBack(){
-	std::cout << "asset back = " << (model_center[2] + (scale * 0.5)) << std::endl;
 	return model_center[2] - (scale * 0.5);
 }

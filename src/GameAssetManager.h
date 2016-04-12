@@ -40,6 +40,7 @@ public:
 	GameAssetManager(GameAssetManager const&&); // move constructor
 	void operator=(GameAssetManager const&); // assignment
 	void AddAsset(std::shared_ptr<GameAsset>);
+	void SetAnimationParameters(std::vector<glm::vec3>, float, glm::vec3, float);
 	void Draw();
 	GLuint CreateGLProgram(std::string &, std::string &);
 	void UpdateCameraPosition(InputDirection, int mouse_x, int mouse_y);

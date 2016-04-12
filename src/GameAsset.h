@@ -31,7 +31,8 @@ public:
 	enum AssetType {CUBE, PYRAMID};
 	void Draw(GLuint);
 	AssetType GetAssetType();
-	std::shared_ptr<BoundingBox> boundingBox;
+	std::shared_ptr<BoundingBox> bounding_box;
+	void SetAnimationParameters(std::vector<glm::vec3>, float, glm::vec3, float);
 	CollisionType DetectCollision(float camera_left, float camera_right, float camera_top, float camera_bottom, float camera_front, float camera_back);
 	glm::mat4 GetCompleteModelTransformationMatrix();
 
