@@ -63,14 +63,14 @@ void GameAssetManager::AddAsset(std::shared_ptr<GameAsset> the_asset) {
  * IMPORTANT - this method should be called immediately after an object has been added to the array if
  * it should be animated. Calling it at any other time will animate the wrong object.
  *
- * @param coordinates_array - std::vector<glm::vec3 - An array of vectors with the coordinate locations the object should be moved to.
+ * @param target_coordinates_array - std::vector<glm::vec3 - An array of vectors with the coordinate locations the object should be moved to.
  * @param movement_speed - float The speed the object should be moved at.
  * @param rotation_axis - glm::vec3 - Each value in the vec3 can be set to 1 to indicate whether the X, Y or Z axis should be rotated around.
  * @param rotation_speed - float - The speed which the object should rotate.
  **/
-void GameAssetManager::SetAnimationParameters(std::vector<glm::vec3> coordinates_array, float movement_speed, glm::vec3 rotation_axis, float rotation_speed){
+void GameAssetManager::SetAnimationParameters(std::vector<glm::vec3> target_coordinates_array, float movement_speed, glm::vec3 rotation_axis, float rotation_speed){
 
-	world_array.back()-> SetAnimationParameters(coordinates_array, movement_speed, rotation_axis, rotation_speed);
+	world_array.back()-> SetAnimationParameters(target_coordinates_array, movement_speed, rotation_axis, rotation_speed);
 
 }
 

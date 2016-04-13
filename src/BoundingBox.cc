@@ -30,9 +30,9 @@
 BoundingBox::BoundingBox(float x_position, float y_position, float z_position, float scale,
 		float x_rotation, float y_rotation, float z_rotation){
 
-	this->x_position = x_position;
-	this->y_position = y_position;
-	this->z_position = z_position;
+	this->position[0] = x_position;
+	this->position[1] = y_position;
+	this->position[2] = z_position;
 
 	this->scale = scale;
 	this->x_rotation = x_rotation;
@@ -58,7 +58,7 @@ glm::mat4 BoundingBox::GetCompleteModelTransformationMatrix(){
 	glm::mat4 scale_matrix = glm::scale(glm::vec3(scale, scale, scale));
 
 	//Now create a translation matrix to move the model to the correct world coordinates.
-	glm::mat4 translate_matrix = glm::translate(glm::mat4(), glm::vec3(-x_position, y_position, z_position));
+	glm::mat4 translate_matrix = glm::translate(glm::mat4(), glm::vec3(-position[0], position[1], position[2]));
 
 	//Multiply the matrices together to set the final model position and scale.
 	model_transformation_matrix = translate_matrix * scale_matrix;
@@ -80,28 +80,70 @@ glm::mat4 BoundingBox::GetCompleteModelTransformationMatrix(){
  * coordinates the object should be moved to, along with the movement speed. It also accepts
  * a vec3 containing the X, Y, Z axis to rotate around and the speed of rotation.
  *
- * @param coordinates_array - std::vector<glm::vec3 - An array of vectors with the coordinate locations the object should be moved to.
+ * @param target_coordinates_array - std::vector<glm::vec3 - An array of vectors with the coordinate locations the object should be moved to.
  * @param movement_speed - float The speed the object should be moved at.
  * @param rotation_axis - glm::vec3 - Each value in the vec3 can be set to 1 to indicate whether the X, Y or Z axis should be rotated around.
  * @param rotation_speed - float - The speed which the object should rotate.
  **/
-void BoundingBox::SetAnimationParameters(std::vector<glm::vec3> coordinates_array, float movement_speed, glm::vec3 rotation_axis, float rotation_speed){
+void BoundingBox::SetAnimationParameters(std::vector<glm::vec3> target_coordinates_array, float movement_speed, glm::vec3 rotation_axis, float rotation_speed){
 
-	this->coordinates_array = coordinates_array;
+	this->target_coordinates_array = target_coordinates_array;
 	this->movement_speed = movement_speed;
 	this->rotation_axis = rotation_axis;
 	this->rotation_speed = rotation_speed;
 	is_animated = true;
+	target_reached = true; //Allows the 'Animate' method to start animating the object.
+	coordinates_array_position = 0;
+
 }
 
 /**
- * Method which animates the object according to the animation paramaters set. This method needs
+ * Method which animates the object according to the animation parameters set. This method needs
  * to be called constantly in order to animate the object each frame.
  */
 void BoundingBox::Animate(){
 
+	//Only animate the object if it has had animation parameters passed to it.
 	if(is_animated == true){
 
+		//Check that coordinates are stored in the array before continuing.
+		if(target_coordinates_array.size() > 0){
+
+			//If the target coordinates have been reached calculate the distance\direction to the next target.
+			//Otherwise just move the object.
+			if(target_reached == true){
+
+				//Set the distance from the current position to the target and the direction.
+				//Code adapted from an example shown at http://gamedev.stackexchange.com/questions/23447/moving-from-ax-y-to-bx1-y1-with-constant-speed.
+				distance = glm::distance(position, target_coordinates_array.at(coordinates_array_position));
+				direction = glm::normalize(target_coordinates_array.at(coordinates_array_position) - position);
+
+				//Move the object and set that the new target has not yet been reached.
+				position += direction * movement_speed * 0.01f;
+				target_reached = false;
+			}else{
+
+				position += direction * movement_speed * 0.01f;
+
+				//Perform a rough check on the current coordinates to see if they are within the target coordinates +\- the movement speed.
+				//If so, then set that the target has been reached and increment the position of the coordinates array.
+				if(position[0] > (target_coordinates_array.at(coordinates_array_position)[0] - movement_speed * 0.01f) && position[0] < (target_coordinates_array.at(coordinates_array_position)[0] + movement_speed * 0.01f)
+						&& position[1] > (target_coordinates_array.at(coordinates_array_position)[1] - movement_speed * 0.01f) && position[1] < (target_coordinates_array.at(coordinates_array_position)[1] + movement_speed * 0.01f)
+						&& position[2] > (target_coordinates_array.at(coordinates_array_position)[2] - movement_speed * 0.01f) && position[2] < (target_coordinates_array.at(coordinates_array_position)[2] + movement_speed * 0.01f)){
+
+					target_reached = true;
+
+					//Increment the position in the array by 1, or reset it back to 0 if the end of the array has been reached.
+					if(coordinates_array_position == target_coordinates_array.size()-1){
+						coordinates_array_position = 0;
+					}else{
+						coordinates_array_position += 1;
+					}
+				}
+			}
+		}
+
+		//Check which axis the object should rotate around and update the rotation amount accordingly.
 		if(rotation_axis[0] >= 1){
 			this->x_rotation = this->x_rotation + rotation_speed;
 		}

@@ -30,12 +30,6 @@ public:
 	bool DetectYCollision(float, float);
 	bool DetectZCollision(float, float);
 
-	std::vector<glm::vec3> coordinates_array;
-	float movement_speed;
-	glm::vec3 rotation_axis;
-	float rotation_speed;
-	bool is_animated;
-
 	float GetLeft();
 	float GetRight();
 	float GetTop();
@@ -49,14 +43,22 @@ public:
 	void RotateZ();
 
 private:
-	float x_position;
-	float y_position;
-	float z_position;
+	glm::vec3 position; //X, Y and Z starting coordinates.
 
 	float scale;
 	float x_rotation;
 	float y_rotation;
 	float z_rotation;
+
+	std::vector<glm::vec3> target_coordinates_array;
+	float movement_speed;
+	glm::vec3 rotation_axis;
+	float rotation_speed;
+	bool is_animated;
+	float distance; //Distance between the start point and target point when animating the object.
+	glm::vec3 direction;
+	bool target_reached;
+	int coordinates_array_position;
 
 	float left_side_test;
 	float right_side_test;

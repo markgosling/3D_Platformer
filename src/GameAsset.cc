@@ -39,13 +39,13 @@ GameAsset::GameAsset(float x_position, float y_position, float z_position, float
 /**
  * Method which passes the animation parameters for the object to the BoundingBox class.
  *
- * @param coordinates_array - std::vector<glm::vec3 - An array of vectors with the coordinate locations the object should be moved to.
+ * @param target_coordinates_array - std::vector<glm::vec3 - An array of vectors with the coordinate locations the object should be moved to.
  * @param movement_speed - float The speed the object should be moved at.
  * @param rotation_axis - glm::vec3 - Each value in the vec3 can be set to 1 to indicate whether the X, Y or Z axis should be rotated around.
  * @param rotation_speed - float - The speed which the object should rotate.
  **/
-void GameAsset::SetAnimationParameters(std::vector<glm::vec3> coordinates_array, float movement_speed, glm::vec3 rotation_axis, float rotation_speed){
-	bounding_box->SetAnimationParameters(coordinates_array, movement_speed, rotation_axis, rotation_speed);
+void GameAsset::SetAnimationParameters(std::vector<glm::vec3> target_coordinates_array, float movement_speed, glm::vec3 rotation_axis, float rotation_speed){
+	bounding_box->SetAnimationParameters(target_coordinates_array, movement_speed, rotation_axis, rotation_speed);
 }
 
 

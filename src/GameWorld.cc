@@ -28,8 +28,7 @@ GameWorld::GameWorld () {
 	//The assets constructor parameters are in the form of: X pos, Y pos, Z pos, scale, X rot, Y rot, Z rot.
 
 	//Animate new objects by calling 'SetAnimationParameters(array of type vec3 containing movement coordinates, movement speed,
-																//vec3 with the coordinates set to 1 to indicate an axis to rotate around,
-																//rotation speed, true\false indicating if the animation should loop);'
+	//vec3 with the coordinates set to 1 to indicate an axis to rotate around, rotation speed);'
 
 	//Add the blocks required to make the ground.
 	asset_manager->AddAsset(std::make_shared<CubeAsset>(0, 0, 0, 1, 0, 0, 0));
@@ -165,6 +164,47 @@ GameWorld::GameWorld () {
 
 	//Set the second pyramid to rotate along the Y axis.
 	asset_manager->SetAnimationParameters(animation_coordinates, 0.0, glm::vec3(0,1,0), -0.1);
+
+	//Add a half size cube above the game world to represent a moving platform.
+	asset_manager->AddAsset(std::make_shared<CubeAsset>(0, 5, 10, 0.5, 0, 0, 0));
+
+	//Animate the platform by setting coordinates which will cause it to move around the edge of the game world.
+	animation_coordinates.push_back(glm::vec3(0,5,0));
+	animation_coordinates.push_back(glm::vec3(7,5,0));
+	animation_coordinates.push_back(glm::vec3(7,5,10));
+	animation_coordinates.push_back(glm::vec3(0,5,10));
+
+	//Pass the movement coordinates to the platform.
+	asset_manager->SetAnimationParameters(animation_coordinates, 2.0, glm::vec3(0,0,0), 0);
+
+	//Add a second small cube to the sky.
+	asset_manager->AddAsset(std::make_shared<CubeAsset>(5, 8, 5, 0.6, 0, 0, 0));
+
+	//Clear the target coordinates and then add new ones to the array to make the cube bounce
+	//from the center of the world to one of the pillars, then back to the center before heading towards
+	//the next pillar.
+	animation_coordinates.clear();
+	animation_coordinates.push_back(glm::vec3(1,4,0)); //Pillar 1.
+	animation_coordinates.push_back(glm::vec3(5, 8, 5)); //Center.
+	animation_coordinates.push_back(glm::vec3(6, 4, 0)); //Pillar 2.
+	animation_coordinates.push_back(glm::vec3(5, 8, 5)); //Center.
+	animation_coordinates.push_back(glm::vec3(6, 4, 10)); //Pillar 3.
+	animation_coordinates.push_back(glm::vec3(5, 8, 5)); //Center.
+	animation_coordinates.push_back(glm::vec3(1, 4, 10)); //Pillar 4.
+	animation_coordinates.push_back(glm::vec3(5, 8, 5)); //Center.
+
+	//Pass the movement coordinates to the cube with a movement speed of 1.
+	//Also set it to rotate around all 3 axes at once with a rotation speed of 0.1.
+	asset_manager->SetAnimationParameters(animation_coordinates, 4.0, glm::vec3(1,1,1), 0.1);
+
+	//Add two large cubes to the left of the play field and a rotated pyramid to represent a windmill(?).
+	asset_manager->AddAsset(std::make_shared<CubeAsset>(-8, 1, 5, 2, 0, 0, 0));
+	asset_manager->AddAsset(std::make_shared<CubeAsset>(-8, 3, 5, 2, 0, 0, 0));
+	asset_manager->AddAsset(std::make_shared<PyramidAsset>(-6.5, 3, 5, 1.5, 0, 0, -1.6));
+
+	//Clear the animation coordinates then call the method to rotate the pyramid around its X axis.
+	animation_coordinates.clear();
+	asset_manager->SetAnimationParameters(animation_coordinates, 0, glm::vec3(1,0,0), 0.1);
 }
 
 /**
