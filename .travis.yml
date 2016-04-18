@@ -20,6 +20,7 @@ before_install:
  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install glfw2; fi
  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install glfw3; fi
  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install python; fi
+ - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew unlink boost
  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install boost --with-python; fi
  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install boost-python; fi
 
