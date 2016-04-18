@@ -96,7 +96,7 @@ std::shared_ptr<SDL_Window> InitWorld() {
 	atexit(SDL_Quit);
 
 	//Create a new window with an OpenGL surface.
-	_window = SDL_CreateWindow("Shader Example"
+	_window = SDL_CreateWindow("3D Platformer"
 			, SDL_WINDOWPOS_CENTERED
 			, SDL_WINDOWPOS_CENTERED
 			, width
