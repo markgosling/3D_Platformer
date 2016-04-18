@@ -19,6 +19,10 @@ before_install:
  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install homebrew/x11/mesalib-glw; fi
  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install glfw2; fi
  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install glfw3; fi
+ - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install python; fi
+ - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install boost --with-python; fi
+ - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install boost-python; fi
+
 
 script:
  - chmod 755 configure
