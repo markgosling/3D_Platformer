@@ -153,6 +153,11 @@ void Draw(const std::shared_ptr<SDL_Window> &window, const std::shared_ptr<GameW
 	SDL_GL_SwapWindow(window.get());
 }
 
+//Fix to prevent WinMain errors when building in Cygwin as shown here: http://stackoverflow.com/questions/29846946/undefined-reference-to-winmain-when-using-cygwin-sdl2-and-netbeans
+#ifdef main
+# undef main
+#endif 
+
 /**
  * Main function which starts the game, initialises the game
  * window and other objects, creates a timer and handles the

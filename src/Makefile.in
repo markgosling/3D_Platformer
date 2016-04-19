@@ -256,8 +256,8 @@ INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 LD = @LD@
 
-#new code adapted from example at http://nuclear.mutantstargoat.com/articles/make/#a-makefile-for-99-of-your-programs for osx builds
-LDFLAGS = -framework OpenGL -framework GLUT -lpython2.7 -lboost_python
+#new open GL code adapted from example at http://nuclear.mutantstargoat.com/articles/make/#a-makefile-for-99-of-your-programs for osx builds
+LDFLAGS = -framework OpenGL -framework GLUT -lpython2.7 -lboost_python -lSDL2
 LIBOBJS = @LIBOBJS@
 ####end of new code
 LIBS = @LIBS@ $(gl_LIBS) $(glew_LIBS) $(sdl2_LIBS) \
@@ -358,7 +358,7 @@ lib3dplatformer_la_SOURCES = GameWorld.cc GameAssetManager.cc CubeAsset.cc Pyram
 lib3dplatformer_la_LDFLAGS = -version-info 0:1
 AM_CPPFLAGS = -DGL_GLEXT_PROTOTYPES -DGL3_PROTOTYPES -std=c++11 \
 	$(gl_CFLAGS) $(glew_CFLAGS) $(sdl2_CFLAGS) $(BOOST_CPPFLAGS) \
-	-I /usr/include/python2.7
+	-I/usr/include/python2.7 -I/usr/local/include
 all: all-am
 
 .SUFFIXES:
