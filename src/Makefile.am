@@ -14,7 +14,8 @@ AM_CPPFLAGS += $(gl_CFLAGS) $(glew_CFLAGS) $(sdl2_CFLAGS) $(BOOST_CPPFLAGS)
 AM_CPPFLAGS += -I/usr/include/python2.7 -I/usr/local/include
 
 #new open GL code adapted from example at http://nuclear.mutantstargoat.com/articles/make/#a-makefile-for-99-of-your-programs for osx builds
-LDFLAGS = -framework OpenGL -framework GLUT -lpython2.7 -lboost_python -lSDL2
+#SDL2 flags added as per http://stackoverflow.com/questions/29846946/undefined-reference-to-winmain-when-using-cygwin-sdl2-and-netbeans
+LDFLAGS = -framework OpenGL -framework GLUT -lpython2.7 -lSDL2
 ####end of new code
 
 LIBS += $(gl_LIBS) $(glew_LIBS) $(sdl2_LIBS) $(BOOST_THREAD_LIBS) $(BOOST_PROGRAM_OPTIONS_LIBS)
