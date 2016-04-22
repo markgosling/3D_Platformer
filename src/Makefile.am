@@ -1,21 +1,22 @@
-EXTRA_DIST = GameWorld.h GameAssetManager.h GameAsset.h CubeAsset.h PyramidAsset.h Camera.h BoundingBox.h
+EXTRA_DIST = GameWorld.h GameAssetManager.h GameAsset.h CubeAsset.h PyramidAsset.h Camera.h BoundingBox.h PythonBindings.h
+
+#Abuse the shell command to compile the shared library. The output is stored in an unused variable.
+temp := $(shell g++ -shared -std=c++11 -fPIC -I/usr/include/python3.4m -lpython3 -lboost_python3 -o .libs/py3dplatformer.so PythonBindings.cc)
 
 bin_PROGRAMS = 3dplatformer
 3dplatformer_SOURCES = main.cc
-3dplatformer_LDADD = lib3dplatformer.la
+3dplatformer_LDADD = lib3dplatformer.la ./.libs/py3dplatformer.so
 
+#Code to compile the game engine as a library.
 lib_LTLIBRARIES = lib3dplatformer.la
 lib3dplatformer_la_SOURCES = GameWorld.cc GameAssetManager.cc CubeAsset.cc PyramidAsset.cc Camera.cc GameAsset.cc BoundingBox.cc
 lib3dplatformer_la_LDFLAGS = -version-info 0:1
 
 AM_CPPFLAGS = -DGL_GLEXT_PROTOTYPES -DGL3_PROTOTYPES
-AM_CPPFLAGS += -std=c++11
+AM_CPPFLAGS += -std=c++11 -I/usr/include/python3.4m
 AM_CPPFLAGS += $(gl_CFLAGS) $(glew_CFLAGS) $(sdl2_CFLAGS) $(BOOST_CPPFLAGS)
-AM_CPPFLAGS += -I/usr/include/python2.7 -I/usr/local/include
 
-#new open GL code adapted from example at http://nuclear.mutantstargoat.com/articles/make/#a-makefile-for-99-of-your-programs for osx builds
-#SDL2 flags added as per http://stackoverflow.com/questions/29846946/undefined-reference-to-winmain-when-using-cygwin-sdl2-and-netbeans
-LDFLAGS = -framework OpenGL -framework GLUT -lpython2.7 -lSDL2
-####end of new code
+#new open GL flags added based off discussion found at http://nuclear.mutantstargoat.com/articles/make/#a-makefile-for-99-of-your-programs for osx builds
+LDFLAGS = -framework OpenGL -framework GLUT -lSDL2 -lboost_python -lboost_system -lpython3 -lboost_python3
 
 LIBS += $(gl_LIBS) $(glew_LIBS) $(sdl2_LIBS) $(BOOST_THREAD_LIBS) $(BOOST_PROGRAM_OPTIONS_LIBS)
