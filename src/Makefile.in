@@ -146,11 +146,13 @@ lib3dplatformer_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
 	$(AM_CXXFLAGS) $(CXXFLAGS) $(lib3dplatformer_la_LDFLAGS) \
 	$(LDFLAGS) -o $@
+libpy3dplatformer_la_LIBADD =
+am_libpy3dplatformer_la_OBJECTS = PythonBindings.lo
+libpy3dplatformer_la_OBJECTS = $(am_libpy3dplatformer_la_OBJECTS)
 PROGRAMS = $(bin_PROGRAMS)
 am_3dplatformer_OBJECTS = main.$(OBJEXT)
 3dplatformer_OBJECTS = $(am_3dplatformer_OBJECTS)
-3dplatformer_DEPENDENCIES = lib3dplatformer.la \
-	./.libs/py3dplatformer.so
+3dplatformer_DEPENDENCIES = lib3dplatformer.la libpy3dplatformer.la
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -185,8 +187,10 @@ AM_V_CXXLD = $(am__v_CXXLD_@AM_V@)
 am__v_CXXLD_ = $(am__v_CXXLD_@AM_DEFAULT_V@)
 am__v_CXXLD_0 = @echo "  CXXLD   " $@;
 am__v_CXXLD_1 = 
-SOURCES = $(lib3dplatformer_la_SOURCES) $(3dplatformer_SOURCES)
-DIST_SOURCES = $(lib3dplatformer_la_SOURCES) $(3dplatformer_SOURCES)
+SOURCES = $(lib3dplatformer_la_SOURCES) \
+	$(libpy3dplatformer_la_SOURCES) $(3dplatformer_SOURCES)
+DIST_SOURCES = $(lib3dplatformer_la_SOURCES) \
+	$(libpy3dplatformer_la_SOURCES) $(3dplatformer_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -258,8 +262,9 @@ INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 LD = @LD@
 
 #new open GL flags added based off discussion found at http://nuclear.mutantstargoat.com/articles/make/#a-makefile-for-99-of-your-programs for osx builds
-LDFLAGS = -framework OpenGL -framework GLUT -lSDL2 -lboost_python -lboost_system -lpython3 -lboost_python3
+LDFLAGS = -framework OpenGL -framework GLUT -lSDL2 -lboost_python3 -lboost_system
 LIBOBJS = @LIBOBJS@
+#-lpython3
 LIBS = @LIBS@ $(gl_LIBS) $(glew_LIBS) $(sdl2_LIBS) \
 	$(BOOST_THREAD_LIBS) $(BOOST_PROGRAM_OPTIONS_LIBS)
 LIBTOOL = @LIBTOOL@
@@ -351,15 +356,13 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 EXTRA_DIST = GameWorld.h GameAssetManager.h GameAsset.h CubeAsset.h PyramidAsset.h Camera.h BoundingBox.h PythonBindings.h
-
-#Abuse the shell command to compile the shared library. The output is stored in an unused variable.
-temp := $(shell g++ -shared -std=c++11 -fPIC -I/usr/include/python3.4m -lpython3 -lboost_python3 -o .libs/py3dplatformer.so PythonBindings.cc)
 3dplatformer_SOURCES = main.cc
-3dplatformer_LDADD = lib3dplatformer.la ./.libs/py3dplatformer.so
+3dplatformer_LDADD = lib3dplatformer.la libpy3dplatformer.la
 
 #Code to compile the game engine as a library.
-lib_LTLIBRARIES = lib3dplatformer.la
+lib_LTLIBRARIES = lib3dplatformer.la libpy3dplatformer.la
 lib3dplatformer_la_SOURCES = GameWorld.cc GameAssetManager.cc CubeAsset.cc PyramidAsset.cc Camera.cc GameAsset.cc BoundingBox.cc
+libpy3dplatformer_la_SOURCES = PythonBindings.cc
 lib3dplatformer_la_LDFLAGS = -version-info 0:1
 AM_CPPFLAGS = -DGL_GLEXT_PROTOTYPES -DGL3_PROTOTYPES -std=c++11 \
 	-I/usr/include/python3.4m $(gl_CFLAGS) $(glew_CFLAGS) \
@@ -435,6 +438,9 @@ clean-libLTLIBRARIES:
 
 lib3dplatformer.la: $(lib3dplatformer_la_OBJECTS) $(lib3dplatformer_la_DEPENDENCIES) $(EXTRA_lib3dplatformer_la_DEPENDENCIES) 
 	$(AM_V_CXXLD)$(lib3dplatformer_la_LINK) -rpath $(libdir) $(lib3dplatformer_la_OBJECTS) $(lib3dplatformer_la_LIBADD) $(LIBS)
+
+libpy3dplatformer.la: $(libpy3dplatformer_la_OBJECTS) $(libpy3dplatformer_la_DEPENDENCIES) $(EXTRA_libpy3dplatformer_la_DEPENDENCIES) 
+	$(AM_V_CXXLD)$(CXXLINK) -rpath $(libdir) $(libpy3dplatformer_la_OBJECTS) $(libpy3dplatformer_la_LIBADD) $(LIBS)
 install-binPROGRAMS: $(bin_PROGRAMS)
 	@$(NORMAL_INSTALL)
 	@list='$(bin_PROGRAMS)'; test -n "$(bindir)" || list=; \
@@ -502,6 +508,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/GameAssetManager.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/GameWorld.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/PyramidAsset.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/PythonBindings.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
 
 .cc.o:

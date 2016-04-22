@@ -1,15 +1,13 @@
 EXTRA_DIST = GameWorld.h GameAssetManager.h GameAsset.h CubeAsset.h PyramidAsset.h Camera.h BoundingBox.h PythonBindings.h
 
-#Abuse the shell command to compile the shared library. The output is stored in an unused variable.
-temp := $(shell g++ -shared -std=c++11 -fPIC -I/usr/include/python3.4m -lpython3 -lboost_python3 -o .libs/py3dplatformer.so PythonBindings.cc)
-
 bin_PROGRAMS = 3dplatformer
 3dplatformer_SOURCES = main.cc
-3dplatformer_LDADD = lib3dplatformer.la ./.libs/py3dplatformer.so
+3dplatformer_LDADD = lib3dplatformer.la libpy3dplatformer.la
 
 #Code to compile the game engine as a library.
-lib_LTLIBRARIES = lib3dplatformer.la
+lib_LTLIBRARIES = lib3dplatformer.la libpy3dplatformer.la
 lib3dplatformer_la_SOURCES = GameWorld.cc GameAssetManager.cc CubeAsset.cc PyramidAsset.cc Camera.cc GameAsset.cc BoundingBox.cc
+libpy3dplatformer_la_SOURCES = PythonBindings.cc
 lib3dplatformer_la_LDFLAGS = -version-info 0:1
 
 AM_CPPFLAGS = -DGL_GLEXT_PROTOTYPES -DGL3_PROTOTYPES
@@ -17,6 +15,7 @@ AM_CPPFLAGS += -std=c++11 -I/usr/include/python3.4m
 AM_CPPFLAGS += $(gl_CFLAGS) $(glew_CFLAGS) $(sdl2_CFLAGS) $(BOOST_CPPFLAGS)
 
 #new open GL flags added based off discussion found at http://nuclear.mutantstargoat.com/articles/make/#a-makefile-for-99-of-your-programs for osx builds
-LDFLAGS = -framework OpenGL -framework GLUT -lSDL2 -lboost_python -lboost_system -lpython3 -lboost_python3
+LDFLAGS = -framework OpenGL -framework GLUT -lSDL2 -lboost_python3 -lboost_system
+#-lpython3
 
 LIBS += $(gl_LIBS) $(glew_LIBS) $(sdl2_LIBS) $(BOOST_THREAD_LIBS) $(BOOST_PROGRAM_OPTIONS_LIBS)
