@@ -262,7 +262,7 @@ INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 LD = @LD@
 
 #new open GL flags added based off discussion found at http://nuclear.mutantstargoat.com/articles/make/#a-makefile-for-99-of-your-programs for osx builds
-LDFLAGS = -framework OpenGL -framework GLUT -lSDL2 -lboost_python3 -lboost_system
+LDFLAGS = -framework OpenGL -framework GLUT -lSDL2 -lboost_system -lpython3 -lboost_python3
 LIBOBJS = @LIBOBJS@
 #-lpython3  
 LIBS = @LIBS@ $(gl_LIBS) $(glew_LIBS) $(sdl2_LIBS) \
