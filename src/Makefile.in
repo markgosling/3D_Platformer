@@ -365,8 +365,8 @@ lib3dplatformer_la_SOURCES = GameWorld.cc GameAssetManager.cc CubeAsset.cc Pyram
 libpy3dplatformer_la_SOURCES = PythonBindings.cc
 lib3dplatformer_la_LDFLAGS = -version-info 0:1
 AM_CPPFLAGS = -DGL_GLEXT_PROTOTYPES -DGL3_PROTOTYPES -std=c++11 \
-	-I/usr/include/python3.4m $(gl_CFLAGS) $(glew_CFLAGS) \
-	$(sdl2_CFLAGS) $(BOOST_CPPFLAGS)
+	-I/usr/include/python3.4m -I/usr/include/python3.2m \
+	$(gl_CFLAGS) $(glew_CFLAGS) $(sdl2_CFLAGS) $(BOOST_CPPFLAGS)
 all: all-am
 
 .SUFFIXES:

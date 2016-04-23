@@ -11,7 +11,7 @@ libpy3dplatformer_la_SOURCES = PythonBindings.cc
 lib3dplatformer_la_LDFLAGS = -version-info 0:1
 
 AM_CPPFLAGS = -DGL_GLEXT_PROTOTYPES -DGL3_PROTOTYPES
-AM_CPPFLAGS += -std=c++11 -I/usr/include/python3.4m
+AM_CPPFLAGS += -std=c++11 -I/usr/include/python3.4m -I/usr/include/python3.2m
 AM_CPPFLAGS += $(gl_CFLAGS) $(glew_CFLAGS) $(sdl2_CFLAGS) $(BOOST_CPPFLAGS)
 
 #new open GL flags added based off discussion found at http://nuclear.mutantstargoat.com/articles/make/#a-makefile-for-99-of-your-programs for osx builds
