@@ -1,4 +1,4 @@
-EXTRA_DIST = GameWorld.h GameAssetManager.h GameAsset.h CubeAsset.h PyramidAsset.h Camera.h BoundingBox.h PythonBindings.h PythonBindings.lo lib3dplatformer.la libpy3dplatformer.la PythonBindings.cc
+EXTRA_DIST = GameWorld.h GameAssetManager.h GameAsset.h CubeAsset.h PyramidAsset.h Camera.h BoundingBox.h PythonBindings.h
 
 bin_PROGRAMS = 3dplatformer
 3dplatformer_SOURCES = main.cc
