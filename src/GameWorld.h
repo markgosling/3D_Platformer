@@ -13,6 +13,7 @@
 #include <memory>
 #include "common.h"
 #include "GameAssetManager.h"
+#include "PythonBindings.h"
 #include "CubeAsset.h"
 #include "PyramidAsset.h"
 #include "GameAsset.h"
@@ -39,5 +40,6 @@ public:
 
 private:
 	std::shared_ptr<GameAssetManager> asset_manager;
+	std::shared_ptr<PythonBindings> python_bindings_module;
 };
 #endif // GAMEWORLD_H

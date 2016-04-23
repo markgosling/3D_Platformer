@@ -1,4 +1,5 @@
 #include "GameWorld.h"
+#include "PythonBindings.h"
 #include <string>
 
 /**
@@ -20,6 +21,10 @@
 GameWorld::GameWorld () {
 
 	asset_manager = std::make_shared<GameAssetManager>();
+
+	//Create a pointer to the python bindings module and give it access to GameWorld.
+	python_bindings_module = std::make_shared<PythonBindings>();
+	python_bindings_module->SetAssetManagerPointer(asset_manager);
 
 	//Array to temporarily store the coordinates animated objects should move to.
 	std::vector<glm::vec3> animation_coordinates;

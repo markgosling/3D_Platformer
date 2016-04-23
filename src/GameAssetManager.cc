@@ -4,6 +4,7 @@
 #include <glm/ext.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+#include "CubeAsset.h"
 
 /**
  * @file GameAssetManager.cc
@@ -19,6 +20,18 @@
  * another method to draw them. It also communicates with the camera class
  * and sends it parameters allowing the camera position to be updated.
  */
+
+
+int GameAssetManager::GetNumberOfAssets(){
+
+	return world_array.size();
+}
+
+void GameAssetManager::AddCube(float x_pos, float y_pos, float z_pos, float scale, float x_rot, float y_rot, float z_rot){
+
+	this->AddAsset(std::make_shared<CubeAsset>(x_pos, y_pos, z_pos, scale, x_rot, y_rot, z_rot));
+
+}
 
 /**
  * Constructor which sets the location of the shader programs and calls the
@@ -47,6 +60,7 @@ GameAssetManager::GameAssetManager() {
 	//Create the projection matrix based on the size of the game window.
 	projection_matrix = glm::perspective(glm::radians(45.0f), (float) 640 / (float) 480, 0.1f, 1000.0f);
 }
+
 
 /**
  * AddAsset allows a GameAsset to be added to the world_array.
@@ -146,8 +160,8 @@ GLuint GameAssetManager::CreateGLProgram(std::string & vertex_shader, std::strin
 	glGetProgramiv(program, GL_LINK_STATUS, &program_ok);
 	if (!program_ok) {
 		std::cerr << "Failed to link shader program:" << std::endl;
-		glDeleteProgram(program);
-		exit(-1);
+		//glDeleteProgram(program);
+		//exit(-1);
 	}
 
 	return program;

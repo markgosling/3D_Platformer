@@ -134,25 +134,18 @@ am__uninstall_files_from_dir = { \
 am__installdirs = "$(DESTDIR)$(libdir)" "$(DESTDIR)$(bindir)"
 LTLIBRARIES = $(lib_LTLIBRARIES)
 lib3dplatformer_la_LIBADD =
-am_lib3dplatformer_la_OBJECTS = GameWorld.lo GameAssetManager.lo \
-	CubeAsset.lo PyramidAsset.lo Camera.lo GameAsset.lo \
-	BoundingBox.lo
+am_lib3dplatformer_la_OBJECTS = PythonBindings.lo CubeAsset.lo \
+	GameAsset.lo BoundingBox.lo GameAssetManager.lo \
+	PyramidAsset.lo Camera.lo GameWorld.lo GameLoop.lo
 lib3dplatformer_la_OBJECTS = $(am_lib3dplatformer_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
 am__v_lt_1 = 
-lib3dplatformer_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
-	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
-	$(AM_CXXFLAGS) $(CXXFLAGS) $(lib3dplatformer_la_LDFLAGS) \
-	$(LDFLAGS) -o $@
-libpy3dplatformer_la_LIBADD =
-am_libpy3dplatformer_la_OBJECTS = PythonBindings.lo
-libpy3dplatformer_la_OBJECTS = $(am_libpy3dplatformer_la_OBJECTS)
 PROGRAMS = $(bin_PROGRAMS)
 am_3dplatformer_OBJECTS = main.$(OBJEXT)
 3dplatformer_OBJECTS = $(am_3dplatformer_OBJECTS)
-3dplatformer_DEPENDENCIES = lib3dplatformer.la libpy3dplatformer.la
+3dplatformer_DEPENDENCIES = .libs/lib3dplatformer.so
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -187,10 +180,8 @@ AM_V_CXXLD = $(am__v_CXXLD_@AM_V@)
 am__v_CXXLD_ = $(am__v_CXXLD_@AM_DEFAULT_V@)
 am__v_CXXLD_0 = @echo "  CXXLD   " $@;
 am__v_CXXLD_1 = 
-SOURCES = $(lib3dplatformer_la_SOURCES) \
-	$(libpy3dplatformer_la_SOURCES) $(3dplatformer_SOURCES)
-DIST_SOURCES = $(lib3dplatformer_la_SOURCES) \
-	$(libpy3dplatformer_la_SOURCES) $(3dplatformer_SOURCES)
+SOURCES = $(lib3dplatformer_la_SOURCES) $(3dplatformer_SOURCES)
+DIST_SOURCES = $(lib3dplatformer_la_SOURCES) $(3dplatformer_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -262,7 +253,7 @@ INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 LD = @LD@
 
 #new open GL flags added based off discussion found at http://nuclear.mutantstargoat.com/articles/make/#a-makefile-for-99-of-your-programs for osx builds
-LDFLAGS = -framework OpenGL -framework GLUT -lSDL2 -lboost_system -lboost_python 
+LDFLAGS = -framework OpenGL -framework GLUT -lSDL2 -lboost_system -lboost_python -lpython2.7 -Wl,-rpath,'$$ORIGIN/.libs'
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@ $(gl_LIBS) $(glew_LIBS) $(sdl2_LIBS) \
 	$(BOOST_THREAD_LIBS) $(BOOST_PROGRAM_OPTIONS_LIBS)
@@ -354,15 +345,14 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-EXTRA_DIST = GameWorld.h GameAssetManager.h GameAsset.h CubeAsset.h PyramidAsset.h Camera.h BoundingBox.h PythonBindings.h
+EXTRA_DIST = GameWorld.h GameAssetManager.h GameAsset.h CubeAsset.h PyramidAsset.h Camera.h BoundingBox.h PythonBindings.h GameLoop.h
 3dplatformer_SOURCES = main.cc
-3dplatformer_LDADD = lib3dplatformer.la libpy3dplatformer.la
+3dplatformer_LDADD = .libs/lib3dplatformer.so
 
-#Code to compile the game engine as a library.
-lib_LTLIBRARIES = lib3dplatformer.la libpy3dplatformer.la
-lib3dplatformer_la_SOURCES = GameWorld.cc GameAssetManager.cc CubeAsset.cc PyramidAsset.cc Camera.cc GameAsset.cc BoundingBox.cc
-libpy3dplatformer_la_SOURCES = PythonBindings.cc
-lib3dplatformer_la_LDFLAGS = -version-info 0:1
+#Code to compile the game engine as a library along with the python bindings code.
+lib_LTLIBRARIES = lib3dplatformer.la
+lib3dplatformer_la_SOURCES = PythonBindings.cc CubeAsset.cc GameAsset.cc BoundingBox.cc GameAssetManager.cc PyramidAsset.cc Camera.cc GameWorld.cc GameLoop.cc
+#lib3dplatformer_la_LDFLAGS = -version-info 0:1
 AM_CPPFLAGS = -DGL_GLEXT_PROTOTYPES -DGL3_PROTOTYPES -std=c++11 \
 	-I/usr/include/python2.7 $(gl_CFLAGS) $(glew_CFLAGS) \
 	$(sdl2_CFLAGS) $(BOOST_CPPFLAGS)
@@ -436,10 +426,7 @@ clean-libLTLIBRARIES:
 	}
 
 lib3dplatformer.la: $(lib3dplatformer_la_OBJECTS) $(lib3dplatformer_la_DEPENDENCIES) $(EXTRA_lib3dplatformer_la_DEPENDENCIES) 
-	$(AM_V_CXXLD)$(lib3dplatformer_la_LINK) -rpath $(libdir) $(lib3dplatformer_la_OBJECTS) $(lib3dplatformer_la_LIBADD) $(LIBS)
-
-libpy3dplatformer.la: $(libpy3dplatformer_la_OBJECTS) $(libpy3dplatformer_la_DEPENDENCIES) $(EXTRA_libpy3dplatformer_la_DEPENDENCIES) 
-	$(AM_V_CXXLD)$(CXXLINK) -rpath $(libdir) $(libpy3dplatformer_la_OBJECTS) $(libpy3dplatformer_la_LIBADD) $(LIBS)
+	$(AM_V_CXXLD)$(CXXLINK) -rpath $(libdir) $(lib3dplatformer_la_OBJECTS) $(lib3dplatformer_la_LIBADD) $(LIBS)
 install-binPROGRAMS: $(bin_PROGRAMS)
 	@$(NORMAL_INSTALL)
 	@list='$(bin_PROGRAMS)'; test -n "$(bindir)" || list=; \
@@ -505,6 +492,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/CubeAsset.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/GameAsset.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/GameAssetManager.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/GameLoop.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/GameWorld.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/PyramidAsset.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/PythonBindings.Plo@am__quote@

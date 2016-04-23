@@ -33,6 +33,8 @@
  */
 class GameAssetManager {
 public:
+	int GetNumberOfAssets();
+	void AddCube(float, float, float, float, float, float, float);
 
 	GameAssetManager(); // constructor
 	virtual ~GameAssetManager();
