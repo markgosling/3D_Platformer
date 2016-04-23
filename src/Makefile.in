@@ -262,7 +262,7 @@ INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 LD = @LD@
 
 #new open GL flags added based off discussion found at http://nuclear.mutantstargoat.com/articles/make/#a-makefile-for-99-of-your-programs for osx builds
-LDFLAGS = -framework OpenGL -framework GLUT -lSDL2 -lboost_system -lboost_python
+LDFLAGS = -framework OpenGL -framework GLUT -lSDL2 -lboost_system -lboost_python3
 LIBOBJS = @LIBOBJS@
 #-lpython3  
 LIBS = @LIBS@ $(gl_LIBS) $(glew_LIBS) $(sdl2_LIBS) \
@@ -365,8 +365,8 @@ lib3dplatformer_la_SOURCES = GameWorld.cc GameAssetManager.cc CubeAsset.cc Pyram
 libpy3dplatformer_la_SOURCES = PythonBindings.cc
 lib3dplatformer_la_LDFLAGS = -version-info 0:1
 AM_CPPFLAGS = -DGL_GLEXT_PROTOTYPES -DGL3_PROTOTYPES -std=c++11 \
-	-I/usr/include/python2.7 $(gl_CFLAGS) $(glew_CFLAGS) \
-	$(sdl2_CFLAGS) $(BOOST_CPPFLAGS)
+	-I/usr/include/python3.4m -I/usr/include/python3.2m \
+	$(gl_CFLAGS) $(glew_CFLAGS) $(sdl2_CFLAGS) $(BOOST_CPPFLAGS)
 all: all-am
 
 .SUFFIXES:
