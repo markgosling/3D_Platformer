@@ -3,35 +3,25 @@
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-
 #include "CubeAsset.h"
+#include "PyramidAsset.h"
 
 /**
  * @file GameAssetManager.cc
- * @version 1.0
+ * @version 1.1
  *
  * @section Description
  *
  * GameAssetManager is used to store and control assets for the game.
  * It contains functions to load shaders and to create a shader program.
- * It also stores a 3D array to hold the assets which make up the game
+ * It also stores an array to hold the assets which make up the game
  * world, has functions allowing new objects to be added to this array
- * and to translate them into the correct position on screen before calling
- * another method to draw them. It also communicates with the camera class
+ * and functions to animate them. It also communicates with the camera class
  * and sends it parameters allowing the camera position to be updated.
  */
 
 
-int GameAssetManager::GetNumberOfAssets(){
 
-	return world_array.size();
-}
-
-void GameAssetManager::AddCube(float x_pos, float y_pos, float z_pos, float scale, float x_rot, float y_rot, float z_rot){
-
-	this->AddAsset(std::make_shared<CubeAsset>(x_pos, y_pos, z_pos, scale, x_rot, y_rot, z_rot));
-
-}
 
 /**
  * Constructor which sets the location of the shader programs and calls the
@@ -63,20 +53,50 @@ GameAssetManager::GameAssetManager() {
 
 
 /**
- * AddAsset allows a GameAsset to be added to the world_array.
+ * Method which adds a cube asset to the game world.
+ *
+ * @param x_pos - float - The starting X position of the asset.
+ * @param y_pos - float - The starting Y position of the asset.
+ * @param z_pos - float - The starting X position of the asset.
+ * @param scale - float - The amount to scale the object up by.
+ * @param x_rot - float - The starting amount of rotation on the X axis.
+ * @param y_rot - float - The starting amount of rotation on the Y axis.
+ * @param z_rot - float - The starting amount of rotation on the Z axis.
+ */
+void GameAssetManager::AddCube(float x_pos, float y_pos, float z_pos, float scale, float x_rot, float y_rot, float z_rot){
+	this->AddAsset(std::make_shared<CubeAsset>(x_pos, y_pos, z_pos, scale, x_rot, y_rot, z_rot));
+}
+
+
+/**
+ * Method which adds a pyramid asset to the game world.
+ *
+ * @param x_pos - float - The starting X position of the asset.
+ * @param y_pos - float - The starting Y position of the asset.
+ * @param z_pos - float - The starting X position of the asset.
+ * @param scale - float - The amount to scale the object up by.
+ * @param x_rot - float - The starting amount of rotation on the X axis.
+ * @param y_rot - float - The starting amount of rotation on the Y axis.
+ * @param z_rot - float - The starting amount of rotation on the Z axis.
+ */
+void GameAssetManager::AddPyramid(float x_pos, float y_pos, float z_pos, float scale, float x_rot, float y_rot, float z_rot){
+	this->AddAsset(std::make_shared<PyramidAsset>(x_pos, y_pos, z_pos, scale, x_rot, y_rot, z_rot));
+}
+
+
+/**
+ * AddAsset allows a pointer to a GameAsset to be added to the world_array.
  *
  * @param the_asset - shared_ptr - A pointer to a game asset.
  */
 void GameAssetManager::AddAsset(std::shared_ptr<GameAsset> the_asset) {
-
 	world_array.push_back(the_asset);
-
 }
 
 /**
- * Method which passes the animation parameters to the game asset at the end position of the world_array array.
+ * Method which passes the animation parameters to the asset at the last position of the world_array array.
  * IMPORTANT - this method should be called immediately after an object has been added to the array if
- * it should be animated. Calling it at any other time will animate the wrong object.
+ * it needs to be animated. Calling it at any other time will animate the wrong object.
  *
  * @param target_coordinates_array - std::vector<glm::vec3 - An array of vectors with the coordinate locations the object should be moved to.
  * @param movement_speed - float The speed the object should be moved at.
@@ -87,6 +107,16 @@ void GameAssetManager::SetAnimationParameters(std::vector<glm::vec3> target_coor
 
 	world_array.back()-> SetAnimationParameters(target_coordinates_array, movement_speed, rotation_axis, rotation_speed);
 
+}
+
+
+/**
+ * Method which returns the number of assets added to the game world.
+ *
+ * @return the number of assets in the 'world_array_ array.
+ */
+int GameAssetManager::GetNumberOfAssets(){
+	return world_array.size();
 }
 
 /**

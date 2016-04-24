@@ -25,23 +25,22 @@
 /**
  * GameAssetManager is used to store and control assets for the game.
  * It contains functions to load shaders and to create a shader program.
- * It also stores a 3D array to hold the assets which make up the game
+ * It also stores an array to hold the assets which make up the game
  * world, has functions allowing new objects to be added to this array
- * and to translate them into the correct position on screen before calling
- * another method to draw them. It also communicates with the camera class
+ * and functions to animate them. It also communicates with the camera class
  * and sends it parameters allowing the camera position to be updated.
  */
 class GameAssetManager {
 public:
-	int GetNumberOfAssets();
-	void AddCube(float, float, float, float, float, float, float);
-
 	GameAssetManager(); // constructor
 	virtual ~GameAssetManager();
 	GameAssetManager(GameAssetManager const&); // copy constructor
 	GameAssetManager(GameAssetManager const&&); // move constructor
 	void operator=(GameAssetManager const&); // assignment
 	void AddAsset(std::shared_ptr<GameAsset>);
+	void AddCube(float, float, float, float, float, float, float);
+	void AddPyramid(float, float, float, float, float, float, float);
+	int GetNumberOfAssets();
 	void SetAnimationParameters(std::vector<glm::vec3>, float, glm::vec3, float);
 	void Draw();
 	GLuint CreateGLProgram(std::string &, std::string &);
