@@ -47,6 +47,8 @@ GameAssetManager::GameAssetManager() {
 
 	//Create the projection matrix based on the size of the game window.
 	projection_matrix = glm::perspective(glm::radians(45.0f), (float) 640 / (float) 480, 0.1f, 1000.0f);
+	
+	rotation_speed = 0;
 }
 
 
@@ -331,7 +333,7 @@ GameAssetManager::~GameAssetManager() {
  * assignment in C++11.
  */
 void GameAssetManager::operator=(GameAssetManager const& the_manager) {
-	// TODO: implement this
+	rotation_speed = 0;
 }
 
 /**
@@ -339,7 +341,7 @@ void GameAssetManager::operator=(GameAssetManager const& the_manager) {
  * may not work as you'd expect when being copied.
  */
 GameAssetManager::GameAssetManager(GameAssetManager const& the_manager) {
-	// TODO: implement this
+	rotation_speed = 0;
 }
 
 /**

@@ -107,7 +107,7 @@ std::shared_ptr<SDL_Window> GameLoop::InitWorld() {
 	SDL_GLContext glContext = SDL_GL_CreateContext(_window);
 	if (!glContext) {
 		std::cout << "Failed to create OpenGL context: " << SDL_GetError() << std::endl;
-		return nullptr;
+		//return nullptr;
 	}
 
 	//Initialise GLEW - an easy way to ensure OpenGl 3.0+
@@ -116,7 +116,7 @@ std::shared_ptr<SDL_Window> GameLoop::InitWorld() {
 	glewInit();
 	if (!glewIsSupported("GL_VERSION_3_0")) {
 		std::cerr << "OpenGL 3.0 not available" << std::endl;
-		return nullptr;
+		//return nullptr;
 	}
 
 	//OpenGL settings.
