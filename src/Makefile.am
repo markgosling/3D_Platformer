@@ -2,7 +2,7 @@ EXTRA_DIST = GameWorld.h GameAssetManager.h GameAsset.h CubeAsset.h PyramidAsset
 
 bin_PROGRAMS = 3dplatformer
 3dplatformer_SOURCES = main.cc
-3dplatformer_LDADD = ./.libs/lib3dplatformer.so
+3dplatformer_LDADD = lib3dplatformer.la
 
 #Code to compile the game engine as a library along with the python bindings code.
 lib_LTLIBRARIES = lib3dplatformer.la
