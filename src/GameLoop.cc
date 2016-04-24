@@ -163,7 +163,7 @@ void GameLoop::Draw(const std::shared_ptr<SDL_Window> &window, const std::shared
  * window and other objects, creates a timer and handles the
  * SDL event loop.
  */
-void GameLoop::run() {
+void GameLoop::Run() {
 
 	//Set the timer delay (currently refreshes the screen at 60fps).
 	Uint32 delay = 1000/60; // in milliseconds

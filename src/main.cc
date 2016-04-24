@@ -13,7 +13,7 @@
 int main(int argc, char ** argv) {
 
 	std::shared_ptr<GameLoop> game_loop = std::shared_ptr<GameLoop>();
-	game_loop->run();
+	game_loop->Run();
 
 
 }

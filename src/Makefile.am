@@ -2,12 +2,11 @@ EXTRA_DIST = GameWorld.h GameAssetManager.h GameAsset.h CubeAsset.h PyramidAsset
 
 bin_PROGRAMS = 3dplatformer
 3dplatformer_SOURCES = main.cc
-3dplatformer_LDADD = .libs/lib3dplatformer.so
+3dplatformer_LDADD = ./.libs/lib3dplatformer.so
 
 #Code to compile the game engine as a library along with the python bindings code.
 lib_LTLIBRARIES = lib3dplatformer.la
 lib3dplatformer_la_SOURCES = PythonBindings.cc CubeAsset.cc GameAsset.cc BoundingBox.cc GameAssetManager.cc PyramidAsset.cc Camera.cc GameWorld.cc GameLoop.cc
-#lib3dplatformer_la_LDFLAGS = -version-info 0:1
 
 AM_CPPFLAGS = -DGL_GLEXT_PROTOTYPES -DGL3_PROTOTYPES
 AM_CPPFLAGS += -std=c++11 -I/usr/include/python2.7

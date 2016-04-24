@@ -3,6 +3,7 @@
 #include "GameAssetManager.h"
 #include "CubeAsset.h"
 #include "PyramidAsset.h"
+#include "GameLoop.h"
 #include "common.h"
 
 using namespace boost::python;
@@ -13,7 +14,7 @@ using namespace boost::python;
  *  Created on: 20 Apr 2016
  *      Author: mark
  *
- * The PythonBindings class sets up the Python Bindings allowing various methods
+ * The PythonBindings class sets up the Python bindings, allowing methods
  * to be accessed and used from within the Python language.
  */
 
@@ -35,15 +36,22 @@ void PythonBindings::SetAssetManagerPointer(std::shared_ptr<GameAssetManager> as
 
 BOOST_PYTHON_MODULE(lib3dplatformer){
 
+
+
 	class_<PythonBindings>("PythonBindings")
 			//.def("AddCube", &PythonBindings::AddCube)
 			.def("AddPyramid", &PythonBindings::AddPyramid)
+
 	;
 
 	class_<GameAssetManager>("GameAssetManager")
-			//.def("AddCube", &PythonBindings::AddCube)
-			.def("AddCube", &GameAssetManager::AddCube)
 			.def("GetNumberOfAssets", &GameAssetManager::GetNumberOfAssets)
+			.def("AddCube", &GameAssetManager::AddCube)
+		//	def("GetNumberOfAssets", &GameAssetManager::GetNumberOfAssets);
+	;
+
+	class_<GameLoop>("GameLoop")
+			.def("Run", &GameLoop::Run)
 	;
 
 

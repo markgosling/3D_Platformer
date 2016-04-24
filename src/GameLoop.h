@@ -17,7 +17,7 @@ class GameLoop{
 public:
 	std::shared_ptr<SDL_Window> InitWorld();
 	void Draw(const std::shared_ptr<SDL_Window> &window, const std::shared_ptr<GameWorld> &game_world);
-	void run();
+	void Run();
 };
 
 
