@@ -32,13 +32,10 @@
  *
  * @section Description
  *
- * This class contains the main game loop for the program and initialises
+ * The GameLoop class contains the main game loop for the program. It also initialises
  * the SDL window and openGL settings. It also runs a SDL event loop
  * which responds to timer and user events to handle input and to call
  * methods which update the state of the game.
- *
- * This project is based off original code written by Aidan Delaney which
- * is available on github at https://github.com/AidanDelaney/glex.
  */
 
 

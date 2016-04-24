@@ -2,7 +2,7 @@
 
 /**
  * @file CubeAsset.cc
- * @version 1.0
+ * @version 1.1
  *
  * @section Description
  *
@@ -20,6 +20,10 @@
  * @param x_position - float - The center X position of the asset.
  * @param y_position - float - The center Y position of the asset.
  * @param z_position - float - The center Z position of the asset.
+ * @param scale - float - The amount to scale the asset by.
+ * @param x_rotation - float - The starting rotation amount around the X axis.
+ * @param y_rotation - float - The starting rotation amount around the Y axis.
+ * @param z_rotation - float - The starting rotation amount around the Z axis.
  */
 CubeAsset::CubeAsset(float x_position, float y_position, float z_position, float scale,
 		float x_rotation, float y_rotation, float z_rotation) : GameAsset(x_position, y_position, z_position, scale,

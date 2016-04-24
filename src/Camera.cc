@@ -159,7 +159,7 @@ glm::mat4 Camera::UpdateCameraPosition(InputDirection input_direction, int mouse
  * checks them for collisions with the camera. If a collision is detected it returns the
  * side of the asset which was collided with. If no collision was detected it returns 'NOCOLLISION'.
  *
- * @param world_array - vector<shared_ptr<GameAsset>> - an array containing pointers to the assets.
+ * @param world_array - vector<shared_ptr<GameAsset>> - an array containing pointers to game assets.
  *
  * @return an Enum which indicates the side of the asset the camera collided with.
  */
@@ -188,6 +188,8 @@ CollisionType Camera::DetectCollisionWithAsset(std::vector<std::shared_ptr<GameA
 
 /**
  * Returns the cameras bounding box left side position.
+ *
+ * @return the left position of the cameras bounding box.
  */
 float Camera::GetLeft(){
 	return camera_x_position - width/2;
@@ -195,6 +197,8 @@ float Camera::GetLeft(){
 
 /**
  * Returns the cameras bounding box right side position.
+ *
+ * @return the right position of the cameras bounding box.
  */
 float Camera::GetRight(){
 	return camera_x_position + width/2;
@@ -202,6 +206,8 @@ float Camera::GetRight(){
 
 /**
  * Returns the cameras bounding box top side position.
+ *
+ * @return the top position of the cameras bounding box.
  */
 float Camera::GetTop(){
 	return camera_y_position + height/2;
@@ -209,6 +215,8 @@ float Camera::GetTop(){
 
 /**
  * Returns the cameras bounding box bottom side position.
+ *
+ * @return the bottom position of the cameras bounding box.
  */
 float Camera::GetBottom(){
 	return camera_y_position - height/2;
@@ -216,13 +224,17 @@ float Camera::GetBottom(){
 
 /**
  * Returns the cameras bounding box front side position.
+ *
+ * @return the front position of the cameras bounding box.
  */
 float Camera::GetFront(){
 	return camera_z_position + depth/2;
 }
 
 /**
- * Returns the cameras bounding box front side position.
+ * Returns the cameras bounding box back side position.
+ *
+ * @return the back position of the cameras bounding box.
  */
 float Camera::GetBack(){
 	return camera_z_position - depth/2;

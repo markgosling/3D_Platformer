@@ -21,8 +21,6 @@
  */
 
 
-
-
 /**
  * Constructor which sets the location of the shader programs and calls the
  * methods to construct them into a shader program. It also sets the uniform
@@ -85,7 +83,7 @@ void GameAssetManager::AddPyramid(float x_pos, float y_pos, float z_pos, float s
 
 
 /**
- * AddAsset allows a pointer to a GameAsset to be added to the world_array.
+ * AddAsset adds a pointer to a GameAsset to the world_array.
  *
  * @param the_asset - shared_ptr - A pointer to a game asset.
  */
@@ -229,8 +227,8 @@ GLuint GameAssetManager::CreateGLProgram(std::string & vertex_shader, std::strin
 	glGetProgramiv(program, GL_LINK_STATUS, &program_ok);
 	if (!program_ok) {
 		std::cerr << "Failed to link shader program:" << std::endl;
-		//glDeleteProgram(program);
-		//exit(-1);
+		glDeleteProgram(program);
+		//exit(-1); //Disabled on purpose to prevent python script and windows builds from exiting.
 	}
 
 	return program;
@@ -276,7 +274,7 @@ GLuint GameAssetManager::CreateGLESShader(GLenum type, std::string & shader) {
 		}
 
 		glDeleteShader(shader_token); //Don't leak the shader.
-		exit(-1);
+		//exit(-1);  //Disabled on purpose to prevent windows builds from exiting.
 	}
 	return shader_token;
 }

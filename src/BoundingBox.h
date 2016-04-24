@@ -3,6 +3,11 @@
  *
  *  Created on: 14 Mar 2016
  *      Author: mark
+ *
+ * BoundingBox is a class which creates a box around all game assets which allows them to use
+ * collision detection. It implements the collision detection method and also has methods allowing
+ * the object to have its scale and rotation set, allows it to be animated and also calculates and
+ * returns a matrix which can be used by the shader program to draw the object in the correct position.
  */
 
 #ifndef SRC_BOUNDINGBOX_H_

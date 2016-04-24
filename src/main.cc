@@ -1,6 +1,18 @@
 #include <memory>
 #include "GameLoop.h"
 
+/**
+ * @file main.cc
+ * @version 1.0
+ *
+ * @section Description
+ *
+ * This file contains the main entry point of the program. When loaded it
+ * creates an instance of GameLoop and calls the Run() method to start the game.
+ *
+ * This project is based off original code written by Aidan Delaney which
+ * is available on github at https://github.com/AidanDelaney/glex.
+ */
 
 
 /**
@@ -14,6 +26,4 @@ int main(int argc, char ** argv) {
 
 	std::shared_ptr<GameLoop> game_loop = std::shared_ptr<GameLoop>();
 	game_loop->Run();
-
-
 }

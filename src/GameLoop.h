@@ -7,6 +7,11 @@
  *
  *  Created on: 23 Apr 2016
  *      Author: mark
+ *
+ * The GameLoop class contains the main game loop for the program. It also initialises
+ * the SDL window and openGL settings. It also runs a SDL event loop
+ * which responds to timer and user events to handle input and to call
+ * methods which update the state of the game.
  */
 
 #ifndef SRC_GAMELOOP_H_

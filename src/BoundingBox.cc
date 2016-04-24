@@ -16,7 +16,7 @@
 
 
 /**
- * Constructor which sets the starting positional information for the bounding box, e.g.
+ * Constructor which sets the starting information for the bounding box, e.g.
  * the position, scale and rotation around the X, Y and Z axis.
  *
  * @param x_position - float - The X position for the bounding box.
@@ -40,6 +40,20 @@ BoundingBox::BoundingBox(float x_position, float y_position, float z_position, f
 	this->z_rotation = z_rotation;
 
 	is_animated = false; //By default the object is not animated.
+
+	//Initialise variables to prevent the IDE giving warnings.
+	coordinates_array_position = 0;
+	front_side_test = 0;
+	back_side_test = 0;
+	top_side_test = 0;
+	left_side_test = 0;
+	right_side_test = 0;
+	bottom_side_test = 0;
+	rotation_speed = 0;
+	movement_speed = 0;
+	distance = 0;
+	target_reached = 0;
+
 }
 
 /**

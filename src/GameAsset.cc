@@ -6,7 +6,7 @@
 
 /**
  * @file GameAsset.cc
- * @version 1.0
+ * @version 1.1
  *
  * @section Description
  *
@@ -31,6 +31,12 @@
  */
 GameAsset::GameAsset(float x_position, float y_position, float z_position, float scale,
 		float x_rotation, float y_rotation, float z_rotation){
+
+	//Initialise variables to prevent IDE warnings.
+	element_buffer_token = 0;
+	element_buffer_length = 0;
+	vertex_buffer_token = 0;
+	assetType = UNKNOWN;
 
 	bounding_box = std::make_shared<BoundingBox>(x_position, y_position, z_position, scale, x_rotation, y_rotation, z_rotation);
 }

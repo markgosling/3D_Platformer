@@ -28,7 +28,7 @@ class GameAsset {
 
 public:
 	GameAsset(float, float, float, float, float, float, float);
-	enum AssetType {CUBE, PYRAMID};
+	enum AssetType {CUBE, PYRAMID, UNKNOWN};
 	void Draw(GLuint);
 	AssetType GetAssetType();
 	std::shared_ptr<BoundingBox> bounding_box;

@@ -4,7 +4,7 @@
 
 /**
  * @file GameWorld.cc
- * @version 1.0
+ * @version 1.1
  *
  * @section Description
  *
@@ -16,14 +16,14 @@
 
 /**
  * Constructor which creates an instance of GameAssetManager and adds
- * the assets required to create the 3D world to it.
+ * the assets required to create the 3D world.
  */
 GameWorld::GameWorld () {
 
 	asset_manager = std::make_shared<GameAssetManager>();
 
 	//Add the assets to make the game world.
-	//The constructor to add a new asset is in the form of: X pos, Y pos, Z pos, scale, X rot, Y rot, Z rot.
+	//The parameters to add a new asset are in the form of: X pos, Y pos, Z pos, scale, X rot, Y rot, Z rot.
 
 	//To set the target animation coordinates call asset_manager->AddAnimationPathCoordinates(float x_target, float y_target, float z_target).
 	//This method should be called once for each set of targets an object should follow. The coordinates can be cleared using asset_manager->ClearAnimationPathCoordinates().
