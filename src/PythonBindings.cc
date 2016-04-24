@@ -32,7 +32,13 @@ BOOST_PYTHON_MODULE(lib3dplatformer){
 	class_<GameAssetManager>("GameAssetManager")
 			.def("GetNumberOfAssets", &GameAssetManager::GetNumberOfAssets)
 			.def("AddCube", &GameAssetManager::AddCube)
-			.def("AddPyramid", &GameAssetManager::AddPyramid);
+			.def("AddPyramid", &GameAssetManager::AddPyramid)
+			.def("AddAnimationPathCoordinates", &GameAssetManager::AddAnimationPathCoordinates)
+			.def("ClearAnimationPathCoordinates", &GameAssetManager::ClearAnimationPathCoordinates)
+			.def("SetRotationParameters", &GameAssetManager::SetRotationParameters)
+			.def("ClearRotationParameters", &GameAssetManager::ClearRotationParameters)
+			.def("SetAnimationParameters", &GameAssetManager::SetAnimationParameters)
+			.def("UpdateCameraPosition", &GameAssetManager::UpdateCameraPosition)
 	;
 
 	class_<GameLoop>("GameLoop")

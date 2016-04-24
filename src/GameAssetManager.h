@@ -41,7 +41,11 @@ public:
 	void AddCube(float, float, float, float, float, float, float);
 	void AddPyramid(float, float, float, float, float, float, float);
 	int GetNumberOfAssets();
-	void SetAnimationParameters(std::vector<glm::vec3>, float, glm::vec3, float);
+	void AddAnimationPathCoordinates(float, float, float);
+	void ClearAnimationPathCoordinates();
+	void SetRotationParameters(float, float, float, float);
+	void ClearRotationParameters();
+	void SetAnimationParameters(float);
 	void Draw();
 	GLuint CreateGLProgram(std::string &, std::string &);
 	void UpdateCameraPosition(InputDirection, int mouse_x, int mouse_y);
@@ -70,9 +74,12 @@ private:
 	glm::mat4 model_transformation_matrix; //The translated position, rotation and scaling of the model.
 	glm::mat4 view_matrix;	//The position of the camera.
 
-	//The 3D vector array used to store game assets.
-	//std::vector<std::vector<std::vector<std::shared_ptr<GameAsset>>>> world_array;
-	std::vector<std::shared_ptr<GameAsset>> world_array;
+	std::vector<std::shared_ptr<GameAsset>> world_array; //Array of pointers to game assets.
+
+	std::vector<glm::vec3> animation_target_coordinates; //Array of target coordinates for an object to follow when animating.
+
+	glm::vec3 rotation_axis; //Vector to store the coordinates the object should animate around.
+	float rotation_speed; //Stores the speed which the object should rotate.
 };
 
 #endif // GAMEASSETMANAGER_H

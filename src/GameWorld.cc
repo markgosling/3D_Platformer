@@ -22,14 +22,17 @@ GameWorld::GameWorld () {
 
 	asset_manager = std::make_shared<GameAssetManager>();
 
-	//Array to temporarily store the coordinates animated objects should move to.
-	std::vector<glm::vec3> animation_coordinates;
-
 	//Add the assets to make the game world.
 	//The constructor to add a new asset is in the form of: X pos, Y pos, Z pos, scale, X rot, Y rot, Z rot.
 
-	//Animate new objects by calling 'SetAnimationParameters(array of type vec3 containing movement coordinates, movement speed,
-	//vec3 with the coordinates set to 1 to indicate an axis to rotate around, rotation speed);'
+	//To set the target animation coordinates call asset_manager->AddAnimationPathCoordinates(float x_target, float y_target, float z_target).
+	//This method should be called once for each set of targets an object should follow. The coordinates can be cleared using asset_manager->ClearAnimationPathCoordinates().
+
+	//To set the rotation parameters call asset_manager->SetRotationParameters(float x_rotation, float y_rotation, float z_rotation, float rotation_speed).
+	//These settings can be cleared by calling asset_manager->ClearRotationParameters().
+
+	//To animate an object with the specified parameters, call asset_manager->SetAnimationParameters(float movement_speed).
+	//The movement speed only sets the speed the object moves towards the target speed. Rotation speed is specified separately.
 
 	//Add the blocks required to make the ground.
 	asset_manager->AddCube(0, 0, 0, 1, 0, 0, 0);
@@ -157,55 +160,60 @@ GameWorld::GameWorld () {
 	//Add a pyramid to the middle/left side of the game world.
 	asset_manager->AddPyramid(0, 1, 5, 1, 0, 0, 0);
 
-	//Set the first pyramid to rotate along the Y axis.
-	asset_manager->SetAnimationParameters(animation_coordinates, 0.0, glm::vec3(0,1,0), 0.1);
+	//Set the first pyramid to rotate along the Y axis at a speed of 0.1 and movement speed of 0 (to keep it stationary).
+	asset_manager->SetRotationParameters(0, 1, 0, 0.1);
+	asset_manager->SetAnimationParameters(0.0);
 
 	//Add a second pyramid to the middle\right side of the game world.
 	asset_manager->AddPyramid(7, 1, 5, 1, 0, 0, 0);
 
-	//Set the second pyramid to rotate along the Y axis.
-	asset_manager->SetAnimationParameters(animation_coordinates, 0.0, glm::vec3(0,1,0), -0.1);
+	//Set the second pyramid to rotate along the Y axis in the oppositte direction to the first by setting the rotation speed to -0.1.
+	asset_manager->SetRotationParameters(0, 1, 0, -0.1);
+	asset_manager->SetAnimationParameters(0.0);
 
 	//Add a half size cube above the game world to represent a moving platform.
 	asset_manager->AddCube(0, 5, 10, 0.5, 0, 0, 0);
 
 	//Animate the platform by setting coordinates which will cause it to move around the edge of the game world.
-	animation_coordinates.push_back(glm::vec3(0,5,0));
-	animation_coordinates.push_back(glm::vec3(7,5,0));
-	animation_coordinates.push_back(glm::vec3(7,5,10));
-	animation_coordinates.push_back(glm::vec3(0,5,10));
+	asset_manager->ClearRotationParameters(); //Reset the rotation paramaters set previously.
+	asset_manager->AddAnimationPathCoordinates(0,5,0);
+	asset_manager->AddAnimationPathCoordinates(7,5,0);
+	asset_manager->AddAnimationPathCoordinates(7,5,10);
+	asset_manager->AddAnimationPathCoordinates(0,5,10);
 
-	//Pass the movement coordinates to the platform.
-	asset_manager->SetAnimationParameters(animation_coordinates, 2.0, glm::vec3(0,0,0), 0);
+	//Set the target coordinates of the platform with a movement speed of 2.
+	asset_manager->SetAnimationParameters(2.0);
 
 	//Add a second small cube to the sky.
 	asset_manager->AddCube(5, 8, 5, 0.6, 0, 0, 0);
 
-	//Clear the target coordinates and then add new ones to the array to make the cube bounce
+	//Clear the target coordinates and then add new ones to make the cube bounce
 	//from the center of the world to one of the pillars, then back to the center before heading towards
 	//the next pillar.
-	animation_coordinates.clear();
-	animation_coordinates.push_back(glm::vec3(1,4,0)); //Pillar 1.
-	animation_coordinates.push_back(glm::vec3(5, 8, 5)); //Center.
-	animation_coordinates.push_back(glm::vec3(6, 4, 0)); //Pillar 2.
-	animation_coordinates.push_back(glm::vec3(5, 8, 5)); //Center.
-	animation_coordinates.push_back(glm::vec3(6, 4, 10)); //Pillar 3.
-	animation_coordinates.push_back(glm::vec3(5, 8, 5)); //Center.
-	animation_coordinates.push_back(glm::vec3(1, 4, 10)); //Pillar 4.
-	animation_coordinates.push_back(glm::vec3(5, 8, 5)); //Center.
+	asset_manager->ClearAnimationPathCoordinates();
+	asset_manager->AddAnimationPathCoordinates(1,4,0); //Pillar 1.
+	asset_manager->AddAnimationPathCoordinates(5, 8, 5); //Center.
+	asset_manager->AddAnimationPathCoordinates(6, 4, 0); //Pillar 2.
+	asset_manager->AddAnimationPathCoordinates(5, 8, 5); //Center.
+	asset_manager->AddAnimationPathCoordinates(6, 4, 10); //Pillar 3.
+	asset_manager->AddAnimationPathCoordinates(5, 8, 5); //Center.
+	asset_manager->AddAnimationPathCoordinates(1, 4, 10); //Pillar 4.
+	asset_manager->AddAnimationPathCoordinates(5, 8, 5); //Center.
 
-	//Pass the movement coordinates to the cube with a movement speed of 1.
-	//Also set it to rotate around all 3 axes at once with a rotation speed of 0.1.
-	asset_manager->SetAnimationParameters(animation_coordinates, 4.0, glm::vec3(1,1,1), 0.1);
+	//Set the asset to rotate around all 3 axis at once then
+	//pass it the target coordinates with a movement speed of 4.
+	asset_manager->SetRotationParameters(1, 1, 1, 0.1);
+	asset_manager->SetAnimationParameters(4.0);
 
 	//Add two large cubes to the left of the play field and a rotated pyramid to represent a windmill(?).
 	asset_manager->AddCube(-8, 1, 5, 2, 0, 0, 0);
 	asset_manager->AddCube(-8, 3, 5, 2, 0, 0, 0);
 	asset_manager->AddPyramid(-6.5, 3, 5, 1.5, 0, 0, -1.6);
 
-	//Clear the animation coordinates then call the method to rotate the pyramid around its X axis.
-	animation_coordinates.clear();
-	asset_manager->SetAnimationParameters(animation_coordinates, 0, glm::vec3(1,0,0), 0.1);
+	//Clear the animation coordinates then call the methods required to rotate the pyramid around its X axis.
+	asset_manager->ClearAnimationPathCoordinates();
+	asset_manager->SetRotationParameters(1, 0, 0, 0.1);
+	asset_manager->SetAnimationParameters(0.0);
 }
 
 /**

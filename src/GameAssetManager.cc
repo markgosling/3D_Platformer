@@ -93,19 +93,58 @@ void GameAssetManager::AddAsset(std::shared_ptr<GameAsset> the_asset) {
 	world_array.push_back(the_asset);
 }
 
+
 /**
- * Method which passes the animation parameters to the asset at the last position of the world_array array.
+ * Method which stores X, Y and Z coordinates in an array that is used to make a
+ * game asset follow those coordinates when animating. This method should be called
+ * for each set of coordinates to be added to the array.
+ *
+ * @param x_target - float - The target X position the asset should move towards.
+ * @param y_target - float - The target Y position the asset should move towards.
+ * @param z_target - float - The target Z position the asset should move towards.
+ */
+void GameAssetManager::AddAnimationPathCoordinates(float x_target, float y_target, float z_target){
+	animation_target_coordinates.push_back(glm::vec3(x_target, y_target, z_target));
+}
+
+/**
+ * Method which clears the list of animation coordinates.
+ */
+void GameAssetManager::ClearAnimationPathCoordinates(){
+	animation_target_coordinates.clear();
+}
+
+/**
+ * Method which sets the axis which a object should rotate around. A value of 1 (or higher) tells the
+ * program to animate the object around that axis. The rotation speed is also set here.
+ *
+ * @param x_rotation - float - set to 1 or higher to animate the asset around the X axis.
+ * @param y_rotation - float - set to 1 or higher to animate the asset around the Y axis.
+ * @param z_rotation - float - set to 1 or higher to animate the asset around the Z axis.
+ * @param rotation_speed - float - sets the rotation speed of the asset.
+ */
+void GameAssetManager::SetRotationParameters(float x_rotation, float y_rotation, float z_rotation, float rotation_speed){
+	rotation_axis = glm::vec3(x_rotation, y_rotation, z_rotation);
+	this->rotation_speed = rotation_speed;
+}
+
+/**
+ * Method which clears the rotation parameters.
+ */
+void GameAssetManager::ClearRotationParameters(){
+	rotation_axis = glm::vec3(0, 0, 0);
+}
+
+/**
+ * Method which animates the asset stored in the last position of world_array according to previously specified parameters.
  * IMPORTANT - this method should be called immediately after an object has been added to the array if
  * it needs to be animated. Calling it at any other time will animate the wrong object.
  *
- * @param target_coordinates_array - std::vector<glm::vec3 - An array of vectors with the coordinate locations the object should be moved to.
- * @param movement_speed - float The speed the object should be moved at.
- * @param rotation_axis - glm::vec3 - Each value in the vec3 can be set to 1 to indicate whether the X, Y or Z axis should be rotated around.
- * @param rotation_speed - float - The speed which the object should rotate.
+ * @param movement_speed - float - The speed the object should be moved at towards the array of target coordinates.
  **/
-void GameAssetManager::SetAnimationParameters(std::vector<glm::vec3> target_coordinates_array, float movement_speed, glm::vec3 rotation_axis, float rotation_speed){
+void GameAssetManager::SetAnimationParameters(float movement_speed){
 
-	world_array.back()-> SetAnimationParameters(target_coordinates_array, movement_speed, rotation_axis, rotation_speed);
+	world_array.back()-> SetAnimationParameters(animation_target_coordinates, movement_speed, rotation_axis, rotation_speed);
 
 }
 
